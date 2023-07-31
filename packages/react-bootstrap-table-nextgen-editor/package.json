@@ -1,7 +1,7 @@
 {
-  "name": "react-bootstrap-table2-editor",
+  "name": "react-bootstrap-table-nextgen-editor",
   "version": "1.4.0",
-  "description": "it's the editor addon for react-bootstrap-table2",
+  "description": "it's the editor addon for react-bootstrap-table-nextgen",
   "main": "./lib/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -9,7 +9,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/react-bootstrap-table/react-bootstrap-table2.git"
+    "url": "git+https://github.com/TerrenceMiao/react-bootstrap-table-nextgen.git"
   },
   "keywords": [
     "react",
@@ -26,7 +26,7 @@
   "tags": [
     "react"
   ],
-  "author": "AllenFang",
+  "author": "Terrence Miao",
   "contributors": [
     {
       "name": "Allen Fang",

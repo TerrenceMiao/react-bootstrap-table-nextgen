@@ -1,5 +1,5 @@
 {
-  "name": "react-bootstrap-table2-example",
+  "name": "react-bootstrap-table-nextgen-example",
   "version": "1.0.41",
   "description": "",
   "main": "index.js",
@@ -10,7 +10,7 @@
     "gh-pages:clean": "rimraf ./storybook-static",
     "gh-pages:build": "build-storybook -s ./public"
   },
-  "author": "",
+  "author": "Terrence Miao",
   "license": "ISC",
   "peerDependencies": {
     "prop-types": "^15.0.0",

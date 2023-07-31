@@ -1,11 +1,11 @@
 {
-  "name": "react-bootstrap-table2-paginator",
+  "name": "react-bootstrap-table-nextgen-paginator",
   "version": "2.1.2",
-  "description": "it's the pagination addon for react-bootstrap-table2",
+  "description": "it's the pagination addon for react-bootstrap-table-nextgen",
   "main": "./lib/index.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/react-bootstrap-table/react-bootstrap-table2.git"
+    "url": "git+https://github.com/react-bootstrap-table/react-bootstrap-table-nextgen.git"
   },
   "license": "MIT",
   "keywords": [
@@ -23,7 +23,7 @@
   "tags": [
     "react"
   ],
-  "author": "AllenFang",
+  "author": "Terrence Miao",
   "contributors": [
     {
       "name": "Allen Fang",
