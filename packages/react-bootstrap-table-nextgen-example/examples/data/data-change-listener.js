@@ -1,8 +1,8 @@
 /* eslint react/no-multi-comp: 0 */
 import React from 'react';
 import BootstrapTable from 'react-bootstrap-table-nextgen';
-import filterFactory, { textFilter } from 'react-bootstrap-table2-filter';
-import paginationFactory from 'react-bootstrap-table2-paginator';
+import filterFactory, { textFilter } from 'react-bootstrap-table-nextgen-filter';
+import paginationFactory from 'react-bootstrap-table-nextgen-paginator';
 import Code from 'components/common/code-block';
 import { productsGenerator } from 'utils/common';
 
@@ -21,7 +21,7 @@ const columns = [{
 
 const sourceCode1 = `\
 import BootstrapTable from 'react-bootstrap-table-nextgen';
-import filterFactory, { textFilter } from 'react-bootstrap-table2-filter';
+import filterFactory, { textFilter } from 'react-bootstrap-table-nextgen-filter';
 
 class Case1 extends React.Component {
   constructor(props) {
@@ -52,8 +52,8 @@ class Case1 extends React.Component {
 
 const sourceCode2 = `\
 import BootstrapTable from 'react-bootstrap-table-nextgen';
-import filterFactory, { textFilter } from 'react-bootstrap-table2-filter';
-import paginationFactory from 'react-bootstrap-table2-paginator';
+import filterFactory, { textFilter } from 'react-bootstrap-table-nextgen-filter';
+import paginationFactory from 'react-bootstrap-table-nextgen-paginator';
 
 class Case2 extends React.Component {
   constructor(props) {

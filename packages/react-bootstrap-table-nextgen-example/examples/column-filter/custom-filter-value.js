@@ -1,7 +1,7 @@
 /* eslint no-unused-vars: 0 */
 import React from 'react';
 import BootstrapTable from 'react-bootstrap-table-nextgen';
-import filterFactory, { textFilter } from 'react-bootstrap-table2-filter';
+import filterFactory, { textFilter } from 'react-bootstrap-table-nextgen-filter';
 import Code from 'components/common/code-block';
 import { jobsGenerator1 } from 'utils/common';
 
@@ -33,7 +33,7 @@ const columns = [{
 
 const sourceCode = `\
 import BootstrapTable from 'react-bootstrap-table-nextgen';
-import filterFactory, { textFilter } from 'react-bootstrap-table2-filter';
+import filterFactory, { textFilter } from 'react-bootstrap-table-nextgen-filter';
 
 const owners = ['Allen', 'Bob', 'Cat'];
 const types = ['Cloud Service', 'Message Service', 'Add Service', 'Edit Service', 'Money'];

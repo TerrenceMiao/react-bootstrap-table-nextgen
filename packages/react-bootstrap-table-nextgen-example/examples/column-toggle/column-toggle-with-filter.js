@@ -2,8 +2,8 @@
 import React from 'react';
 
 import BootstrapTable from 'react-bootstrap-table-nextgen';
-import filterFactory, { textFilter } from 'react-bootstrap-table2-filter';
-import ToolkitProvider, { ColumnToggle } from 'react-bootstrap-table2-toolkit';
+import filterFactory, { textFilter } from 'react-bootstrap-table-nextgen-filter';
+import ToolkitProvider, { ColumnToggle } from 'react-bootstrap-table-nextgen-toolkit';
 import Code from 'components/common/code-block';
 import { productsGenerator } from 'utils/common';
 
@@ -27,8 +27,8 @@ const columns = [{
 
 const sourceCode = `\
 import BootstrapTable from 'react-bootstrap-table-nextgen';
-import filterFactory, { textFilter } from 'react-bootstrap-table2-filter';
-import ToolkitProvider, { ColumnToggle } from 'react-bootstrap-table2-toolkit';
+import filterFactory, { textFilter } from 'react-bootstrap-table-nextgen-filter';
+import ToolkitProvider, { ColumnToggle } from 'react-bootstrap-table-nextgen-toolkit';
 
 const { ToggleList } = ColumnToggle;
 const columns = [{

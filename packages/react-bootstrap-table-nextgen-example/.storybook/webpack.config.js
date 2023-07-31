@@ -1,15 +1,15 @@
 const path = require('path');
 
-const sourcePath = path.join(__dirname, '../../react-bootstrap-table2/index.js');
-const paginationSourcePath = path.join(__dirname, '../../react-bootstrap-table2-paginator/index.js');
-const overlaySourcePath = path.join(__dirname, '../../react-bootstrap-table2-overlay/index.js');
-const filterSourcePath = path.join(__dirname, '../../react-bootstrap-table2-filter/index.js');
-const editorSourcePath = path.join(__dirname, '../../react-bootstrap-table2-editor/index.js');
-const sourceStylePath = path.join(__dirname, '../../react-bootstrap-table2/style');
-const paginationStylePath = path.join(__dirname, '../../react-bootstrap-table2-paginator/style');
-const filterStylePath = path.join(__dirname, '../../react-bootstrap-table2-filter/style');
-const toolkitSourcePath = path.join(__dirname, '../../react-bootstrap-table2-toolkit/index.js');
-const toolkitStylePath = path.join(__dirname, '../../react-bootstrap-table2-toolkit/style');
+const sourcePath = path.join(__dirname, '../../react-bootstrap-table-nextgen/index.js');
+const paginationSourcePath = path.join(__dirname, '../../react-bootstrap-table-nextgen-paginator/index.js');
+const overlaySourcePath = path.join(__dirname, '../../react-bootstrap-table-nextgen-overlay/index.js');
+const filterSourcePath = path.join(__dirname, '../../react-bootstrap-table-nextgen-filter/index.js');
+const editorSourcePath = path.join(__dirname, '../../react-bootstrap-table-nextgen-editor/index.js');
+const sourceStylePath = path.join(__dirname, '../../react-bootstrap-table-nextgen/style');
+const paginationStylePath = path.join(__dirname, '../../react-bootstrap-table-nextgen-paginator/style');
+const filterStylePath = path.join(__dirname, '../../react-bootstrap-table-nextgen-filter/style');
+const toolkitSourcePath = path.join(__dirname, '../../react-bootstrap-table-nextgen-toolkit/index.js');
+const toolkitStylePath = path.join(__dirname, '../../react-bootstrap-table-nextgen-toolkit/style');
 const storyPath = path.join(__dirname, '../stories');
 const examplesPath = path.join(__dirname, '../examples');
 const srcPath = path.join(__dirname, '../src');
@@ -21,11 +21,11 @@ const aliasPath = {
   utils: path.join(srcPath, 'utils'),
 
   'react-bootstrap-table-nextgen': sourcePath,
-  'react-bootstrap-table2-editor': editorSourcePath,
-  'react-bootstrap-table2-filter': filterSourcePath,
-  'react-bootstrap-table2-overlay': overlaySourcePath,
-  'react-bootstrap-table2-paginator': paginationSourcePath,
-  'react-bootstrap-table2-toolkit': toolkitSourcePath
+  'react-bootstrap-table-nextgen-editor': editorSourcePath,
+  'react-bootstrap-table-nextgen-filter': filterSourcePath,
+  'react-bootstrap-table-nextgen-overlay': overlaySourcePath,
+  'react-bootstrap-table-nextgen-paginator': paginationSourcePath,
+  'react-bootstrap-table-nextgen-toolkit': toolkitSourcePath
 };
 
 const loaders = [{

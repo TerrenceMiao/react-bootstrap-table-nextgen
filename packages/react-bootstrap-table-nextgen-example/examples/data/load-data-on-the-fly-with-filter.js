@@ -2,7 +2,7 @@
 import React from 'react';
 
 import BootstrapTable from 'react-bootstrap-table-nextgen';
-import filterFactory, { textFilter } from 'react-bootstrap-table2-filter';
+import filterFactory, { textFilter } from 'react-bootstrap-table-nextgen-filter';
 import { productsGenerator } from 'utils/common';
 
 const ProductList = (props) => {

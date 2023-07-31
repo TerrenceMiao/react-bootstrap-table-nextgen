@@ -2,8 +2,8 @@
 import React from 'react';
 
 import BootstrapTable from 'react-bootstrap-table-nextgen';
-import paginationFactory, { PaginationProvider, PaginationListStandalone } from 'react-bootstrap-table2-paginator';
-import ToolkitProvider, { Search } from 'react-bootstrap-table2-toolkit';
+import paginationFactory, { PaginationProvider, PaginationListStandalone } from 'react-bootstrap-table-nextgen-paginator';
+import ToolkitProvider, { Search } from 'react-bootstrap-table-nextgen-toolkit';
 import Code from 'components/common/code-block';
 import { productsGenerator } from 'utils/common';
 
@@ -20,8 +20,8 @@ const columns = [{
 
 const sourceCode = `\
 import BootstrapTable from 'react-bootstrap-table-nextgen';
-import paginationFactory, { PaginationProvider, PaginationListStandalone } from 'react-bootstrap-table2-paginator';
-import filterFactory, { textFilter } from 'react-bootstrap-table2-filter';
+import paginationFactory, { PaginationProvider, PaginationListStandalone } from 'react-bootstrap-table-nextgen-paginator';
+import filterFactory, { textFilter } from 'react-bootstrap-table-nextgen-filter';
 
 class Table extends React.Component {
   state = { products }

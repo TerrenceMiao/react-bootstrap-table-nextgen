@@ -1,12 +1,12 @@
 import React from 'react';
 
 import BootstrapTable from 'react-bootstrap-table-nextgen';
-import paginationFactory from 'react-bootstrap-table2-paginator';
+import paginationFactory from 'react-bootstrap-table-nextgen-paginator';
 import Code from 'components/common/code-block';
 
 const sourceCode = `\
 import BootstrapTable from 'react-bootstrap-table-nextgen';
-import paginationFactory from 'react-bootstrap-table2-paginator';
+import paginationFactory from 'react-bootstrap-table-nextgen-paginator';
 
 class BookList extends React.Component {
   state = {

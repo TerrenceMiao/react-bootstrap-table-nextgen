@@ -2,7 +2,7 @@
 import React from 'react';
 
 import BootstrapTable from 'react-bootstrap-table-nextgen';
-import ToolkitProvider from 'react-bootstrap-table2-toolkit';
+import ToolkitProvider from 'react-bootstrap-table-nextgen-toolkit';
 import Code from 'components/common/code-block';
 import { productsGenerator } from 'utils/common';
 
@@ -21,7 +21,7 @@ const columnsdt = [{
 
 const sourceCode = `\
 import BootstrapTable from 'react-bootstrap-table-nextgen';
-import ToolkitProvider from 'react-bootstrap-table2-toolkit';
+import ToolkitProvider from 'react-bootstrap-table-nextgen-toolkit';
 
 const columns = [{
   dataField: 'id',

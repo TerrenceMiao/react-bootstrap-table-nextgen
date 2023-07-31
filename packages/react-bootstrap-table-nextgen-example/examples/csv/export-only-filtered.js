@@ -2,9 +2,9 @@
 import React from 'react';
 
 import BootstrapTable from 'react-bootstrap-table-nextgen';
-import ToolkitProvider, { CSVExport, Search } from 'react-bootstrap-table2-toolkit';
-import filterFactory, { textFilter } from 'react-bootstrap-table2-filter';
-import paginationFactory from 'react-bootstrap-table2-paginator';
+import ToolkitProvider, { CSVExport, Search } from 'react-bootstrap-table-nextgen-toolkit';
+import filterFactory, { textFilter } from 'react-bootstrap-table-nextgen-filter';
+import paginationFactory from 'react-bootstrap-table-nextgen-paginator';
 import Code from 'components/common/code-block';
 import { productsGenerator } from 'utils/common';
 
@@ -26,8 +26,8 @@ const columns = [{
 
 const sourceCode = `\
 import BootstrapTable from 'react-bootstrap-table-nextgen';
-import ToolkitProvider, { CSVExport, Search } from 'react-bootstrap-table2-toolkit';
-import filterFactory, { textFilter } from 'react-bootstrap-table2-filter';
+import ToolkitProvider, { CSVExport, Search } from 'react-bootstrap-table-nextgen-toolkit';
+import filterFactory, { textFilter } from 'react-bootstrap-table-nextgen-filter';
 
 const { SearchBar } = Search;
 const { ExportCSVButton } = CSVExport;

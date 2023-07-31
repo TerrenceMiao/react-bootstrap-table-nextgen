@@ -2,7 +2,7 @@
 import React from 'react';
 
 import BootstrapTable from 'react-bootstrap-table-nextgen';
-import ToolkitProvider, { Search } from 'react-bootstrap-table2-toolkit';
+import ToolkitProvider, { Search } from 'react-bootstrap-table-nextgen-toolkit';
 import Code from 'components/common/code-block';
 import { productsGenerator } from 'utils/common';
 
@@ -22,7 +22,7 @@ const columns = [{
 
 const sourceCode = `\
 import BootstrapTable from 'react-bootstrap-table-nextgen';
-import ToolkitProvider, { Search } from 'react-bootstrap-table2-toolkit';
+import ToolkitProvider, { Search } from 'react-bootstrap-table-nextgen-toolkit';
 
 const { SearchBar, ClearSearchButton } = Search;
 

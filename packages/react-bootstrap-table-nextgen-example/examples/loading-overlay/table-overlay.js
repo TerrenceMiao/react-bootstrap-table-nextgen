@@ -2,8 +2,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import BootstrapTable from 'react-bootstrap-table-nextgen';
-import paginationFactory from 'react-bootstrap-table2-paginator';
-import overlayFactory from 'react-bootstrap-table2-overlay';
+import paginationFactory from 'react-bootstrap-table-nextgen-paginator';
+import overlayFactory from 'react-bootstrap-table-nextgen-overlay';
 import Code from 'components/common/code-block';
 import { productsGenerator } from 'utils/common';
 
@@ -22,8 +22,8 @@ const columns = [{
 
 const sourceCode = `\
 import BootstrapTable from 'react-bootstrap-table-nextgen';
-import paginationFactory from 'react-bootstrap-table2-paginator';
-import overlayFactory from 'react-bootstrap-table2-overlay';
+import paginationFactory from 'react-bootstrap-table-nextgen-paginator';
+import overlayFactory from 'react-bootstrap-table-nextgen-overlay';
 
 // ...
 const RemotePagination = ({ loading, data, page, sizePerPage, onTableChange, totalSize }) => (

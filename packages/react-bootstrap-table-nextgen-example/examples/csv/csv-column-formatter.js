@@ -3,7 +3,7 @@ import React from 'react';
 
 /* eslint no-unused-vars: 0 */
 import BootstrapTable from 'react-bootstrap-table-nextgen';
-import ToolkitProvider, { CSVExport } from 'react-bootstrap-table2-toolkit';
+import ToolkitProvider, { CSVExport } from 'react-bootstrap-table-nextgen-toolkit';
 import Code from 'components/common/code-block';
 import { productsGenerator } from 'utils/common';
 
@@ -24,7 +24,7 @@ const columns = [{
 
 const sourceCode = `\
 import BootstrapTable from 'react-bootstrap-table-nextgen';
-import ToolkitProvider, { CSVExport } from 'react-bootstrap-table2-toolkit';
+import ToolkitProvider, { CSVExport } from 'react-bootstrap-table-nextgen-toolkit';
 
 const { ExportCSVButton } = CSVExport;
 const columns = [{

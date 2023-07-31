@@ -248,10 +248,10 @@ import LoadDataWithPaginationAndFilter from 'examples/data/load-data-on-the-fly-
 // css style
 import 'stories/stylesheet/tomorrow.min.css';
 import 'stories/stylesheet/storybook.scss';
-import '../../react-bootstrap-table2/style/react-bootstrap-table2.scss';
-import '../../react-bootstrap-table2-paginator/style/react-bootstrap-table2-paginator.scss';
-import '../../react-bootstrap-table2-filter/style/react-bootstrap-table2-filter.scss';
-import '../../react-bootstrap-table2-toolkit/style/react-bootstrap-table2-toolkit.scss';
+import '../../react-bootstrap-table-nextgen/style/react-bootstrap-table-nextgen.scss';
+import '../../react-bootstrap-table-nextgen-paginator/style/react-bootstrap-table-nextgen-paginator.scss';
+import '../../react-bootstrap-table-nextgen-filter/style/react-bootstrap-table-nextgen-filter.scss';
+import '../../react-bootstrap-table-nextgen-toolkit/style/react-bootstrap-table-nextgen-toolkit.scss';
 
 // import bootstrap style by given version
 import bootstrapStyle, { BOOTSTRAP_VERSION } from './bootstrap-style';

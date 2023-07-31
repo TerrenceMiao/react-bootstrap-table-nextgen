@@ -1,6 +1,6 @@
 import React from 'react';
 import BootstrapTable from 'react-bootstrap-table-nextgen';
-import filterFactory, { selectFilter } from 'react-bootstrap-table2-filter';
+import filterFactory, { selectFilter } from 'react-bootstrap-table-nextgen-filter';
 import Code from 'components/common/code-block';
 import { productsQualityGenerator } from 'utils/common';
 
@@ -70,7 +70,7 @@ const columns3 = [{
 
 const sourceCode = `\
 import BootstrapTable from 'react-bootstrap-table-nextgen';
-import filterFactory, { selectFilter } from 'react-bootstrap-table2-filter';
+import filterFactory, { selectFilter } from 'react-bootstrap-table-nextgen-filter';
 
 // Object map options
 const selectOptions = {

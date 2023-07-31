@@ -1,6 +1,6 @@
 import React from 'react';
 import BootstrapTable from 'react-bootstrap-table-nextgen';
-import filterFactory, { textFilter, dateFilter, selectFilter } from 'react-bootstrap-table2-filter';
+import filterFactory, { textFilter, dateFilter, selectFilter } from 'react-bootstrap-table-nextgen-filter';
 import Code from 'components/common/code-block';
 import { stockGenerator } from 'utils/common';
 
@@ -70,7 +70,7 @@ const handleClick = () => {
 
 const sourceCode = `\
 import BootstrapTable from 'react-bootstrap-table-nextgen';
-import filterFactory, { textFilter, dateFilter } from 'react-bootstrap-table2-filter';
+import filterFactory, { textFilter, dateFilter } from 'react-bootstrap-table-nextgen-filter';
 
 let nameFilter;
 let priceFilter;

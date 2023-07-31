@@ -3,7 +3,7 @@
 import React from 'react';
 
 import BootstrapTable from 'react-bootstrap-table-nextgen';
-import cellEditFactory, { Type } from 'react-bootstrap-table2-editor';
+import cellEditFactory, { Type } from 'react-bootstrap-table-nextgen-editor';
 import Code from 'components/common/code-block';
 import { stockGenerator } from 'utils/common';
 
@@ -32,7 +32,7 @@ const columns = [{
 
 const sourceCode = `\
 import BootstrapTable from 'react-bootstrap-table-nextgen';
-import cellEditFactory, { Type } from 'react-bootstrap-table2-editor';
+import cellEditFactory, { Type } from 'react-bootstrap-table-nextgen-editor';
 
 const columns = [{
   dataField: 'id',
