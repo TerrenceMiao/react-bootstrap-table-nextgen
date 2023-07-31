@@ -5,7 +5,7 @@
   "main": "./lib/index.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/react-bootstrap-table/react-bootstrap-table-nextgen.git"
+    "url": "git+https://github.com/TerrenceMiao/react-bootstrap-table-nextgen.git"
   },
   "license": "MIT",
   "keywords": [
