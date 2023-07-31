@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<SelectionCell /> render should render component correctly 1`] = `
+<td
+  className="selection-cell"
+  onClick={[Function]}
+>
+  <input
+    checked={true}
+    className=""
+    onChange={[Function]}
+    type="checkbox"
+  />
+</td>
+`;
