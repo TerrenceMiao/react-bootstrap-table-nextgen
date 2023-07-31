@@ -1,7 +1,7 @@
 /* eslint jsx-a11y/label-has-for: 0 */
 import React from 'react';
 
-import BootstrapTable from 'react-bootstrap-table-next';
+import BootstrapTable from 'react-bootstrap-table-nextgen';
 import Code from 'components/common/code-block';
 
 
@@ -12,7 +12,7 @@ const products = [
 ];
 
 const sourceCode = `\
-import BootstrapTable from 'react-bootstrap-table-next';
+import BootstrapTable from 'react-bootstrap-table-nextgen';
 
 class ProductList extends React.Component {
   constructor(props) {

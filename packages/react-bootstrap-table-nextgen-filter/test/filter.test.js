@@ -1,4 +1,4 @@
-import _ from 'react-bootstrap-table-next/src/utils';
+import _ from 'react-bootstrap-table-nextgen/src/utils';
 
 import { filters } from '../src/filter';
 import { FILTER_TYPE } from '../src/const';

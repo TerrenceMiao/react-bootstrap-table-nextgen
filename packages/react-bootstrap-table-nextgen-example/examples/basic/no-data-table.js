@@ -1,6 +1,6 @@
 import React from 'react';
 
-import BootstrapTable from 'react-bootstrap-table-next';
+import BootstrapTable from 'react-bootstrap-table-nextgen';
 import Code from 'components/common/code-block';
 
 const columns = [{
@@ -15,7 +15,7 @@ const columns = [{
 }];
 
 const sourceCode = `\
-import BootstrapTable from 'react-bootstrap-table-next';
+import BootstrapTable from 'react-bootstrap-table-nextgen';
 // omit...
 
 <BootstrapTable keyField='id' data={ [] } columns={ columns } noDataIndication="Table is Empty" />

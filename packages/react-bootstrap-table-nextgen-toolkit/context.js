@@ -104,7 +104,7 @@ class ToolkitProvider extends statelessDecorator(React.Component) {
    * 
    * @param {*} _ 
    * this function will be called only one time when table render
-   * react-bootstrap-table-next/src/context/index.js will call this cb for passing the _ module
+   * react-bootstrap-table-nextgen/src/context/index.js will call this cb for passing the _ module
    * Please consider to extract a common module to handle _ module.
    * this is just a quick fix
    */

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import BootstrapTable from 'react-bootstrap-table-next';
+import BootstrapTable from 'react-bootstrap-table-nextgen';
 import Code from 'components/common/code-block';
 import { productsGenerator } from 'utils/common';
 
@@ -26,7 +26,7 @@ const selectRow1 = {
 };
 
 const sourceCode1 = `\
-import BootstrapTable from 'react-bootstrap-table-next';
+import BootstrapTable from 'react-bootstrap-table-nextgen';
 
 const columns = ...
 
@@ -68,7 +68,7 @@ const selectRow2 = {
 };
 
 const sourceCode2 = `\
-import BootstrapTable from 'react-bootstrap-table-next';
+import BootstrapTable from 'react-bootstrap-table-nextgen';
 
 const columns = ...
 

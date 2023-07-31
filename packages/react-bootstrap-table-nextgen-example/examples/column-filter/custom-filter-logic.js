@@ -1,6 +1,6 @@
 /* eslint eqeqeq: 0 */
 import React from 'react';
-import BootstrapTable from 'react-bootstrap-table-next';
+import BootstrapTable from 'react-bootstrap-table-nextgen';
 import filterFactory, { textFilter } from 'react-bootstrap-table2-filter';
 import Code from 'components/common/code-block';
 import { productsGenerator } from 'utils/common';
@@ -8,7 +8,7 @@ import { productsGenerator } from 'utils/common';
 const products = productsGenerator(8);
 
 const sourceCode = `\
-import BootstrapTable from 'react-bootstrap-table-next';
+import BootstrapTable from 'react-bootstrap-table-nextgen';
 import filterFactory, { textFilter } from 'react-bootstrap-table2-filter';
 
 class Table extends React.Component {

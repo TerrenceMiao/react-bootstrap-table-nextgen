@@ -4,7 +4,7 @@ import React from 'react';
 import sinon from 'sinon';
 import { shallow, mount } from 'enzyme';
 
-import _ from 'react-bootstrap-table-next/src/utils';
+import _ from 'react-bootstrap-table-nextgen/src/utils';
 import editingCellFactory from '../src/editing-cell';
 import * as constants from '../src/const';
 import TextEditor from '../src/text-editor';

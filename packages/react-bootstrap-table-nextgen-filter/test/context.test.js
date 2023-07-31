@@ -1,8 +1,8 @@
 import 'jsdom-global/register';
 import React from 'react';
 import { shallow } from 'enzyme';
-import _ from 'react-bootstrap-table-next/src/utils';
-import BootstrapTable from 'react-bootstrap-table-next/src/bootstrap-table';
+import _ from 'react-bootstrap-table-nextgen/src/utils';
+import BootstrapTable from 'react-bootstrap-table-nextgen/src/bootstrap-table';
 
 import {
   FILTER_TYPE

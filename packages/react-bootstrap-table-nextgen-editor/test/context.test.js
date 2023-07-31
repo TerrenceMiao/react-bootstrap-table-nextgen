@@ -1,8 +1,8 @@
 import 'jsdom-global/register';
 import React from 'react';
 import { shallow } from 'enzyme';
-import _ from 'react-bootstrap-table-next/src/utils';
-import dataOperator from 'react-bootstrap-table-next/src/store/operators';
+import _ from 'react-bootstrap-table-nextgen/src/utils';
+import dataOperator from 'react-bootstrap-table-nextgen/src/store/operators';
 
 import {
   CLICK_TO_CELL_EDIT,

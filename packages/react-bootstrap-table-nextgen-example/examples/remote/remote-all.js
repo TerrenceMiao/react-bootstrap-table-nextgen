@@ -2,7 +2,7 @@
 /* eslint no-restricted-syntax: 0 */
 import React from 'react';
 import PropTypes from 'prop-types';
-import BootstrapTable from 'react-bootstrap-table-next';
+import BootstrapTable from 'react-bootstrap-table-nextgen';
 import paginationFactory from 'react-bootstrap-table2-paginator';
 import cellEditFactory from 'react-bootstrap-table2-editor';
 import filterFactory, { textFilter, Comparator } from 'react-bootstrap-table2-filter';
@@ -30,7 +30,7 @@ const columns = [{
 }];
 
 const sourceCode = `\
-import BootstrapTable from 'react-bootstrap-table-next';
+import BootstrapTable from 'react-bootstrap-table-nextgen';
 import paginationFactory from 'react-bootstrap-table2-paginator';
 import cellEditFactory from 'react-bootstrap-table2-editor';
 import filterFactory, { textFilter, Comparator } from 'react-bootstrap-table2-filter';

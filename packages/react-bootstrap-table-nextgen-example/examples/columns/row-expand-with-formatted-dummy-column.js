@@ -1,13 +1,13 @@
 /* eslint no-param-reassign: 0 */
 import React from 'react';
-import BootstrapTable from 'react-bootstrap-table-next';
+import BootstrapTable from 'react-bootstrap-table-nextgen';
 import Code from 'components/common/code-block';
 import { productsGenerator } from 'utils/common';
 
 const products = productsGenerator();
 
 const sourceCode = `\
-import BootstrapTable from 'react-bootstrap-table-next';
+import BootstrapTable from 'react-bootstrap-table-nextgen';
 
 class DummyColumnWithRowExpand extends React.Component {
   constructor(props) {

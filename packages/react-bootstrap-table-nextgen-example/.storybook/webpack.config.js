@@ -20,7 +20,7 @@ const aliasPath = {
   components: path.join(srcPath, 'components'),
   utils: path.join(srcPath, 'utils'),
 
-  'react-bootstrap-table-next': sourcePath,
+  'react-bootstrap-table-nextgen': sourcePath,
   'react-bootstrap-table2-editor': editorSourcePath,
   'react-bootstrap-table2-filter': filterSourcePath,
   'react-bootstrap-table2-overlay': overlaySourcePath,
