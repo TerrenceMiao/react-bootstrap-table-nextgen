@@ -9,6 +9,7 @@ coverage
 # misc
 .DS_Store
 .vscode
+.idea
 
 # logs
 lerna-debug.log

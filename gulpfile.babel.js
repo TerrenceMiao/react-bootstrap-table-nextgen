@@ -13,21 +13,21 @@ const PKG_PATH = './packages';
 const NODE_MODULES = 'node_modules';
 
 const JS_PKGS = [
-  'react-bootstrap-table2',
-  'react-bootstrap-table2-editor',
-  'react-bootstrap-table2-filter',
-  'react-bootstrap-table2-overlay',
-  'react-bootstrap-table2-paginator',
-  'react-bootstrap-table2-toolkit'
+  'react-bootstrap-table-nextgen',
+  'react-bootstrap-table-nextgen-editor',
+  'react-bootstrap-table-nextgen-filter',
+  'react-bootstrap-table-nextgen-overlay',
+  'react-bootstrap-table-nextgen-paginator',
+  'react-bootstrap-table-nextgen-toolkit'
 ].reduce((pkg, curr) => `${curr}|${pkg}`, '');
 
 const JS_SKIPS = `+(${TEST}|${LIB}|${DIST}|${NODE_MODULES})`;
 
 const STYLE_PKGS = [
-  'react-bootstrap-table2',
-  'react-bootstrap-table2-filter',
-  'react-bootstrap-table2-paginator',
-  'react-bootstrap-table2-toolkit',
+  'react-bootstrap-table-nextgen',
+  'react-bootstrap-table-nextgen-filter',
+  'react-bootstrap-table-nextgen-paginator',
+  'react-bootstrap-table-nextgen-toolkit',
 ].reduce((pkg, curr) => `${curr}|${pkg}`, '');
 
 const STYLE_SKIPS = `+(${NODE_MODULES})`;

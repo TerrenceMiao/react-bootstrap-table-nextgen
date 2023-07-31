@@ -1,5 +1,5 @@
 {
-  "name": "react-bootstrap-table2",
+  "name": "react-bootstrap-table-nextgen",
   "version": "0.0.1",
   "private": true,
   "description": "Rebuilt for react-bootstrap-table",
@@ -12,16 +12,16 @@
     "test": "jest",
     "test:coverage": "jest --coverage",
     "test:watch": "jest --coverage --watch",
-    "storybook": "cd ./packages/react-bootstrap-table2-example && yarn storybook",
-    "gh-pages:clean": "cd ./packages/react-bootstrap-table2-example && yarn gh-pages:clean",
-    "gh-pages:build": "cd ./packages/react-bootstrap-table2-example && yarn gh-pages:build",
+    "storybook": "cd ./packages/react-bootstrap-table-nextgen-example && yarn storybook",
+    "gh-pages:clean": "cd ./packages/react-bootstrap-table-nextgen-example && yarn gh-pages:clean",
+    "gh-pages:build": "cd ./packages/react-bootstrap-table-nextgen-example && yarn gh-pages:build",
     "release": "yarn install && yarn build && lerna publish"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/react-bootstrap-table/react-bootstrap-table2.git"
+    "url": "git+https://github.com/TerrenceMiao/react-bootstrap-table-nextgen.git"
   },
-  "author": "AllenFang",
+  "author": "Terrence Miao",
   "contributors": [
     {
       "name": "Allen Fang",
@@ -36,9 +36,9 @@
   ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/react-bootstrap-table/react-bootstrap-table2/issues"
+    "url": "https://github.com/TerrenceMiao/react-bootstrap-table-nextgen/issues"
   },
-  "homepage": "https://github.com/react-bootstrap-table/react-bootstrap-table2#readme",
+  "homepage": "https://github.com/TerrenceMiao/react-bootstrap-table-nextgen#README",
   "devDependencies": {
     "babel-cli": "6.26.0",
     "babel-core": "6.25.0",
@@ -90,7 +90,7 @@
     "collectCoverageFrom": [
       "packages/*/src/**/*.js",
       "packages/*/index.js",
-      "!packages/react-bootstrap-table2-example/**/*.js"
+      "!packages/react-bootstrap-table-nextgen-example/**/*.js"
     ],
     "roots": [
       "<rootDir>/packages"
@@ -99,7 +99,7 @@
       "<rootDir>/enzyme-setup.js"
     ],
     "modulePaths": [
-      "<rootDir>/packages/react-bootstrap-table2"
+      "<rootDir>/packages/react-bootstrap-table-nextgen"
     ],
     "testEnvironment": "node",
     "testMatch": [
