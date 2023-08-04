@@ -6,7 +6,7 @@ module.exports = {
   entry: {
     "react-bootstrap-table-nextgen/dist/react-bootstrap-table-nextgen":
       "./packages/react-bootstrap-table-nextgen/index.js",
-    "react-bootstrap-table-nextgen/dist/react-bootstrap-table-next.min":
+    "react-bootstrap-table-nextgen/dist/react-bootstrap-table-nextgen.min":
       "./packages/react-bootstrap-table-nextgen/index.js",
   },
   output: {

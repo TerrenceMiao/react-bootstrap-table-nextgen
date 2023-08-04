@@ -6,25 +6,25 @@ Next generation of [`react-bootstrap-table`](https://github.com/AllenFang/react-
 ### Installation
 
 ```sh
-npm install react-bootstrap-table-next --save
+npm install react-bootstrap-table-nextgen --save
 ```
 
 ### Include CSS
 
-> react-bootstrap-table2 need you to add bootstrap css in your application firstly. About bootstrap css, we only compatible with bootstrap 3 but will start to compatible for bootstrap 4 on v0.2.0
+> react-bootstrap-table-nextgen need you to add bootstrap css in your application firstly. About bootstrap css, we only compatible with bootstrap 3 but will start to compatible for bootstrap 4 on v0.2.0
 
 ```js
-// es5 
-require('react-bootstrap-table-next/dist/react-bootstrap-table2.min.css');
+// es5
+require('react-bootstrap-table-nextgen/dist/react-bootstrap-table-nextgen.min.css');
 
 // es6
-import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
+import 'react-bootstrap-table-nextgen/dist/react-bootstrap-table-nextgen.min.css';
 ```
 
 ### Your First Table
 
 ```js
-import BootstrapTable from 'react-bootstrap-table-next';
+import BootstrapTable from 'react-bootstrap-table-nextgen';
 
 const products = [ ... ];
 const columns = [{
