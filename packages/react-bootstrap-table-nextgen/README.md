@@ -1,4 +1,4 @@
-# react-bootstrap-table-next
+# react-bootstrap-table-nextgen
 Next generation of [`react-bootstrap-table`](https://github.com/AllenFang/react-bootstrap-table)
 
 ## Usage
