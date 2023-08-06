@@ -2,8 +2,8 @@
 /* eslint react/require-default-props: 0 */
 /* eslint no-lonely-if: 0 */
 /* eslint camelcase: 0 */
-import React from 'react';
 import EventEmitter from 'events';
+import React from 'react';
 import Const from './const';
 import { alignPage } from './page';
 

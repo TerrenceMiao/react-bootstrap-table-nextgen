@@ -12,7 +12,7 @@ module.exports = {
   output: {
     path: path.join(__dirname, "../packages"),
     filename: "[name].js",
-    library: "ReactBootstraptable-nextgenFilter",
+    library: "ReactBootstrapTableNextgenFilter",
     libraryTarget: "umd",
   },
 };

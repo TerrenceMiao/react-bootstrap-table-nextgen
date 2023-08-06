@@ -22,11 +22,11 @@ If you are coming from the legacy [`react-bootstrap-table`](https://github.com/A
 
 ## Usage
 
-See [getting started](https://github.com/TerrenceMiao/docs/getting-started.html).
+See [getting started](https://react-bootstrap-table.github.io/react-bootstrap-table2/docs/getting-started.html).
 
 ## Online Demo
 
-See `react-bootstrap-table-nextgen` [storybook](https://github.com/TerrenceMiao/storybook/index.html).
+See `react-bootstrap-table2` [storybook](https://react-bootstrap-table.github.io/react-bootstrap-table2/storybook/index.html).
 
 ## Development
 
@@ -49,4 +49,4 @@ $ npm run storybook
 
 ```
 
-**Storybook examples: [`packages/react-bootstrap-table-nextgen-example/examples`](https://github.com/TerrenceMiao/react-bootstrap-table-nextgen/tree/master/packages/react-bootstrap-table-nextgen-example/examples)**
+**Storybook examples: [`packages/react-bootstrap-table2-example/examples`](https://github.com/react-bootstrap-table/react-bootstrap-table2/tree/master/packages/react-bootstrap-table2-example/examples)**

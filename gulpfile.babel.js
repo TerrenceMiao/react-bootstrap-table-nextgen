@@ -1,10 +1,10 @@
-import gulp from 'gulp';
-import babel from 'gulp-babel';
-import sass from 'gulp-sass';
-import cleanCSS from 'gulp-clean-css';
-import cleanDir from 'gulp-clean';
-import rename from 'gulp-rename';
-import shell from 'gulp-shell';
+const gulp = require('gulp');
+const babel = require('gulp-babel');
+const sass = require('gulp-sass')(require('sass'));
+const cleanCSS = require('gulp-clean-css');
+const cleanDir = require('gulp-clean');
+const rename = require('gulp-rename');
+const shell = require('gulp-shell');
 
 const LIB = 'lib';
 const DIST = 'dist';
@@ -27,7 +27,7 @@ const STYLE_PKGS = [
   'react-bootstrap-table-nextgen',
   'react-bootstrap-table-nextgen-filter',
   'react-bootstrap-table-nextgen-paginator',
-  'react-bootstrap-table-nextgen-toolkit',
+  'react-bootstrap-table-nextgen-toolkit'
 ].reduce((pkg, curr) => `${curr}|${pkg}`, '');
 
 const STYLE_SKIPS = `+(${NODE_MODULES})`;
@@ -76,7 +76,7 @@ function styles() {
 
 function umd(done) {
   gulp.parallel(
-    () => gulp.src('./webpack/next.umd.babel.js').pipe(shell(['webpack --config <%= file.path %>'])),
+    () => gulp.src('./webpack/nextgen.umd.babel.js').pipe(shell(['webpack --config <%= file.path %>'])),
     () => gulp.src('./webpack/editor.umd.babel.js').pipe(shell(['webpack --config <%= file.path %>'])),
     () => gulp.src('./webpack/filter.umd.babel.js').pipe(shell(['webpack --config <%= file.path %>'])),
     () => gulp.src('./webpack/overlay.umd.babel.js').pipe(shell(['webpack --config <%= file.path %>'])),

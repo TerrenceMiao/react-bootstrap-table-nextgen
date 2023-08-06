@@ -2,8 +2,8 @@
 /* eslint no-return-assign: 0 */
 /* eslint no-param-reassign: 0 */
 /* eslint class-methods-use-this: 0 */
-import React, { Component } from 'react';
 import EventEmitter from 'events';
+import React, { Component } from 'react';
 import _ from '../utils';
 import createDataContext from './data-context';
 import createColumnMgtContext from './column-context';
@@ -263,7 +263,7 @@ const withContext = Base =>
                 rootProps,
                 filterProps,
                 searchProps,
-                sortProps,
+                sortProps
               )
             }
           </this.SortContext.Consumer>
