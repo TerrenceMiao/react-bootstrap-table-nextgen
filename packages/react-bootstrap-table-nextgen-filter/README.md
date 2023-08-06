@@ -1,6 +1,6 @@
-# react-bootstrap-table2-filter
+# react-bootstrap-table-nextgen-filter
 
-`react-bootstrap-table2` separate the filter core code base to [`react-bootstrap-table2-filter`](https://github.com/react-bootstrap-table/react-bootstrap-table2/tree/develop/packages/react-bootstrap-table2-filter), so there's a little bit different when you use column filter than `react-bootstrap-table`. In the following, we are going to show you how to enable the column filter:
+`react-bootstrap-table-nextgen` separate the filter core code base to [`react-bootstrap-table-nextgen-filter`](https://github.com/TerrenceMiao/react-bootstrap-table-nextgen/tree/main/packages/react-bootstrap-table-nextgen-filter), so there's a little bit different when you use column filter than `react-bootstrap-table`. In the following, we are going to show you how to enable the column filter:
 
 **[Live Demo For Column Filter](https://react-bootstrap-table.github.io/react-bootstrap-table2/storybook/index.html?selectedKind=Column%20Filter)**
 
@@ -11,7 +11,7 @@
 ## Install
 
 ```sh
-$ npm install react-bootstrap-table2-filter --save
+$ npm install react-bootstrap-table-nextgen-filter --save
 ```
 
 You can get all types of filters via import and these filters are a factory function to create a individual filter instance. Currently, we support following filters:
@@ -27,18 +27,18 @@ You can get all types of filters via import and these filters are a factory func
 ## Add CSS
 
 ```js
-// es5 
-require('react-bootstrap-table2-filter/dist/react-bootstrap-table2-filter.min.css');
+// es5
+require('react-bootstrap-table-nextgen-filter/dist/react-bootstrap-table-nextgen-filter.min.css');
 
 // es6
-import 'react-bootstrap-table2-filter/dist/react-bootstrap-table2-filter.min.css';
+import 'react-bootstrap-table-nextgen-filter/dist/react-bootstrap-table-nextgen-filter.min.css';
 ```
 
 ## Text Filter
 Following is a quick demo for enable the column filter on **Product Price** column!!
 
 ```js
-import filterFactory, { textFilter } from 'react-bootstrap-table2-filter';
+import filterFactory, { textFilter } from 'react-bootstrap-table-nextgen-filter';
 
 // omit...
 const columns = [
@@ -54,7 +54,7 @@ const columns = [
 In addition, we preserve all of the filter features and functionality in legacy `react-bootstrap-table`, but in different way to do it:
 
 ```js
-import filterFactory, { textFilter, Comparator } from 'react-bootstrap-table2-filter';
+import filterFactory, { textFilter, Comparator } from 'react-bootstrap-table-nextgen-filter';
 // omit...
 
 const priceFilter = textFilter({
@@ -72,10 +72,10 @@ const priceFilter = textFilter({
 ```
 
 ## Select Filter
-A quick example: 
+A quick example:
 
 ```js
-import filterFactory, { selectFilter } from 'react-bootstrap-table2-filter';
+import filterFactory, { selectFilter } from 'react-bootstrap-table-nextgen-filter';
 
 // omit...
 const selectOptions = {
@@ -100,7 +100,7 @@ const columns = [
 Following is an example for custom select filter:
 
 ```js
-import filterFactory, { selectFilter, Comparator } from 'react-bootstrap-table2-filter';
+import filterFactory, { selectFilter, Comparator } from 'react-bootstrap-table-nextgen-filter';
 // omit...
 
 const qualityFilter = selectFilter({
@@ -117,7 +117,7 @@ const qualityFilter = selectFilter({
 // omit...
 ```
 
-> Note, the selectOptions can be an array or a function which return an array: 
+> Note, the selectOptions can be an array or a function which return an array:
 
 ### Array as options
 
@@ -156,14 +156,14 @@ const columns = [
 }];
 ```
 
-The benifit is `react-bootstrap-table2` will render the select options by the order of array.
+The benifit is `react-bootstrap-table-nextgen` will render the select options by the order of array.
 
 ## MultiSelect Filter
 
-A quick example: 
+A quick example:
 
 ```js
-import filterFactory, { multiSelectFilter } from 'react-bootstrap-table2-filter';
+import filterFactory, { multiSelectFilter } from 'react-bootstrap-table-nextgen-filter';
 
 // omit...
 const selectOptions = {
@@ -188,7 +188,7 @@ const columns = [
 Following is an example for custom select filter:
 
 ```js
-import filterFactory, { multiSelectFilter, Comparator } from 'react-bootstrap-table2-filter';
+import filterFactory, { multiSelectFilter, Comparator } from 'react-bootstrap-table-nextgen-filter';
 // omit...
 
 const qualityFilter = multiSelectFilter({
@@ -208,7 +208,7 @@ const qualityFilter = multiSelectFilter({
 ## Number Filter
 
 ```js
-import filterFactory, { numberFilter } from 'react-bootstrap-table2-filter';
+import filterFactory, { numberFilter } from 'react-bootstrap-table-nextgen-filter';
 
 const columns = [..., {
   dataField: 'price',
@@ -222,7 +222,7 @@ const columns = [..., {
 Numner filter is same as other filter, you can custom the number filter via `numberFilter` factory function:
 
 ```js
-import filterFactory, { selectFilter, Comparator, numberFilter } from 'react-bootstrap-table2-filter';
+import filterFactory, { selectFilter, Comparator, numberFilter } from 'react-bootstrap-table-nextgen-filter';
 // omit...
 
 const numberFilter = numberFilter({
@@ -248,7 +248,7 @@ const numberFilter = numberFilter({
 ## Date Filter
 
 ```js
-import filterFactory, { dateFilter } from 'react-bootstrap-table2-filter';
+import filterFactory, { dateFilter } from 'react-bootstrap-table-nextgen-filter';
 
 const columns = [..., {
   dataField: 'date',
@@ -264,7 +264,7 @@ const columns = [..., {
 Date filter is same as other filter, you can custom the date filter via `dateFilter` factory function:
 
 ```js
-import filterFactory, { selectFilter, Comparator } from 'react-bootstrap-table2-filter';
+import filterFactory, { selectFilter, Comparator } from 'react-bootstrap-table-nextgen-filter';
 // omit...
 
 const dateFilter = dateFilter({
@@ -288,7 +288,7 @@ const dateFilter = dateFilter({
 ## Custom Filter
 
 ```js
-import filterFactory, { customFilter } from 'react-bootstrap-table2-filter';
+import filterFactory, { customFilter } from 'react-bootstrap-table-nextgen-filter';
 
 const columns = [..., {
   dataField: 'date',
@@ -318,7 +318,7 @@ In the end, please remember to return your custom filter element!
 
 
 ```js
-import filterFactory, { FILTER_TYPES } from 'react-bootstrap-table2-filter';
+import filterFactory, { FILTER_TYPES } from 'react-bootstrap-table-nextgen-filter';
 
 const customFilter = customFilter({
   type: FILTER_TYPES.NUMBER,  // default is FILTER_TYPES.TEXT
@@ -367,7 +367,7 @@ Default filter is rendered inside the table column header, but you can choose to
 `filterFactory` is a factory function for initializing some internal config. Below is available options for `filterFactory`:
 
 ### afterFilter
-This hook function will be called with two arguments(new filter result and filter object) when filtering completed. 
+This hook function will be called with two arguments(new filter result and filter object) when filtering completed.
 
 ```js
 function afterFilter(newResult, newFilters) {

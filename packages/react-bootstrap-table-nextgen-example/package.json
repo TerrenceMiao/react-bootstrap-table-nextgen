@@ -3,15 +3,35 @@
   "version": "1.0.41",
   "description": "",
   "main": "index.js",
-  "private": true,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "storybook": "start-storybook -p 6006 -s ./public",
     "gh-pages:clean": "rimraf ./storybook-static",
     "gh-pages:build": "build-storybook -s ./public"
   },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TerrenceMiao/react-bootstrap-table-nextgen.git"
+  },
   "author": "Terrence Miao",
-  "license": "ISC",
+  "contributors": [
+    {
+      "name": "Terrence Miao",
+      "email": "terrence.miao@gmail.com",
+      "url": "https://github.com/TerrenceMiao"
+    },
+    {
+      "name": "Allen Fang",
+      "email": "ayu780129@hotmail.com",
+      "url": "https://github.com/AllenFang"
+    },
+    {
+      "name": "Chun-MingChen",
+      "email": "nick830314@gmail.com",
+      "url": "https://github.com/Chun-MingChen"
+    }
+  ],
   "peerDependencies": {
     "prop-types": "^15.0.0",
     "react": "^16.3.0",

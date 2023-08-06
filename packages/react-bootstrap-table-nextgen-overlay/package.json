@@ -1,7 +1,7 @@
 {
   "name": "react-bootstrap-table-nextgen-overlay",
   "version": "2.0.0",
-  "description": "it's a loading overlay addons for react-bootstrap-table-nextgen",
+  "description": "It's a loading overlay addons for react-bootstrap-table-nextgen",
   "main": "./lib/index.js",
   "repository": {
     "type": "git",
@@ -25,6 +25,11 @@
   ],
   "author": "Terrence Miao",
   "contributors": [
+    {
+      "name": "Terrence Miao",
+      "email": "terrence.miao@gmail.com",
+      "url": "https://github.com/TerrenceMiao"
+    },
     {
       "name": "Allen Fang",
       "email": "ayu780129@hotmail.com",

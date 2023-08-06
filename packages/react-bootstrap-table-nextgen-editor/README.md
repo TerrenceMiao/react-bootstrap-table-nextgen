@@ -1,6 +1,6 @@
-# react-bootstrap-table2-editor
+# react-bootstrap-table-nextgen-editor
 
-`react-bootstrap-table2` separate the cell edit code base to [`react-bootstrap-table2-editor`](https://github.com/react-bootstrap-table/react-bootstrap-table2/tree/develop/packages/react-bootstrap-table2-editor), so there's a little bit different when you use cell edit than `react-bootstrap-table`. In the following, we are going to show you how to enable the cell edit
+`react-bootstrap-table-nextgen` separate the cell edit code base to [`react-bootstrap-table-nextgen-editor`](https://github.com/TerrenceMiao/react-bootstrap-table-nextgen/tree/main/packages/react-bootstrap-table-nextgen-editor), so there's a little bit different when you use cell edit than `react-bootstrap-table`. In the following, we are going to show you how to enable the cell edit
 
 **[Live Demo For Cell Edit](https://react-bootstrap-table.github.io/react-bootstrap-table2/storybook/index.html?selectedKind=Cell%20Editing)**
 
@@ -11,7 +11,7 @@
 ## Install
 
 ```sh
-$ npm install react-bootstrap-table2-editor --save
+$ npm install react-bootstrap-table-nextgen-editor --save
 ```
 
 ## How
@@ -24,7 +24,7 @@ We have [two ways](https://react-bootstrap-table.github.io/react-bootstrap-table
 That's look into how we enable the cell edit on tabe:
 
 ```js
-import cellEditFactory from 'react-bootstrap-table2-editor';
+import cellEditFactory from 'react-bootstrap-table-nextgen-editor';
 
 // omit
 
@@ -42,7 +42,7 @@ How user save their new editings? We offer two ways:
 * Blur from current editing cell(Need to enable the [cellEdit.blurToSave](https://react-bootstrap-table.github.io/react-bootstrap-table2/docs/cell-edit-props.html#celleditblurtosave-bool))
 
 ## Editable Cell
-`react-bootstrap-table2` support you to configure the cell editable on three level:
+`react-bootstrap-table-nextgen` support you to configure the cell editable on three level:
 
 * Row Level ([cellEdit.nonEditableRows](https://react-bootstrap-table.github.io/react-bootstrap-table2/docs/cell-edit-props.html#celleditnoneditablerows-function))
 * Column Level (Configure [column.editable](https://react-bootstrap-table.github.io/react-bootstrap-table2/docs/column-props.html#columneditable-bool-function) as bool value)
@@ -62,7 +62,7 @@ How user save their new editings? We offer two ways:
 * Customize the editor classname via [column.editoClasses](https://react-bootstrap-table.github.io/react-bootstrap-table2/docs/column-props.html#columneditorclasses-string-function)
 
 ## Rich Editors
-`react-bootstrap-table2` have following predefined editor:
+`react-bootstrap-table-nextgen` have following predefined editor:
 
 * Text(Default)
 * Dropdown
@@ -73,7 +73,7 @@ How user save their new editings? We offer two ways:
 In a nutshell, you just only give a [column.editor](https://react-bootstrap-table.github.io/react-bootstrap-table2/docs/column-props.html#columneditor-object) and define the `type`:
 
 ```js
-import { Type } from 'react-bootstrap-table2-editor';
+import { Type } from 'react-bootstrap-table-nextgen-editor';
 const columns = [
   ..., {
     dataField: 'done',
@@ -92,10 +92,10 @@ In the following, we go though all the predefined editors:
 Dropdown editor give a select menu to choose a data from a list. When use dropdown editor, either `editor.options` or `editor.getOptions` should be required prop.
 
 #### editor.options
-This is most simple case for assign the dropdown options data directly.   
+This is most simple case for assign the dropdown options data directly.
 
 ```js
-import { Type } from 'react-bootstrap-table2-editor';
+import { Type } from 'react-bootstrap-table-nextgen-editor';
 const columns = [
   ..., {
   dataField: 'type',
@@ -128,7 +128,7 @@ It is much flexible which accept a function and you can assign the dropdown opti
 There are two case for `getOptions`:
 
 * *Synchronous*: Just return the options array in `getOptions` callback function
-* *Asynchronous*: Call `setOptions` function argument when you get the options from remote. 
+* *Asynchronous*: Call `setOptions` function argument when you get the options from remote.
 
 
 ```js

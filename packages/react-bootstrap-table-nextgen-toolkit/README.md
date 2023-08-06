@@ -1,6 +1,6 @@
-# react-bootstrap-table2-toolkit
+# react-bootstrap-table-nextgen-toolkit
 
-`react-bootstrap-table2` support some additional features in [`react-bootstrap-table2-toolkit`](https://github.com/react-bootstrap-table/react-bootstrap-table2/tree/develop/packages/react-bootstrap-table2-toolkit).
+`react-bootstrap-table-nextgen` support some additional features in [`react-bootstrap-table-nextgen-toolkit`](https://github.com/TerrenceMiao/react-bootstrap-table-nextgen/tree/main/packages/react-bootstrap-table-nextgen-toolkit).
 
 In the future, this toolkit will support other feature like row delete, insert etc. Right now we only following features:
 
@@ -19,23 +19,23 @@ In the future, this toolkit will support other feature like row delete, insert e
 ## Install
 
 ```sh
-$ npm install react-bootstrap-table2-toolkit --save
+$ npm install react-bootstrap-table-nextgen-toolkit --save
 ```
 
 ## Add CSS
 
 ```js
-// es5 
-require('react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit.min.css');
+// es5
+require('react-bootstrap-table-nextgen-toolkit/dist/react-bootstrap-table-nextgen-toolkit.min.css');
 
 // es6
-import 'react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit.min.css';
+import 'react-bootstrap-table-nextgen-toolkit/dist/react-bootstrap-table-nextgen-toolkit.min.css';
 ```
 
 ## Table Search
 
 ```js
-import ToolkitProvider, { Search } from 'react-bootstrap-table2-toolkit';
+import ToolkitProvider, { Search } from 'react-bootstrap-table-nextgen-toolkit';
 
 const { SearchBar } = Search;
 //...
@@ -129,7 +129,7 @@ function onColumnMatch({
 > Notes: You have to return `true` when your match logic is positive and vice versa.
 
 #### searchFormatted - [bool]
-If you want to search on the formatted data, you are supposed to enable this props. `react-bootstrap-table2` will check if you define the `column.formatter` when doing search.
+If you want to search on the formatted data, you are supposed to enable this props. `react-bootstrap-table-nextgen` will check if you define the `column.formatter` when doing search.
 
 ```js
 <ToolkitProvider
@@ -164,7 +164,7 @@ After search done, this callback function will be called with newest result.
 We have a built-in clear search function which allow user clear search status via clicking button:
 
 ```js
-import ToolkitProvider, { Search } from 'react-bootstrap-table2-toolkit';
+import ToolkitProvider, { Search } from 'react-bootstrap-table-nextgen-toolkit';
 
 const { SearchBar, ClearSearchButton } = Search;
 
@@ -195,7 +195,7 @@ There are two steps to enable the export CSV functionality:
 2. Render `ExportCSVButton` with `csvProps`. The position of `ExportCSVButton` is depends on you.
 
 ```js
-import ToolkitProvider, { CSVExport } from 'react-bootstrap-table2-toolkit';
+import ToolkitProvider, { CSVExport } from 'react-bootstrap-table-nextgen-toolkit';
 
 const { ExportCSVButton } = CSVExport;
 
@@ -255,8 +255,8 @@ Default is `false`. `true` will only export the data which is filtered/searched.
 Let's see how to render the column toggle in your react component:
 
 ```js
-import BootstrapTable from 'react-bootstrap-table-next';
-import ToolkitProvider, { ColumnToggle } from 'react-bootstrap-table2-toolkit';
+import BootstrapTable from 'react-bootstrap-table-nextgen';
+import ToolkitProvider, { ColumnToggle } from 'react-bootstrap-table-nextgen-toolkit';
 
 <ToolkitProvider
   keyField="id"

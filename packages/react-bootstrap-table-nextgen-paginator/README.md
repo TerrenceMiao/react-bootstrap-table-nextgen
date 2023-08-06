@@ -1,6 +1,6 @@
-# react-bootstrap-table2-paginator
+# react-bootstrap-table-nextgen-paginator
 
-`react-bootstrap-table2` separate the pagination code base to [`react-bootstrap-table2-paginator`](https://github.com/react-bootstrap-table/react-bootstrap-table2/tree/develop/packages/react-bootstrap-table2-paginator), so there's a little bit different when you use pagination. In the following, we are going to show you how to enable and configure the a pagination table
+`react-bootstrap-table-nextgen` separate the pagination code base to [`react-bootstrap-table-nextgen-paginator`](https://github.com/TerrenceMiao/react-bootstrap-table-nextgen/tree/main/packages/react-bootstrap-table-nextgen-paginator), so there's a little bit different when you use pagination. In the following, we are going to show you how to enable and configure the a pagination table
 
 **[Live Demo For Pagination](https://react-bootstrap-table.github.io/react-bootstrap-table2/storybook/index.html?selectedKind=Pagination)**
 
@@ -11,17 +11,17 @@
 ## Install
 
 ```sh
-$ npm install react-bootstrap-table2-paginator --save
+$ npm install react-bootstrap-table-nextgen-paginator --save
 ```
 
 ## Add CSS
 
 ```js
-// es5 
-require('react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css');
+// es5
+require('react-bootstrap-table-nextgen-paginator/dist/react-bootstrap-table-nextgen-paginator.min.css');
 
 // es6
-import 'react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css';
+import 'react-bootstrap-table-nextgen-paginator/dist/react-bootstrap-table-nextgen-paginator.min.css';
 ```
 
 ## How
@@ -29,7 +29,7 @@ import 'react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.m
 Let's enable a pagination on your table:
 
 ```js
-import paginationFactory from 'react-bootstrap-table2-paginator';
+import paginationFactory from 'react-bootstrap-table-nextgen-paginator';
 // omit...
 
 <BootstrapTable keyField='id' data={ products } columns={ columns } pagination={ paginationFactory() } />
@@ -39,7 +39,7 @@ import paginationFactory from 'react-bootstrap-table2-paginator';
 
 ### Basic Customization
 
-`react-bootstrap-table2` give some simple ways to customize something like text, styling etc, following is all the props we support for basic customization:
+`react-bootstrap-table-nextgen` give some simple ways to customize something like text, styling etc, following is all the props we support for basic customization:
 
 * [paginationSize](https://react-bootstrap-table.github.io/react-bootstrap-table2/docs/pagination-props.html#paginationpaginationsize-number)
 * [sizePerPageList](https://react-bootstrap-table.github.io/react-bootstrap-table2/docs/pagination-props.html#paginationsizeperpagelist-array)
@@ -82,7 +82,7 @@ If you want to customize the pagination component completely, you may get intere
 #### 1. Import PaginationProvider
 
 ```js
-import paginationFactory, { PaginationProvider } from 'react-bootstrap-table2-paginator';
+import paginationFactory, { PaginationProvider } from 'react-bootstrap-table-nextgen-paginator';
 
 ```
 
@@ -107,7 +107,7 @@ const paginationOption = {
       paginationTableProps
     }) => (
       .....
-    ) 
+    )
   }
 </PaginationProvider>
 ```
@@ -143,7 +143,7 @@ So far, your customization pagination is supposed to look like it:
 Now, you have to choose which solution you like: standalone or non-standalone ?
 
 #### 4.1 Use Standalone Component
-`react-bootstrap-table2-paginator` provider three standalone components:
+`react-bootstrap-table-nextgen-paginator` provider three standalone components:
 
 * Size Per Page Dropdwn Standalone
 * Pagination List Standalone
@@ -242,7 +242,7 @@ In most of case, `page`, `sizePerPage`, `onPageChange` and `onSizePerPageChange`
 
 * `page`: Current page.
 * `sizePerPage`: Current size per page.
-* `onPageChange`: Call it when you nede to change page. This function accept one number argument which indicate the new page 
+* `onPageChange`: Call it when you nede to change page. This function accept one number argument which indicate the new page
 * `onSizePerPageChange`: Call it when you nede to change size per page. This function accept two number argument which indicate the new sizePerPage and new page
 
 [Here](https://react-bootstrap-table.github.io/react-bootstrap-table2/storybook/index.html?selectedKind=Pagination&selectedStory=Fully%20Custom%20Pagination&full=0&addons=1&stories=1&panelRight=0&addonPanel=storybook%2Factions%2Factions-panel) is a online example.
