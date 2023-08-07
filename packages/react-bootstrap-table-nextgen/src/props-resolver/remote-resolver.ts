@@ -1,9 +1,9 @@
+// @ts-expect-error TS(7016): Could not find a declaration file for module 'even... Remove this comment to see the full error message
 import EventEmitter from 'events';
 import _ from '../utils';
 
-export default ExtendBase =>
-  class RemoteResolver extends ExtendBase {
-    constructor(props) {
+export default (ExtendBase: any) => class RemoteResolver extends ExtendBase {
+    constructor(props: any) {
       super(props);
       this.remoteEmitter = new EventEmitter();
       this.remoteEmitter.on('paginationChange', this.handleRemotePageChange);
@@ -57,7 +57,9 @@ export default ExtendBase =>
 
     isRemotePagination = (e = {}) => {
       const { remote } = this.props;
+      // @ts-expect-error TS(2339): Property 'result' does not exist on type '{}'.
       e.result = (remote === true || (_.isObject(remote) && remote.pagination));
+      // @ts-expect-error TS(2339): Property 'result' does not exist on type '{}'.
       return e.result;
     }
 
@@ -76,29 +78,30 @@ export default ExtendBase =>
       return remote === true || (_.isObject(remote) && remote.cellEdit);
     }
 
-    handleRemotePageChange = (page, sizePerPage) => {
+    handleRemotePageChange = (page: any, sizePerPage: any) => {
       this.props.onTableChange('pagination', this.getNewestState({ page, sizePerPage }));
     }
 
-    handleRemoteFilterChange = (filters) => {
+    handleRemoteFilterChange = (filters: any) => {
       const newState = { filters };
       if (this.isRemotePagination()) {
         const options = this.props.pagination.options || {};
+        // @ts-expect-error TS(2339): Property 'page' does not exist on type '{ filters:... Remove this comment to see the full error message
         newState.page = _.isDefined(options.pageStartIndex) ? options.pageStartIndex : 1;
       }
       this.props.onTableChange('filter', this.getNewestState(newState));
     }
 
-    handleRemoteSortChange = (sortField, sortOrder) => {
+    handleRemoteSortChange = (sortField: any, sortOrder: any) => {
       this.props.onTableChange('sort', this.getNewestState({ sortField, sortOrder }));
     }
 
-    handleRemoteCellChange = (rowId, dataField, newValue) => {
+    handleRemoteCellChange = (rowId: any, dataField: any, newValue: any) => {
       const cellEdit = { rowId, dataField, newValue };
       this.props.onTableChange('cellEdit', this.getNewestState({ cellEdit }));
     }
 
-    handleRemoteSearchChange = (searchText) => {
+    handleRemoteSearchChange = (searchText: any) => {
       this.props.onTableChange('search', this.getNewestState({ searchText }));
     }
   };

@@ -1,26 +1,34 @@
 /* eslint camelcase: 0 */
 /* eslint arrow-body-style: 0 */
 
+// @ts-expect-error TS(7016): Could not find a declaration file for module 'reac... Remove this comment to see the full error message
 import React, { Component } from 'react';
+// @ts-expect-error TS(7016): Could not find a declaration file for module 'prop... Remove this comment to see the full error message
 import PropTypes from 'prop-types';
 import cs from 'classnames';
 
+// @ts-expect-error TS(6142): Module './header' was resolved to '/Users/terrence... Remove this comment to see the full error message
 import Header from './header';
+// @ts-expect-error TS(6142): Module './filters' was resolved to '/Users/terrenc... Remove this comment to see the full error message
 import Filters from './filters';
+// @ts-expect-error TS(6142): Module './caption' was resolved to '/Users/terrenc... Remove this comment to see the full error message
 import Caption from './caption';
+// @ts-expect-error TS(6142): Module './body' was resolved to '/Users/terrence/P... Remove this comment to see the full error message
 import Body from './body';
+// @ts-expect-error TS(6142): Module './footer' was resolved to '/Users/terrence... Remove this comment to see the full error message
 import Footer from './footer';
 import PropsBaseResolver from './props-resolver';
 import Const from './const';
 import _ from './utils';
 
 class BootstrapTable extends PropsBaseResolver(Component) {
-  constructor(props) {
+  constructor(props: any) {
+    // @ts-expect-error TS(2554): Expected 0 arguments, but got 1.
     super(props);
     this.validateProps();
   }
 
-  UNSAFE_componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps: any) {
     if (nextProps.onDataSizeChange && !nextProps.pagination) {
       if (nextProps.data.length !== this.props.data.length) {
         nextProps.onDataSizeChange({ dataSize: nextProps.data.length });
@@ -38,6 +46,7 @@ class BootstrapTable extends PropsBaseResolver(Component) {
     if (overlay) {
       const LoadingOverlay = overlay(loading);
       return (
+        // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
         <LoadingOverlay>
           { this.renderTable() }
         </LoadingOverlay>
@@ -79,18 +88,22 @@ class BootstrapTable extends PropsBaseResolver(Component) {
       [bootstrap4 ? 'table-sm' : 'table-condensed']: condensed
     }, classes);
 
-    const hasFilters = columns.some(col => col.filter || col.filterRenderer);
+    const hasFilters = columns.some((col: any) => col.filter || col.filterRenderer);
 
-    const hasFooter = _.filter(columns, col => _.has(col, 'footer')).length > 0;
+    const hasFooter = _.filter(columns, (col: any) => _.has(col, 'footer')).length > 0;
 
     const tableCaption = (
+      // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
       caption && <Caption bootstrap4={ bootstrap4 }>{ caption }</Caption>
     );
 
     return (
+      // @ts-expect-error TS(7026): JSX element implicitly has type 'any' because no i... Remove this comment to see the full error message
       <div className={ tableWrapperClass }>
+        // @ts-expect-error TS(7026): JSX element implicitly has type 'any' because no i... Remove this comment to see the full error message
         <table id={ id } className={ tableClass }>
           { tableCaption }
+          // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
           <Header
             columns={ columns }
             className={ this.props.headerClasses }
@@ -107,6 +120,7 @@ class BootstrapTable extends PropsBaseResolver(Component) {
             filterPosition={ filterPosition }
           />
           {hasFilters && filterPosition !== Const.FILTERS_POSITION_INLINE && (
+            // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
             <Filters
               columns={ columns }
               className={ this.props.filtersClasses }
@@ -119,6 +133,7 @@ class BootstrapTable extends PropsBaseResolver(Component) {
               expandRow={ expandRow }
             />
           )}
+          // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
           <Body
             className={ this.props.bodyClasses }
             data={ this.getData() }
@@ -136,6 +151,7 @@ class BootstrapTable extends PropsBaseResolver(Component) {
             rowEvents={ rowEvents }
           />
           {hasFooter && (
+            // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
             <Footer
               data={ this.getData() }
               columns={ columns }
@@ -144,12 +160,15 @@ class BootstrapTable extends PropsBaseResolver(Component) {
               className={ this.props.footerClasses }
             />
           )}
+        // @ts-expect-error TS(7026): JSX element implicitly has type 'any' because no i... Remove this comment to see the full error message
         </table>
+      // @ts-expect-error TS(7026): JSX element implicitly has type 'any' because no i... Remove this comment to see the full error message
       </div>
     );
   }
 }
 
+// @ts-expect-error TS(2339): Property 'propTypes' does not exist on type 'typeo... Remove this comment to see the full error message
 BootstrapTable.propTypes = {
   keyField: PropTypes.string.isRequired,
   data: PropTypes.array.isRequired,
@@ -258,6 +277,7 @@ BootstrapTable.propTypes = {
   setDependencyModules: PropTypes.func
 };
 
+// @ts-expect-error TS(2339): Property 'defaultProps' does not exist on type 'ty... Remove this comment to see the full error message
 BootstrapTable.defaultProps = {
   bootstrap4: false,
   remote: false,

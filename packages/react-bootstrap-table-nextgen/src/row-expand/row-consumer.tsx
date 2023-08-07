@@ -1,12 +1,15 @@
 /* eslint react/prop-types: 0 */
+// @ts-expect-error TS(7016): Could not find a declaration file for module 'reac... Remove this comment to see the full error message
 import React from 'react';
 import cs from 'classnames';
+// @ts-expect-error TS(6142): Module './expand-row' was resolved to '/Users/terr... Remove this comment to see the full error message
 import ExpandRow from './expand-row';
 import _ from '../utils';
+// @ts-expect-error TS(6142): Module '../contexts/row-expand-context' was resolv... Remove this comment to see the full error message
 import ExpansionContext from '../contexts/row-expand-context';
 
-export default (Component) => {
-  const renderWithExpansion = (props, expandRow) => {
+export default (Component: any) => {
+  const renderWithExpansion = (props: any, expandRow: any) => {
     let parentClassName = '';
     let className = '';
     const key = props.value;
@@ -25,6 +28,7 @@ export default (Component) => {
     }
 
     return [
+      // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
       <Component
         { ...props }
         key={ key }
@@ -33,6 +37,7 @@ export default (Component) => {
         expandRow={ { ...expandRow } }
         className={ cs(props.className, parentClassName) }
       />,
+      // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
       expanded || isClosing ? <ExpandRow
         key={ `${key}-expanding` }
         colSpan={ props.visibleColumnSize }
@@ -44,9 +49,8 @@ export default (Component) => {
       </ExpandRow> : null
     ];
   };
-  return props => (
-    <ExpansionContext.Consumer>
-      { expandRow => renderWithExpansion(props, expandRow) }
-    </ExpansionContext.Consumer>
-  );
+  // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
+  return (props: any) => <ExpansionContext.Consumer>
+    { (expandRow: any) => renderWithExpansion(props, expandRow) }
+  </ExpansionContext.Consumer>;
 };

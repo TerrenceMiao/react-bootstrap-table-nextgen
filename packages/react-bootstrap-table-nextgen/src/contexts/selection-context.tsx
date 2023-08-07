@@ -1,6 +1,8 @@
 /* eslint camelcase: 0 */
 /* eslint react/prop-types: 0 */
+// @ts-expect-error TS(7016): Could not find a declaration file for module 'reac... Remove this comment to see the full error message
 import React from 'react';
+// @ts-expect-error TS(7016): Could not find a declaration file for module 'prop... Remove this comment to see the full error message
 import PropTypes from 'prop-types';
 import Const from '../const';
 import _ from '../utils';
@@ -16,7 +18,11 @@ class SelectionProvider extends React.Component {
     keyField: PropTypes.string.isRequired
   }
 
-  constructor(props) {
+  forceUpdate: any;
+  props: any;
+  selected: any;
+
+  constructor(props: any) {
     super(props);
     this.selected = props.selectRow.selected || [];
   }
@@ -26,13 +32,13 @@ class SelectionProvider extends React.Component {
     return this.selected;
   }
 
-  UNSAFE_componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps: any) {
     if (nextProps.selectRow) {
       this.selected = nextProps.selectRow.selected || this.selected;
     }
   }
 
-  handleRowSelect = (rowKey, checked, rowIndex, e) => {
+  handleRowSelect = (rowKey: any, checked: any, rowIndex: any, e: any) => {
     const { data, keyField, selectRow: { mode, onSelect } } = this.props;
     const { ROW_SELECT_SINGLE } = Const;
 
@@ -57,7 +63,7 @@ class SelectionProvider extends React.Component {
     this.forceUpdate();
   }
 
-  handleAllRowsSelect = (e, isUnSelect) => {
+  handleAllRowsSelect = (e: any, isUnSelect: any) => {
     const {
       data,
       keyField,
@@ -73,7 +79,7 @@ class SelectionProvider extends React.Component {
     if (!isUnSelect) {
       currSelected = selected.concat(dataOperator.selectableKeys(data, keyField, nonSelectable));
     } else {
-      currSelected = selected.filter(s => typeof data.find(d => _.get(d, keyField) === s) === 'undefined');
+      currSelected = selected.filter((s: any) => typeof data.find((d: any) => _.get(d, keyField) === s) === 'undefined');
     }
 
     let result;
@@ -113,6 +119,7 @@ class SelectionProvider extends React.Component {
     else checkedStatus = Const.CHECKBOX_STATUS_INDETERMINATE;
 
     return (
+      // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
       <SelectionContext.Provider
         value={ {
           ...this.props.selectRow,

@@ -1,13 +1,18 @@
 /* eslint class-methods-use-this: 0 */
 /* eslint react/prop-types: 0 */
 /* eslint no-plusplus: 0 */
+// @ts-expect-error TS(7016): Could not find a declaration file for module 'reac... Remove this comment to see the full error message
 import React from 'react';
+// @ts-expect-error TS(7016): Could not find a declaration file for module 'prop... Remove this comment to see the full error message
 import PropTypes from 'prop-types';
 import _ from '../utils';
+// @ts-expect-error TS(6142): Module '../row-expand/expand-cell' was resolved to... Remove this comment to see the full error message
 import ExpandCell from '../row-expand/expand-cell';
+// @ts-expect-error TS(6142): Module '../row-selection/selection-cell' was resol... Remove this comment to see the full error message
 import SelectionCell from '../row-selection/selection-cell';
 import shouldUpdater from './should-updater';
 import eventDelegater from './event-delegater';
+// @ts-expect-error TS(6142): Module './row-pure-content' was resolved to '/User... Remove this comment to see the full error message
 import RowPureContent from './row-pure-content';
 import Const from '../const';
 
@@ -22,14 +27,15 @@ export default class RowAggregator extends shouldUpdater(eventDelegater(React.Co
     style: {}
   };
 
-  constructor(props) {
+  constructor(props: any) {
+    // @ts-expect-error TS(2554): Expected 0 arguments, but got 1.
     super(props);
     this.clickNum = 0;
     this.shouldUpdateRowContent = false;
     this.createClickEventHandler = this.createClickEventHandler.bind(this);
   }
 
-  shouldComponentUpdate(nextProps) {
+  shouldComponentUpdate(nextProps: any) {
     if (
       this.props.selected !== nextProps.selected ||
       this.props.expanded !== nextProps.expanded ||
@@ -83,6 +89,7 @@ export default class RowAggregator extends shouldUpdater(eventDelegater(React.Co
     let tabIndexStart = (rowIndex * visibleColumnSize) + 1;
 
     const childrens = [(
+      // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
       <RowPureContent
         key="row"
         row={ row }
@@ -97,6 +104,7 @@ export default class RowAggregator extends shouldUpdater(eventDelegater(React.Co
 
     if (!hideSelectColumn) {
       const selectCell = (
+        // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
         <SelectionCell
           { ...selectRow }
           key="selection-cell"
@@ -116,6 +124,7 @@ export default class RowAggregator extends shouldUpdater(eventDelegater(React.Co
 
     if (showExpandColumn) {
       const expandCell = (
+        // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
         <ExpandCell
           { ...expandRow }
           key="expand-cell"
@@ -134,12 +143,14 @@ export default class RowAggregator extends shouldUpdater(eventDelegater(React.Co
     }
 
     return (
+      // @ts-expect-error TS(7026): JSX element implicitly has type 'any' because no i... Remove this comment to see the full error message
       <tr
         style={ style }
         className={ className }
         { ...newAttrs }
       >
         { childrens }
+      // @ts-expect-error TS(7026): JSX element implicitly has type 'any' because no i... Remove this comment to see the full error message
       </tr>
     );
   }

@@ -2,8 +2,8 @@ import _ from '../utils';
 import { getRowByRowId } from './rows';
 
 export const isAnyExpands = (
-  data,
-  keyField,
+  data: any,
+  keyField: any,
   expanded = []
 ) => {
   for (let i = 0; i < data.length; i += 1) {
@@ -15,14 +15,14 @@ export const isAnyExpands = (
   return false;
 };
 
-export const expandableKeys = (data, keyField, skips = []) => {
+export const expandableKeys = (data: any, keyField: any, skips = []) => {
   if (skips.length === 0) {
-    return data.map(row => _.get(row, keyField));
+    return data.map((row: any) => _.get(row, keyField));
   }
   return data
-    .filter(row => !_.contains(skips, _.get(row, keyField)))
-    .map(row => _.get(row, keyField));
+    .filter((row: any) => !_.contains(skips, _.get(row, keyField)))
+    .map((row: any) => _.get(row, keyField));
 };
 
-export const getExpandedRows = (data, keyField, expanded) =>
-  expanded.map(k => getRowByRowId(data, keyField, k));
+export const getExpandedRows = (data: any, keyField: any, expanded: any) =>
+  expanded.map((k: any) => getRowByRowId(data, keyField, k));

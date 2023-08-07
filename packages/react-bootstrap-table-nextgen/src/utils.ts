@@ -1,9 +1,10 @@
 /* eslint no-empty: 0 */
 /* eslint no-param-reassign: 0 */
 /* eslint prefer-rest-params: 0 */
+// @ts-expect-error TS(7016): Could not find a declaration file for module 'unde... Remove this comment to see the full error message
 import _ from 'underscore';
 
-function splitNested(str) {
+function splitNested(str: any) {
   return [str]
     .join('.')
     .replace(/\[/g, '.')
@@ -11,7 +12,7 @@ function splitNested(str) {
     .split('.');
 }
 
-function contains(list, value) {
+function contains(list: any, value: any) {
   if (_.includes) {
     return _.includes(list, value);
   }
@@ -19,7 +20,7 @@ function contains(list, value) {
   return list.indexOf(value) > -1;
 }
 
-function get(target, field) {
+function get(target: any, field: any) {
   const directGet = target[field];
   if (directGet !== undefined && directGet !== null) {
     return directGet;
@@ -33,7 +34,7 @@ function get(target, field) {
   return result;
 }
 
-function set(target, field, value, safe = false) {
+function set(target: any, field: any, value: any, safe = false) {
   const pathArray = splitNested(field);
   let level = 0;
   pathArray.reduce((a, b) => {
@@ -52,7 +53,7 @@ function set(target, field, value, safe = false) {
   }, target);
 }
 
-function isEmptyObject(obj) {
+function isEmptyObject(obj: any) {
   if (!_.isObject(obj)) return false;
 
   const hasOwnProperty = Object.prototype.hasOwnProperty;
@@ -65,16 +66,16 @@ function isEmptyObject(obj) {
   return true;
 }
 
-function isDefined(value) {
+function isDefined(value: any) {
   return typeof value !== 'undefined' && value !== null;
 }
 
-function sleep(fn, ms) {
+function sleep(fn: any, ms: any) {
   return setTimeout(() => fn(), ms);
 }
 
-function debounce(func, wait, immediate) {
-  let timeout;
+function debounce(this: any, func: any, wait: any, immediate: any) {
+  let timeout: any;
 
   return () => {
     const later = () => {

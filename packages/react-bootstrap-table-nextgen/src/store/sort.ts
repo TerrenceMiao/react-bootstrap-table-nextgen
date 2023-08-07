@@ -4,7 +4,7 @@
 import _ from '../utils';
 import Const from '../const';
 
-function comparator(a, b) {
+function comparator(a: any, b: any) {
   let result;
   if (typeof b === 'string') {
     result = b.localeCompare(a);
@@ -14,7 +14,11 @@ function comparator(a, b) {
   return result;
 }
 
-export const sort = (data, sortOrder, { dataField, sortFunc, sortValue }) => {
+export const sort = (data: any, sortOrder: any, {
+  dataField,
+  sortFunc,
+  sortValue
+}: any) => {
   const _data = [...data];
   _data.sort((a, b) => {
     let result;
@@ -43,8 +47,11 @@ export const sort = (data, sortOrder, { dataField, sortFunc, sortValue }) => {
 };
 
 export const nextOrder = (
-  currentSortColumn,
-  { sortOrder, sortColumn },
+  currentSortColumn: any,
+  {
+    sortOrder,
+    sortColumn
+  }: any,
   defaultOrder = Const.SORT_DESC
 ) => {
   if (!sortColumn || currentSortColumn.dataField !== sortColumn.dataField) return defaultOrder;

@@ -1,16 +1,23 @@
 /* eslint react/require-default-props: 0 */
+// @ts-expect-error TS(7016): Could not find a declaration file for module 'reac... Remove this comment to see the full error message
 import React, { Component } from 'react';
+// @ts-expect-error TS(7016): Could not find a declaration file for module 'prop... Remove this comment to see the full error message
 import PropTypes from 'prop-types';
 import Const from '../const';
 import { BootstrapContext } from '../contexts/bootstrap';
 import _ from '../utils';
 
-export const CheckBox = ({ className, checked, indeterminate }) => (
+export const CheckBox = ({
+  className,
+  checked,
+  indeterminate
+}: any) => (
+  // @ts-expect-error TS(7026): JSX element implicitly has type 'any' because no i... Remove this comment to see the full error message
   <input
     type="checkbox"
     checked={ checked }
     className={ className }
-    ref={ (input) => {
+    ref={ (input: any) => {
       if (input) input.indeterminate = indeterminate; // eslint-disable-line no-param-reassign
     } }
     onChange={ () => {} }
@@ -33,6 +40,8 @@ export default class SelectionHeaderCell extends Component {
     headerColumnStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.func])
   };
 
+  props: any;
+
   constructor() {
     super();
     this.handleCheckBoxClick = this.handleCheckBoxClick.bind(this);
@@ -43,7 +52,7 @@ export default class SelectionHeaderCell extends Component {
    * 1. radio
    * 2. status was not changed.
    */
-  shouldComponentUpdate(nextProps) {
+  shouldComponentUpdate(nextProps: any) {
     const { ROW_SELECT_SINGLE } = Const;
     const { mode, checkedStatus } = this.props;
 
@@ -52,7 +61,7 @@ export default class SelectionHeaderCell extends Component {
     return nextProps.checkedStatus !== checkedStatus;
   }
 
-  handleCheckBoxClick(e) {
+  handleCheckBoxClick(e: any) {
     const { onAllRowsSelect, checkedStatus } = this.props;
     const isUnSelect =
       checkedStatus === Const.CHECKBOX_STATUS_CHECKED ||
@@ -74,6 +83,7 @@ export default class SelectionHeaderCell extends Component {
       headerColumnStyle
     } = this.props;
     if (hideSelectAll) {
+      // @ts-expect-error TS(7026): JSX element implicitly has type 'any' because no i... Remove this comment to see the full error message
       return <th data-row-selection />;
     }
 
@@ -82,19 +92,24 @@ export default class SelectionHeaderCell extends Component {
     const indeterminate = checkedStatus === CHECKBOX_STATUS_INDETERMINATE;
 
     const attrs = {};
-    let content;
+    let content: any;
     if (selectionHeaderRenderer || mode === ROW_SELECT_MULTIPLE) {
+      // @ts-expect-error TS(2339): Property 'onClick' does not exist on type '{}'.
       attrs.onClick = this.handleCheckBoxClick;
     }
 
+    // @ts-expect-error TS(2339): Property 'style' does not exist on type '{}'.
     attrs.style = _.isFunction(headerColumnStyle) ?
       headerColumnStyle(checkedStatus) :
       headerColumnStyle;
 
     return (
+      // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
       <BootstrapContext.Consumer>
         {
-          ({ bootstrap4 }) => {
+          ({
+            bootstrap4
+          }: any) => {
             if (selectionHeaderRenderer) {
               content = selectionHeaderRenderer({
                 mode,
@@ -103,6 +118,7 @@ export default class SelectionHeaderCell extends Component {
               });
             } else if (mode === ROW_SELECT_MULTIPLE) {
               content = (
+                // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
                 <CheckBox
                   { ...this.props }
                   checked={ checked }
@@ -112,6 +128,7 @@ export default class SelectionHeaderCell extends Component {
               );
             }
             return (
+              // @ts-expect-error TS(7026): JSX element implicitly has type 'any' because no i... Remove this comment to see the full error message
               <th className="selection-cell-header" data-row-selection { ...attrs }>{ content }</th>
             );
           }

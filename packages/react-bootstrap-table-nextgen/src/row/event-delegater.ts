@@ -10,17 +10,16 @@ const events = [
   'onAuxClick'
 ];
 
-export default ExtendBase =>
-  class RowEventDelegater extends ExtendBase {
-    constructor(props) {
+export default (ExtendBase: any) => class RowEventDelegater extends ExtendBase {
+    constructor(props: any) {
       super(props);
       this.clickNum = 0;
       this.createDefaultEventHandler = this.createDefaultEventHandler.bind(this);
       this.createClickEventHandler = this.createClickEventHandler.bind(this);
     }
 
-    createClickEventHandler(cb) {
-      return (e) => {
+    createClickEventHandler(cb: any) {
+      return (e: any) => {
         const {
           row,
           selected,
@@ -65,8 +64,8 @@ export default ExtendBase =>
       };
     }
 
-    createDefaultEventHandler(cb) {
-      return (e) => {
+    createDefaultEventHandler(cb: any) {
+      return (e: any) => {
         const { row, rowIndex } = this.props;
         cb(e, row, rowIndex);
       };
@@ -76,6 +75,7 @@ export default ExtendBase =>
       const newAttrs = { ...attrs };
       Object.keys(attrs).forEach((attr) => {
         if (_.contains(events, attr)) {
+          // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
           newAttrs[attr] = this.createDefaultEventHandler(attrs[attr]);
         }
       });

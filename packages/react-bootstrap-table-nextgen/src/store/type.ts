@@ -1,6 +1,6 @@
 import Const from '../const';
 
-export const typeConvert = (type, value) => {
+export const typeConvert = (type: any, value: any) => {
   if (type === Const.TYPE_STRING) {
     return String(value);
   } else if (type === Const.TYPE_NUMBER) {

@@ -1,8 +1,7 @@
 import _ from '../utils';
 import ColumnResolver from './column-resolver';
 
-export default ExtendBase =>
-  class TableResolver extends ColumnResolver(ExtendBase) {
+export default (ExtendBase: any) => class TableResolver extends ColumnResolver(ExtendBase) {
     validateProps() {
       const { keyField } = this.props;
       if (!keyField) {
@@ -20,7 +19,7 @@ export default ExtendBase =>
     visibleRows() {
       const { data, hiddenRows, keyField } = this.props;
       if (!hiddenRows || hiddenRows.length === 0) return data;
-      return data.filter((row) => {
+      return data.filter((row: any) => {
         const key = _.get(row, keyField);
         return !_.contains(hiddenRows, key);
       });

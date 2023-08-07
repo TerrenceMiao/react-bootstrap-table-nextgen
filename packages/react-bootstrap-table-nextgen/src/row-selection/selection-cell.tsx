@@ -2,7 +2,9 @@
   react/require-default-props: 0
   jsx-a11y/no-noninteractive-element-interactions: 0
 */
+// @ts-expect-error TS(7016): Could not find a declaration file for module 'reac... Remove this comment to see the full error message
 import React, { Component } from 'react';
+// @ts-expect-error TS(7016): Could not find a declaration file for module 'prop... Remove this comment to see the full error message
 import PropTypes from 'prop-types';
 import Const from '../const';
 import _ from '../utils';
@@ -22,12 +24,14 @@ export default class SelectionCell extends Component {
     selectColumnStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.func])
   }
 
+  props: any;
+
   constructor() {
     super();
     this.handleClick = this.handleClick.bind(this);
   }
 
-  shouldComponentUpdate(nextProps) {
+  shouldComponentUpdate(nextProps: any) {
     const shouldUpdate =
       this.props.rowIndex !== nextProps.rowIndex ||
       this.props.selected !== nextProps.selected ||
@@ -39,7 +43,7 @@ export default class SelectionCell extends Component {
     return shouldUpdate;
   }
 
-  handleClick(e) {
+  handleClick(e: any) {
     const {
       mode: inputType,
       rowKey,
@@ -71,8 +75,10 @@ export default class SelectionCell extends Component {
     } = this.props;
 
     const attrs = {};
+    // @ts-expect-error TS(2339): Property 'tabIndex' does not exist on type '{}'.
     if (tabIndex !== -1) attrs.tabIndex = tabIndex;
 
+    // @ts-expect-error TS(2339): Property 'style' does not exist on type '{}'.
     attrs.style = _.isFunction(selectColumnStyle) ?
       selectColumnStyle({
         checked: selected,
@@ -83,9 +89,13 @@ export default class SelectionCell extends Component {
       selectColumnStyle;
 
     return (
+      // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
       <BootstrapContext.Consumer>
         {
-          ({ bootstrap4 }) => (
+          ({
+            bootstrap4
+          }: any) => (
+            // @ts-expect-error TS(7026): JSX element implicitly has type 'any' because no i... Remove this comment to see the full error message
             <td className="selection-cell" onClick={ this.handleClick } { ...attrs }>
               {
                 selectionRenderer ? selectionRenderer({
@@ -95,6 +105,7 @@ export default class SelectionCell extends Component {
                   rowIndex,
                   rowKey
                 }) : (
+                  // @ts-expect-error TS(7026): JSX element implicitly has type 'any' because no i... Remove this comment to see the full error message
                   <input
                     type={ inputType }
                     checked={ selected }
@@ -104,6 +115,7 @@ export default class SelectionCell extends Component {
                   />
                 )
               }
+            // @ts-expect-error TS(7026): JSX element implicitly has type 'any' because no i... Remove this comment to see the full error message
             </td>
           )
         }

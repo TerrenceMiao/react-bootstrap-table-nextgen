@@ -1,11 +1,13 @@
 /* eslint react/prop-types: 0 */
+// @ts-expect-error TS(7016): Could not find a declaration file for module 'reac... Remove this comment to see the full error message
 import React from 'react';
 import cs from 'classnames';
 import _ from '../utils';
+// @ts-expect-error TS(6142): Module '../contexts/selection-context' was resolve... Remove this comment to see the full error message
 import SelectionContext from '../contexts/selection-context';
 
-export default (Component) => {
-  const renderWithSelection = (props, selectRow) => {
+export default (Component: any) => {
+  const renderWithSelection = (props: any, selectRow: any) => {
     const key = props.value;
     const selected = _.contains(selectRow.selected, key);
     const selectable = !selectRow.nonSelectable || !_.contains(selectRow.nonSelectable, key);
@@ -56,6 +58,7 @@ export default (Component) => {
     }
 
     return (
+      // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
       <Component
         { ...props }
         style={ style }
@@ -67,10 +70,11 @@ export default (Component) => {
     );
   };
 
-  function withConsumer(props) {
+  function withConsumer(props: any) {
     return (
+      // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
       <SelectionContext.Consumer>
-        { selectRow => renderWithSelection(props, selectRow) }
+        { (selectRow: any) => renderWithSelection(props, selectRow) }
       </SelectionContext.Consumer>
     );
   }

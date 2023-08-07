@@ -3,7 +3,7 @@ import { getRowByRowId } from './rows';
 
 export const getSelectionSummary = (
   data = [],
-  keyField,
+  keyField: any,
   selected = []
 ) => {
   let allRowsSelected = data.length > 0;
@@ -24,7 +24,7 @@ export const getSelectionSummary = (
   };
 };
 
-export const selectableKeys = (data = [], keyField, skips = []) => {
+export const selectableKeys = (data = [], keyField: any, skips = []) => {
   if (skips.length === 0) {
     return data.map(row => _.get(row, keyField));
   }
@@ -33,13 +33,13 @@ export const selectableKeys = (data = [], keyField, skips = []) => {
     .map(row => _.get(row, keyField));
 };
 
-export const unSelectableKeys = (selected, skips = []) => {
+export const unSelectableKeys = (selected: any, skips = []) => {
   if (skips.length === 0) {
     return [];
   }
-  return selected.filter(x => _.contains(skips, x));
+  return selected.filter((x: any) => _.contains(skips, x));
 };
 
-export const getSelectedRows = (data = [], keyField, selected) =>
-  selected.map(k => getRowByRowId(data, keyField, k)).filter(x => !!x);
+export const getSelectedRows = (data = [], keyField: any, selected: any) =>
+  selected.map((k: any) => getRowByRowId(data, keyField, k)).filter((x: any) => !!x);
 

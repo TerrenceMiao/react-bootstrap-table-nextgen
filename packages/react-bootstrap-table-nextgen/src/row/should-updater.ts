@@ -1,9 +1,8 @@
 /* eslint react/prop-types: 0 */
 import _ from '../utils';
 
-export default ExtendBase =>
-  class RowShouldUpdater extends ExtendBase {
-    shouldUpdateByCellEditing(nextProps) {
+export default (ExtendBase: any) => class RowShouldUpdater extends ExtendBase {
+    shouldUpdateByCellEditing(nextProps: any) {
       if (!(this.props.clickToEdit || this.props.dbclickToEdit)) return false;
       return (
         nextProps.editingRowIdx === nextProps.rowIndex ||
@@ -13,7 +12,7 @@ export default ExtendBase =>
       );
     }
 
-    shouldUpdatedBySelfProps(nextProps) {
+    shouldUpdatedBySelfProps(nextProps: any) {
       return (
         this.props.className !== nextProps.className ||
         !_.isEqual(this.props.style, nextProps.style) ||
@@ -22,7 +21,7 @@ export default ExtendBase =>
     }
 
     // Only use for simple-row
-    shouldUpdateByColumnsForSimpleCheck(nextProps) {
+    shouldUpdateByColumnsForSimpleCheck(nextProps: any) {
       if (this.props.columns.length !== nextProps.columns.length) {
         return true;
       }
@@ -34,7 +33,7 @@ export default ExtendBase =>
       return false;
     }
 
-    shouldUpdatedByNormalProps(nextProps) {
+    shouldUpdatedByNormalProps(nextProps: any) {
       const shouldUpdate =
         this.props.rowIndex !== nextProps.rowIndex ||
         this.props.editable !== nextProps.editable ||
@@ -44,12 +43,12 @@ export default ExtendBase =>
       return shouldUpdate;
     }
 
-    shouldUpdateChild(nextProps) {
+    shouldUpdateChild(nextProps: any) {
       return this.shouldUpdateByCellEditing(nextProps) ||
         this.shouldUpdatedByNormalProps(nextProps);
     }
 
-    shouldRowContentUpdate(nextProps) {
+    shouldRowContentUpdate(nextProps: any) {
       return this.shouldUpdateChild(nextProps) ||
         this.shouldUpdateByColumnsForSimpleCheck(nextProps);
     }

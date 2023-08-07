@@ -1,10 +1,14 @@
 /* eslint react/require-default-props: 0 */
+// @ts-expect-error TS(7016): Could not find a declaration file for module 'reac... Remove this comment to see the full error message
 import React from 'react';
 import cs from 'classnames';
+// @ts-expect-error TS(7016): Could not find a declaration file for module 'prop... Remove this comment to see the full error message
 import PropTypes from 'prop-types';
 
 import Const from './const';
+// @ts-expect-error TS(6142): Module './sort/symbol' was resolved to '/Users/ter... Remove this comment to see the full error message
 import SortSymbol from './sort/symbol';
+// @ts-expect-error TS(6142): Module './sort/caret' was resolved to '/Users/terr... Remove this comment to see the full error message
 import SortCaret from './sort/caret';
 import _ from './utils';
 import eventDelegater from './cell-event-delegater';
@@ -72,19 +76,20 @@ class HeaderCell extends eventDelegater(React.Component) {
     }
 
     if (headerAlign) {
+      // @ts-expect-error TS(2339): Property 'textAlign' does not exist on type '{}'.
       cellStyle.textAlign = _.isFunction(headerAlign) ? headerAlign(column, index) : headerAlign;
     }
 
     if (sort) {
       const customClick = cellAttrs.onClick;
       cellAttrs['aria-label'] = sorting ? `${text} sort ${sortOrder}` : `${text} sortable`;
-      cellAttrs.onKeyUp = (e) => {
+      cellAttrs.onKeyUp = (e: any) => {
         if (e.key === 'Enter') {
           onSort(column);
           if (_.isFunction(customClick)) customClick(e);
         }
       };
-      cellAttrs.onClick = (e) => {
+      cellAttrs.onClick = (e: any) => {
         onSort(column);
         if (_.isFunction(customClick)) customClick(e);
       };
@@ -93,6 +98,7 @@ class HeaderCell extends eventDelegater(React.Component) {
       if (sorting) {
         sortSymbol = sortCaretfunc ?
           sortCaretfunc(sortOrder, column) :
+          // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
           <SortCaret order={ sortOrder } />;
 
         // append customized classes or style if table was sorting based on the current column.
@@ -105,11 +111,10 @@ class HeaderCell extends eventDelegater(React.Component) {
 
         cellStyle = {
           ...cellStyle,
-          ..._.isFunction(headerSortingStyle)
-            ? headerSortingStyle(column, sortOrder, isLastSorting, index)
-            : headerSortingStyle
+          ...(_.isFunction(headerSortingStyle) ? headerSortingStyle(column, sortOrder, isLastSorting, index) : headerSortingStyle)
         };
       } else {
+        // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
         sortSymbol = sortCaretfunc ? sortCaretfunc(undefined, column) : <SortSymbol />;
       }
     }
@@ -123,6 +128,7 @@ class HeaderCell extends eventDelegater(React.Component) {
         filterElm = filterRenderer(onCustomFilter, column);
       } else if (filter) {
         filterElm = (
+          // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
           <filter.Filter
             { ...filter.props }
             filterState={ currFilters[column.dataField] }
@@ -145,6 +151,7 @@ class HeaderCell extends eventDelegater(React.Component) {
   }
 }
 
+// @ts-expect-error TS(2339): Property 'propTypes' does not exist on type 'typeo... Remove this comment to see the full error message
 HeaderCell.propTypes = {
   column: PropTypes.shape({
     dataField: PropTypes.string.isRequired,

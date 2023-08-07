@@ -1,6 +1,8 @@
 /* eslint react/require-default-props: 0 */
+// @ts-expect-error TS(7016): Could not find a declaration file for module 'reac... Remove this comment to see the full error message
 import React from 'react';
 import cs from 'classnames';
+// @ts-expect-error TS(7016): Could not find a declaration file for module 'prop... Remove this comment to see the full error message
 import PropTypes from 'prop-types';
 
 import _ from './utils';
@@ -48,6 +50,7 @@ class FooterCell extends eventDelegater(React.Component) {
     }
 
     if (footerAlign) {
+      // @ts-expect-error TS(2339): Property 'textAlign' does not exist on type '{}'.
       cellStyle.textAlign = _.isFunction(footerAlign) ? footerAlign(column, index) : footerAlign;
     }
 
@@ -60,6 +63,7 @@ class FooterCell extends eventDelegater(React.Component) {
   }
 }
 
+// @ts-expect-error TS(2339): Property 'propTypes' does not exist on type 'typeo... Remove this comment to see the full error message
 FooterCell.propTypes = {
   columnData: PropTypes.array,
   index: PropTypes.number,

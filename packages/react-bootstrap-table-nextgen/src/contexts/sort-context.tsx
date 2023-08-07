@@ -1,13 +1,15 @@
 /* eslint camelcase: 0 */
 /* eslint react/require-default-props: 0 */
+// @ts-expect-error TS(7016): Could not find a declaration file for module 'reac... Remove this comment to see the full error message
 import React from 'react';
+// @ts-expect-error TS(7016): Could not find a declaration file for module 'prop... Remove this comment to see the full error message
 import PropTypes from 'prop-types';
 import Const from '../const';
 
 export default (
-  dataOperator,
-  isRemoteSort,
-  handleSortChange
+  dataOperator: any,
+  isRemoteSort: any,
+  handleSortChange: any
 ) => {
   const SortContext = React.createContext();
 
@@ -28,7 +30,11 @@ export default (
       defaultSortDirection: PropTypes.oneOf([Const.SORT_DESC, Const.SORT_ASC])
     }
 
-    constructor(props) {
+    props: any;
+    setState: any;
+    state: any;
+
+    constructor(props: any) {
       super(props);
       let sortOrder;
       let sortColumn;
@@ -51,20 +57,20 @@ export default (
       }
     }
 
-    UNSAFE_componentWillReceiveProps(nextProps) {
+    UNSAFE_componentWillReceiveProps(nextProps: any) {
       const { sort, columns } = nextProps;
       if (sort && sort.dataField && sort.order) {
         this.setState({
           sortOrder: sort.order,
-          sortColumn: columns.find(col => col.dataField === sort.dataField)
+          sortColumn: columns.find((col: any) => col.dataField === sort.dataField)
         });
       }
     }
 
-    initSort(sortField, sortOrder) {
+    initSort(sortField: any, sortOrder: any) {
       let sortColumn;
       const { columns } = this.props;
-      const sortColumns = columns.filter(col => col.dataField === sortField);
+      const sortColumns = columns.filter((col: any) => col.dataField === sortField);
       if (sortColumns.length > 0) {
         sortColumn = sortColumns[0];
 
@@ -75,7 +81,7 @@ export default (
       return sortColumn;
     }
 
-    handleSort = (column) => {
+    handleSort = (column: any) => {
       const sortOrder = dataOperator.nextOrder(column, this.state, this.props.defaultSortDirection);
 
       if (column.onSort) {
@@ -101,6 +107,7 @@ export default (
       }
 
       return (
+        // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
         <SortContext.Provider
           value={ {
             data,
