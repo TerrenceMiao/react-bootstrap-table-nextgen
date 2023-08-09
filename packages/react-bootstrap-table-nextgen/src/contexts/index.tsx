@@ -1,29 +1,49 @@
-/* eslint camelcase: 0 */
-/* eslint no-return-assign: 0 */
-/* eslint no-param-reassign: 0 */
-/* eslint class-methods-use-this: 0 */
-// @ts-expect-error TS(7016): Could not find a declaration file for module 'even... Remove this comment to see the full error message
 import EventEmitter from "events";
-// @ts-expect-error TS(7016): Could not find a declaration file for module 'reac... Remove this comment to see the full error message
-import { Component } from "react";
-import _ from "../utils";
-// @ts-expect-error TS(6142): Module './data-context' was resolved to '/Users/te... Remove this comment to see the full error message
-import createDataContext from "./data-context";
-// @ts-expect-error TS(6142): Module './column-context' was resolved to '/Users/... Remove this comment to see the full error message
-import createColumnMgtContext from "./column-context";
-// @ts-expect-error TS(6142): Module './sort-context' was resolved to '/Users/te... Remove this comment to see the full error message
-import createSortContext from "./sort-context";
-// @ts-expect-error TS(6142): Module './selection-context' was resolved to '/Use... Remove this comment to see the full error message
-import SelectionContext from "./selection-context";
-// @ts-expect-error TS(6142): Module './row-expand-context' was resolved to '/Us... Remove this comment to see the full error message
-import remoteResolver from "../props-resolver/remote-resolver";
+import React from "react";
+import RemoteResolver, {
+  RemoteResolverProps,
+} from "../props-resolver/remote-resolver";
 import dataOperator from "../store/operators";
+import _ from "../utils";
 import { BootstrapContext } from "./bootstrap";
+import createColumnMgtContext from "./column-context";
+import createDataContext from "./data-context";
 import RowExpandContext from "./row-expand-context";
+import SelectionContext from "./selection-context";
+import createSortContext from "./sort-context";
 
-const withContext = (Base: any) =>
-  class BootstrapTableContainer extends remoteResolver(Component) {
-    constructor(props: any) {
+interface BootstrapTableContainerProps extends RemoteResolverProps {
+  registerExposedAPI?: (emitter: EventEmitter) => void;
+  columns: any[]; // Add proper type here
+  columnToggle?: any; // Add proper type here
+  selectRow?: any; // Add proper type here
+  expandRow?: any; // Add proper type here
+  cellEdit?: any; // Add proper type here
+  filter?: any; // Add proper type here
+  setDependencyModules?: (utils: any) => void; // Add proper type here
+  setPaginationRemoteEmitter?: (emitter: EventEmitter) => void;
+  defaultSorted?: any; // Add proper type here
+  defaultSortDirection?: any; // Add proper type here
+  sort?: any; // Add proper type here
+  bootstrap4?: boolean;
+  onDataSizeChange?: (size: number) => void;
+  id?: string;
+  dataChangeListener?: any; // Add proper type here
+}
+
+export default (Base: any) =>
+  class BootstrapTableContainer extends RemoteResolver(Base) {
+    DataContext: any; // Add proper type here
+    SortContext: any; // Add proper type here
+    ColumnManagementContext: any; // Add proper type here
+    SelectionContext: any; // Add proper type here
+    RowExpandContext: any; // Add proper type here
+    CellEditContext: any; // Add proper type here
+    FilterContext: any; // Add proper type here
+    PaginationContext: any; // Add proper type here
+    SearchContext: any; // Add proper type here
+
+    constructor(props: BootstrapTableContainerProps) {
       super(props);
       this.DataContext = createDataContext();
 
@@ -31,14 +51,13 @@ const withContext = (Base: any) =>
         const exposedAPIEmitter = new EventEmitter();
         exposedAPIEmitter.on(
           "get.table.data",
-          (payload: any) => (payload.result = this.table.getData())
+          (payload) => (payload.result = this.table.getData())
         );
         exposedAPIEmitter.on(
           "get.selected.rows",
-          (payload: any) =>
-            (payload.result = this.selectionContext.getSelected())
+          (payload) => (payload.result = this.selectionContext.getSelected())
         );
-        exposedAPIEmitter.on("get.filtered.rows", (payload: any) => {
+        exposedAPIEmitter.on("get.filtered.rows", (payload) => {
           if (this.searchContext) {
             payload.result = this.searchContext.getSearched();
           } else if (this.filterContext) {
@@ -50,7 +69,7 @@ const withContext = (Base: any) =>
         props.registerExposedAPI(exposedAPIEmitter);
       }
 
-      if (props.columns.filter((col: any) => col.sort).length > 0) {
+      if (props.columns.filter((col) => col.sort).length > 0) {
         this.SortContext = createSortContext(
           dataOperator,
           this.isRemoteSort,
@@ -60,7 +79,7 @@ const withContext = (Base: any) =>
 
       if (
         props.columnToggle ||
-        props.columns.filter((col: any) => col.hidden).length > 0
+        props.columns.filter((col) => col.hidden).length > 0
       ) {
         this.ColumnManagementContext = createColumnMgtContext();
       }
@@ -111,8 +130,9 @@ const withContext = (Base: any) =>
       }
     }
 
-    UNSAFE_componentWillReceiveProps(nextProps: any) {
-      if (nextProps.columns.filter((col: any) => col.sort).length <= 0) {
+    // TODO
+    UNSAFE_componentWillReceiveProps(nextProps: BootstrapTableContainerProps) {
+      if (nextProps.columns.filter((col) => col.sort).length <= 0) {
         this.SortContext = null;
       } else if (!this.SortContext) {
         this.SortContext = createSortContext(
@@ -145,14 +165,20 @@ const withContext = (Base: any) =>
 
     renderBase() {
       return (
-        rootProps: any,
+        rootProps: {
+          getData: (
+            filterProps: any,
+            searchProps: any,
+            sortProps: any,
+            paginationProps: any
+          ) => any;
+        },
         filterProps: any,
         searchProps: any,
         sortProps: any,
         paginationProps: any,
         columnToggleProps: any
       ) => (
-        // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
         <Base
           ref={(n: any) => (this.table = n)}
           {...this.props}
@@ -179,15 +205,12 @@ const withContext = (Base: any) =>
         sortProps: any,
         paginationProps: any
       ) => (
-        // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
         <this.ColumnManagementContext.Provider
           {...baseProps}
           toggles={
             this.props.columnToggle ? this.props.columnToggle.toggles : null
           }
         >
-          // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag
-          is provided... Remove this comment to see the full error message
           <this.ColumnManagementContext.Consumer>
             {(columnToggleProps: any) =>
               base(
@@ -206,13 +229,19 @@ const withContext = (Base: any) =>
 
     renderWithSelectionCtx(base: any, baseProps: any) {
       return (
-        rootProps: any,
+        rootProps: {
+          getData: (
+            filterProps: any,
+            searchProps: any,
+            sortProps: any,
+            paginationProps: any
+          ) => any;
+        },
         filterProps: any,
         searchProps: any,
         sortProps: any,
         paginationProps: any
       ) => (
-        // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
         <this.SelectionContext.Provider
           {...baseProps}
           ref={(n: any) => (this.selectionContext = n)}
@@ -237,13 +266,19 @@ const withContext = (Base: any) =>
 
     renderWithRowExpandCtx(base: any, baseProps: any) {
       return (
-        rootProps: any,
+        rootProps: {
+          getData: (
+            filterProps: any,
+            searchProps: any,
+            sortProps: any,
+            paginationProps: any
+          ) => any;
+        },
         filterProps: any,
         searchProps: any,
         sortProps: any,
         paginationProps: any
       ) => (
-        // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
         <this.RowExpandContext.Provider
           {...baseProps}
           ref={(n: any) => (this.rowExpandContext = n)}
@@ -268,12 +303,18 @@ const withContext = (Base: any) =>
 
     renderWithPaginationCtx(base: any) {
       return (
-        rootProps: any,
+        rootProps: {
+          getData: (
+            filterProps: any,
+            searchProps: any,
+            sortProps: any,
+            paginationProps?: any
+          ) => any;
+        },
         filterProps: any,
         searchProps: any,
         sortProps: any
       ) => (
-        // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
         <this.PaginationContext.Provider
           ref={(n: any) => (this.paginationContext = n)}
           pagination={this.props.pagination}
@@ -284,8 +325,6 @@ const withContext = (Base: any) =>
           onDataSizeChange={this.props.onDataSizeChange}
           tableId={this.props.id}
         >
-          // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag
-          is provided... Remove this comment to see the full error message
           <this.PaginationContext.Consumer>
             {(paginationProps: any) =>
               base(
@@ -302,8 +341,18 @@ const withContext = (Base: any) =>
     }
 
     renderWithSortCtx(base: any, baseProps: any) {
-      return (rootProps: any, filterProps: any, searchProps: any) => (
-        // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
+      return (
+        rootProps: {
+          getData: (
+            filterProps: any,
+            searchProps: any,
+            sortProps?: any,
+            paginationProps?: any
+          ) => any;
+        },
+        filterProps: any,
+        searchProps: any
+      ) => (
         <this.SortContext.Provider
           {...baseProps}
           ref={(n: any) => (this.sortContext = n)}
@@ -312,8 +361,6 @@ const withContext = (Base: any) =>
           sort={this.props.sort}
           data={rootProps.getData(filterProps, searchProps)}
         >
-          // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag
-          is provided... Remove this comment to see the full error message
           <this.SortContext.Consumer>
             {(sortProps: any) =>
               base(rootProps, filterProps, searchProps, sortProps)
@@ -324,8 +371,17 @@ const withContext = (Base: any) =>
     }
 
     renderWithSearchCtx(base: any, baseProps: any) {
-      return (rootProps: any, filterProps: any) => (
-        // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
+      return (
+        rootProps: {
+          getData: (
+            filterProps: any,
+            searchProps?: any,
+            sortProps?: any,
+            paginationProps?: any
+          ) => any;
+        },
+        filterProps: any
+      ) => (
         <this.SearchContext.Provider
           {...baseProps}
           ref={(n: any) => (this.searchContext = n)}
@@ -333,8 +389,6 @@ const withContext = (Base: any) =>
           searchText={this.props.search.searchText}
           dataChangeListener={this.props.dataChangeListener}
         >
-          // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag
-          is provided... Remove this comment to see the full error message
           <this.SearchContext.Consumer>
             {(searchProps: any) => base(rootProps, filterProps, searchProps)}
           </this.SearchContext.Consumer>
@@ -343,7 +397,6 @@ const withContext = (Base: any) =>
     }
 
     renderWithFilterCtx(base: any, baseProps: any) {
-      // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
       return (rootProps: any) => (
         <this.FilterContext.Provider
           {...baseProps}
@@ -352,8 +405,6 @@ const withContext = (Base: any) =>
           filter={this.props.filter.options || {}}
           dataChangeListener={this.props.dataChangeListener}
         >
-          // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag
-          is provided... Remove this comment to see the full error message
           <this.FilterContext.Consumer>
             {(filterProps: any) => base(rootProps, filterProps)}
           </this.FilterContext.Consumer>
@@ -362,8 +413,14 @@ const withContext = (Base: any) =>
     }
 
     renderWithCellEditCtx(base: any, baseProps: any) {
-      // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-      return (rootProps: any) => (
+      return (rootProps: {
+        getData: (
+          filterProps?: any,
+          searchProps?: any,
+          sortProps?: any,
+          paginationProps?: any
+        ) => any;
+      }) => (
         <this.CellEditContext.Provider
           {...baseProps}
           ref={(n: any) => (this.cellEditContext = n)}
@@ -395,8 +452,7 @@ const withContext = (Base: any) =>
       }
 
       if (this.PaginationContext) {
-        // @ts-expect-error TS(2554): Expected 1 arguments, but got 2.
-        base = this.renderWithPaginationCtx(base, baseProps);
+        base = this.renderWithPaginationCtx(base);
       }
 
       if (this.SortContext) {
@@ -416,19 +472,11 @@ const withContext = (Base: any) =>
       }
 
       return (
-        // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
         <BootstrapContext.Provider value={{ bootstrap4 }}>
-          // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag
-          is provided... Remove this comment to see the full error message
           <this.DataContext.Provider {...baseProps} data={this.props.data}>
-            // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx'
-            flag is provided... Remove this comment to see the full error
-            message
             <this.DataContext.Consumer>{base}</this.DataContext.Consumer>
           </this.DataContext.Provider>
         </BootstrapContext.Provider>
       );
     }
   };
-
-export default withContext;

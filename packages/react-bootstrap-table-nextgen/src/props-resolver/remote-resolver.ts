@@ -1,23 +1,25 @@
 import EventEmitter from "events";
 import _ from "../utils";
 
-interface RemoteResolverProps {
+export interface RemoteResolverProps {
   remote: boolean | { [key: string]: any };
   onTableChange: (action: string, state: any) => void;
   data: any[];
   pagination: {
     options?: {
       pageStartIndex?: number;
-    };
+    },
+    createContext:(isRemotePagination?: any, handleRemotePageChange?: any) => void;
   };
   search: {
-    searchText: string;
+    searchText: string,
+    searchContext: (_: any, isRemoteSearch: any, handleRemoteSearchChange: any) => void;
   };
 }
 
 export default (ExtendBase: any) =>
   class RemoteResolver extends ExtendBase {
-    private remoteEmitter: EventEmitter;
+    protected remoteEmitter: EventEmitter;
 
     constructor(props: RemoteResolverProps) {
       super(props);

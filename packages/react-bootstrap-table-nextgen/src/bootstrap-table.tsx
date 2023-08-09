@@ -71,6 +71,7 @@ class BootstrapTable extends PropsBaseResolver(
     this.validateProps();
   }
 
+  // TODO
   UNSAFE_componentWillReceiveProps(nextProps: BootstrapTableProps) {
     if (nextProps.onDataSizeChange && !nextProps.pagination) {
       if (nextProps.data.length !== this.props.data.length) {
