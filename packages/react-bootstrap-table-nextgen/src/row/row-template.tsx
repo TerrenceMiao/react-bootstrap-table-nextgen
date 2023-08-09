@@ -1,51 +1,58 @@
-/* eslint react/require-default-props: 0 */
-// @ts-expect-error TS(7016): Could not find a declaration file for module 'reac... Remove this comment to see the full error message
-import React from 'react';
-// @ts-expect-error TS(7016): Could not find a declaration file for module 'prop... Remove this comment to see the full error message
-import PropTypes from 'prop-types';
+import React from "react";
 
-import Const from '../const';
+import Const from "../const";
 
-const RowTemplate = (props: any) => {
-  const {
-    renderContent,
-    selectRow,
-    expandRow,
-    cellEl,
-    ...rest
-  } = props;
+export interface SelectRow {
+  hideSelectColumn: boolean;
+  selectColumnPosition: string;
+}
+
+export interface ExpandRow {
+  showExpandColumn: boolean;
+  expandColumnPosition: string;
+}
+
+interface RowTemplateProps {
+  renderContent: () => any;
+  cellEl: string;
+  selectRow?: SelectRow;
+  expandRow?: ExpandRow;
+  [key: string]: any; // For any other props you might have
+}
+
+const RowTemplate: React.FC<RowTemplateProps> = (props) => {
+  const { renderContent, selectRow, expandRow, cellEl, ...rest } = props;
 
   const isRenderFunctionColumnInLeft = (
-    position = Const.INDICATOR_POSITION_LEFT
-  ) => position === Const.INDICATOR_POSITION_LEFT;
+    position: string = Const.INDICATOR_POSITION_LEFT
+  ): boolean => position === Const.INDICATOR_POSITION_LEFT;
 
   const childrens = renderContent() || [];
 
   if (selectRow && selectRow.hideSelectColumn !== true) {
     if (isRenderFunctionColumnInLeft(selectRow.selectColumnPosition)) {
-      childrens.unshift(React.createElement(cellEl, { key: 'selection' }));
+      childrens.unshift(React.createElement(cellEl, { key: "selection" }));
     } else {
-      childrens.push(React.createElement(cellEl, { key: 'selection' }));
+      childrens.push(React.createElement(cellEl, { key: "selection" }));
     }
   }
 
-  if (expandRow.showExpandColumn) {
+  if (expandRow && expandRow.showExpandColumn) {
     if (isRenderFunctionColumnInLeft(expandRow.expandColumnPosition)) {
-      childrens.unshift(React.createElement(cellEl, { key: 'expansion' }));
+      childrens.unshift(React.createElement(cellEl, { key: "expansion" }));
     } else {
-      childrens.push(React.createElement(cellEl, { key: 'expansion' }));
+      childrens.push(React.createElement(cellEl, { key: "expansion" }));
     }
   }
 
-  // @ts-expect-error TS(7026): JSX element implicitly has type 'any' because no i... Remove this comment to see the full error message
-  return <tr { ...rest }>{ childrens }</tr>;
+  return <tr {...rest}>{childrens}</tr>;
 };
 
-RowTemplate.propTypes = {
-  renderContent: PropTypes.func.isRequired,
-  cellEl: PropTypes.string.isRequired,
-  selectRow: PropTypes.object,
-  expandRow: PropTypes.object
-};
+// RowTemplate.propTypes = {
+//   renderContent: PropTypes.func.isRequired,
+//   cellEl: PropTypes.string.isRequired,
+//   selectRow: PropTypes.object,
+//   expandRow: PropTypes.object
+// };
 
 export default RowTemplate;

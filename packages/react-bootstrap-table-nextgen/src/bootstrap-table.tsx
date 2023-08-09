@@ -1,34 +1,77 @@
-/* eslint camelcase: 0 */
-/* eslint arrow-body-style: 0 */
+import cs from "classnames";
+import React from "react";
 
-// @ts-expect-error TS(7016): Could not find a declaration file for module 'reac... Remove this comment to see the full error message
-import React, { Component } from 'react';
-// @ts-expect-error TS(7016): Could not find a declaration file for module 'prop... Remove this comment to see the full error message
-import PropTypes from 'prop-types';
-import cs from 'classnames';
+import Body from "./body";
+import Caption from "./caption";
+import Const from "./const";
+import Filters from "./filters";
+import Footer from "./footer";
+import Header from "./header";
+import PropsBaseResolver from "./props-resolver";
+import _ from "./utils";
 
-// @ts-expect-error TS(6142): Module './header' was resolved to '/Users/terrence... Remove this comment to see the full error message
-import Header from './header';
-// @ts-expect-error TS(6142): Module './filters' was resolved to '/Users/terrenc... Remove this comment to see the full error message
-import Filters from './filters';
-// @ts-expect-error TS(6142): Module './caption' was resolved to '/Users/terrenc... Remove this comment to see the full error message
-import Caption from './caption';
-// @ts-expect-error TS(6142): Module './body' was resolved to '/Users/terrence/P... Remove this comment to see the full error message
-import Body from './body';
-// @ts-expect-error TS(6142): Module './footer' was resolved to '/Users/terrence... Remove this comment to see the full error message
-import Footer from './footer';
-import PropsBaseResolver from './props-resolver';
-import Const from './const';
-import _ from './utils';
+interface BootstrapTableProps {
+  keyField: string;
+  data: any[];
+  columns: any[];
+  bootstrap4?: boolean;
+  remote?: boolean | { pagination: boolean };
+  noDataIndication?: React.ReactNode | (() => React.ReactNode);
+  striped?: boolean;
+  bordered?: boolean;
+  hover?: boolean;
+  tabIndexCell?: boolean;
+  id?: string;
+  classes?: string;
+  headerClasses?: string;
+  bodyClasses?: string;
+  wrapperClasses?: string;
+  headerWrapperClasses?: string;
+  condensed?: boolean;
+  caption?: React.ReactNode | string;
+  pagination?: any;
+  filter?: any;
+  cellEdit?: any;
+  selectRow?: any;
+  expandRow?: any;
+  rowStyle?:
+    | React.CSSProperties
+    | ((row: any, rowIndex: number) => React.CSSProperties);
+  rowEvents?: Record<string, any>;
+  rowClasses?: string | ((row: any, rowIndex: number) => string);
+  filtersClasses?: string;
+  filterPosition?: string;
+  footerClasses?: string;
+  defaultSorted?: Array<{ dataField: string; order: string }>;
+  sort?: {
+    dataField: string;
+    order: string;
+    sortFunc?: (a: any, b: any, order: string, dataField: string) => number;
+    sortCaret?: (order: string, column: any) => JSX.Element;
+  };
+  defaultSortDirection?: string;
+  overlay?: (loading: boolean) => JSX.Element;
+  onTableChange?: (type: string, newState: Record<string, any>) => void;
+  onSort?: (field: string, order: string) => void;
+  onFilter?: (filterData: Record<string, any>) => void;
+  onExternalFilter?: (filterData: Record<string, any>) => void;
+  onDataSizeChange?: (options: { dataSize: number }) => void;
+  search?: {
+    searchText: string;
+    searchContext: (cell: any, filterValue: string, row: any) => boolean;
+  };
+  setDependencyModules?: (deps: Record<string, any>) => void;
+}
 
-class BootstrapTable extends PropsBaseResolver(Component) {
-  constructor(props: any) {
-    // @ts-expect-error TS(2554): Expected 0 arguments, but got 1.
-    super(props);
+class BootstrapTable extends PropsBaseResolver(
+  React.Component<BootstrapTableProps>
+) {
+  constructor(props: BootstrapTableProps) {
+    super();
     this.validateProps();
   }
 
-  UNSAFE_componentWillReceiveProps(nextProps: any) {
+  UNSAFE_componentWillReceiveProps(nextProps: BootstrapTableProps) {
     if (nextProps.onDataSizeChange && !nextProps.pagination) {
       if (nextProps.data.length !== this.props.data.length) {
         nextProps.onDataSizeChange({ dataSize: nextProps.data.length });
@@ -39,18 +82,13 @@ class BootstrapTable extends PropsBaseResolver(Component) {
   // Exposed APIs
   getData = () => {
     return this.visibleRows();
-  }
+  };
 
   render() {
     const { loading, overlay } = this.props;
     if (overlay) {
       const LoadingOverlay = overlay(loading);
-      return (
-        // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-        <LoadingOverlay>
-          { this.renderTable() }
-        </LoadingOverlay>
-      );
+      return <LoadingOverlay>{this.renderTable()}</LoadingOverlay>;
     }
     return this.renderTable();
   }
@@ -76,231 +114,92 @@ class BootstrapTable extends PropsBaseResolver(Component) {
       selectRow,
       expandRow,
       cellEdit,
-      filterPosition
+      filterPosition,
     } = this.props;
 
-    const tableWrapperClass = cs('react-bootstrap-table', wrapperClasses);
+    const tableWrapperClass = cs("react-bootstrap-table", wrapperClasses);
 
-    const tableClass = cs('table', {
-      'table-striped': striped,
-      'table-hover': hover,
-      'table-bordered': bordered,
-      [bootstrap4 ? 'table-sm' : 'table-condensed']: condensed
-    }, classes);
+    const tableClass = cs(
+      "table",
+      {
+        "table-striped": striped,
+        "table-hover": hover,
+        "table-bordered": bordered,
+        [bootstrap4 ? "table-sm" : "table-condensed"]: condensed,
+      },
+      classes
+    );
 
-    const hasFilters = columns.some((col: any) => col.filter || col.filterRenderer);
+    const hasFilters = columns.some((col: { filter: any; filterRenderer: any; }) => col.filter || col.filterRenderer);
 
-    const hasFooter = _.filter(columns, (col: any) => _.has(col, 'footer')).length > 0;
+    const hasFooter =
+      _.filter(columns, (col) => _.has(col, "footer")).length > 0;
 
-    const tableCaption = (
-      // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-      caption && <Caption bootstrap4={ bootstrap4 }>{ caption }</Caption>
+    const tableCaption = caption && (
+      <Caption bootstrap4={bootstrap4}>{caption}</Caption>
     );
 
     return (
-      // @ts-expect-error TS(7026): JSX element implicitly has type 'any' because no i... Remove this comment to see the full error message
-      <div className={ tableWrapperClass }>
-        // @ts-expect-error TS(7026): JSX element implicitly has type 'any' because no i... Remove this comment to see the full error message
-        <table id={ id } className={ tableClass }>
-          { tableCaption }
-          // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
+      <div className={tableWrapperClass}>
+        <table id={id} className={tableClass}>
+          {tableCaption}
           <Header
-            columns={ columns }
-            className={ this.props.headerClasses }
-            wrapperClasses={ this.props.headerWrapperClasses }
-            sortField={ this.props.sortField }
-            sortOrder={ this.props.sortOrder }
-            onSort={ this.props.onSort }
-            globalSortCaret={ this.props.sort && this.props.sort.sortCaret }
-            onFilter={ this.props.onFilter }
-            currFilters={ this.props.currFilters }
-            onExternalFilter={ this.props.onExternalFilter }
-            selectRow={ selectRow }
-            expandRow={ expandRow }
-            filterPosition={ filterPosition }
+            columns={columns}
+            className={this.props.headerClasses}
+            wrapperClasses={this.props.headerWrapperClasses}
+            sortField={this.props.sortField}
+            sortOrder={this.props.sortOrder}
+            onSort={this.props.onSort}
+            globalSortCaret={this.props.sort && this.props.sort.sortCaret}
+            onFilter={this.props.onFilter}
+            currFilters={this.props.currFilters}
+            onExternalFilter={this.props.onExternalFilter}
+            selectRow={selectRow}
+            expandRow={expandRow}
+            filterPosition={filterPosition}
           />
           {hasFilters && filterPosition !== Const.FILTERS_POSITION_INLINE && (
-            // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
             <Filters
-              columns={ columns }
-              className={ this.props.filtersClasses }
-              onSort={ this.props.onSort }
-              onFilter={ this.props.onFilter }
-              currFilters={ this.props.currFilters }
-              filterPosition={ this.props.filterPosition }
-              onExternalFilter={ this.props.onExternalFilter }
-              selectRow={ selectRow }
-              expandRow={ expandRow }
+              columns={columns}
+              className={this.props.filtersClasses}
+              onSort={this.props.onSort}
+              onFilter={this.props.onFilter}
+              currFilters={this.props.currFilters}
+              filterPosition={this.props.filterPosition}
+              onExternalFilter={this.props.onExternalFilter}
+              selectRow={selectRow}
+              expandRow={expandRow}
             />
           )}
-          // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
           <Body
-            className={ this.props.bodyClasses }
-            data={ this.getData() }
-            keyField={ keyField }
-            tabIndexCell={ tabIndexCell }
-            columns={ columns }
-            isEmpty={ this.isEmpty() }
-            visibleColumnSize={ this.visibleColumnSize() }
-            noDataIndication={ noDataIndication }
-            cellEdit={ cellEdit }
-            selectRow={ selectRow }
-            expandRow={ expandRow }
-            rowStyle={ rowStyle }
-            rowClasses={ rowClasses }
-            rowEvents={ rowEvents }
+            className={this.props.bodyClasses}
+            data={this.getData()}
+            keyField={keyField}
+            tabIndexCell={tabIndexCell}
+            columns={columns}
+            isEmpty={this.isEmpty()}
+            visibleColumnSize={this.visibleColumnSize()}
+            noDataIndication={noDataIndication}
+            cellEdit={cellEdit}
+            selectRow={selectRow}
+            expandRow={expandRow}
+            rowStyle={rowStyle}
+            rowClasses={rowClasses}
+            rowEvents={rowEvents}
           />
           {hasFooter && (
-            // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
             <Footer
-              data={ this.getData() }
-              columns={ columns }
-              selectRow={ selectRow }
-              expandRow={ expandRow }
-              className={ this.props.footerClasses }
+              data={this.getData()}
+              columns={columns}
+              selectRow={selectRow}
+              expandRow={expandRow}
+              className={this.props.footerClasses}
             />
           )}
-        // @ts-expect-error TS(7026): JSX element implicitly has type 'any' because no i... Remove this comment to see the full error message
         </table>
-      // @ts-expect-error TS(7026): JSX element implicitly has type 'any' because no i... Remove this comment to see the full error message
       </div>
     );
   }
 }
-
-// @ts-expect-error TS(2339): Property 'propTypes' does not exist on type 'typeo... Remove this comment to see the full error message
-BootstrapTable.propTypes = {
-  keyField: PropTypes.string.isRequired,
-  data: PropTypes.array.isRequired,
-  columns: PropTypes.array.isRequired,
-  bootstrap4: PropTypes.bool,
-  remote: PropTypes.oneOfType([PropTypes.bool, PropTypes.shape({
-    pagination: PropTypes.bool
-  })]),
-  noDataIndication: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
-  striped: PropTypes.bool,
-  bordered: PropTypes.bool,
-  hover: PropTypes.bool,
-  tabIndexCell: PropTypes.bool,
-  id: PropTypes.string,
-  classes: PropTypes.string,
-  headerClasses: PropTypes.string,
-  bodyClasses: PropTypes.string,
-  wrapperClasses: PropTypes.string,
-  headerWrapperClasses: PropTypes.string,
-  condensed: PropTypes.bool,
-  caption: PropTypes.oneOfType([
-    PropTypes.node,
-    PropTypes.string
-  ]),
-  pagination: PropTypes.object,
-  filter: PropTypes.object,
-  cellEdit: PropTypes.object,
-  selectRow: PropTypes.shape({
-    mode: PropTypes.oneOf([
-      Const.ROW_SELECT_SINGLE,
-      Const.ROW_SELECT_MULTIPLE,
-      Const.ROW_SELECT_DISABLED
-    ]).isRequired,
-    clickToSelect: PropTypes.bool,
-    clickToExpand: PropTypes.bool,
-    clickToEdit: PropTypes.bool,
-    hideSelectAll: PropTypes.bool,
-    onSelect: PropTypes.func,
-    onSelectAll: PropTypes.func,
-    style: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-    classes: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
-    nonSelectable: PropTypes.array,
-    nonSelectableStyle: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
-    nonSelectableClasses: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
-    bgColor: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
-    hideSelectColumn: PropTypes.bool,
-    selectionRenderer: PropTypes.func,
-    selectionHeaderRenderer: PropTypes.func,
-    headerColumnStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-    selectColumnStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-    selectColumnPosition: PropTypes.oneOf([
-      Const.INDICATOR_POSITION_LEFT,
-      Const.INDICATOR_POSITION_RIGHT
-    ])
-  }),
-  expandRow: PropTypes.shape({
-    renderer: PropTypes.func,
-    expanded: PropTypes.array,
-    onExpand: PropTypes.func,
-    onExpandAll: PropTypes.func,
-    nonExpandable: PropTypes.array,
-    showExpandColumn: PropTypes.bool,
-    onlyOneExpanding: PropTypes.bool,
-    expandByColumnOnly: PropTypes.bool,
-    expandColumnRenderer: PropTypes.func,
-    expandHeaderColumnRenderer: PropTypes.func,
-    expandColumnPosition: PropTypes.oneOf([
-      Const.INDICATOR_POSITION_LEFT,
-      Const.INDICATOR_POSITION_RIGHT
-    ]),
-    className: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
-    parentClassName: PropTypes.oneOfType([PropTypes.string, PropTypes.func])
-  }),
-  rowStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-  rowEvents: PropTypes.object,
-  rowClasses: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
-  filtersClasses: PropTypes.string,
-  filterPosition: PropTypes.oneOf([
-    Const.FILTERS_POSITION_TOP,
-    Const.FILTERS_POSITION_INLINE,
-    Const.FILTERS_POSITION_BOTTOM
-  ]),
-  footerClasses: PropTypes.string,
-  defaultSorted: PropTypes.arrayOf(PropTypes.shape({
-    dataField: PropTypes.string.isRequired,
-    order: PropTypes.oneOf([Const.SORT_DESC, Const.SORT_ASC]).isRequired
-  })),
-  sort: PropTypes.shape({
-    dataField: PropTypes.string,
-    order: PropTypes.oneOf([Const.SORT_DESC, Const.SORT_ASC]),
-    sortFunc: PropTypes.func,
-    sortCaret: PropTypes.func
-  }),
-  defaultSortDirection: PropTypes.oneOf([Const.SORT_DESC, Const.SORT_ASC]),
-  overlay: PropTypes.func,
-  onTableChange: PropTypes.func,
-  onSort: PropTypes.func,
-  onFilter: PropTypes.func,
-  onExternalFilter: PropTypes.func,
-  onDataSizeChange: PropTypes.func,
-  // Inject from toolkit
-  search: PropTypes.shape({
-    searchText: PropTypes.string,
-    searchContext: PropTypes.func
-  }),
-  setDependencyModules: PropTypes.func
-};
-
-// @ts-expect-error TS(2339): Property 'defaultProps' does not exist on type 'ty... Remove this comment to see the full error message
-BootstrapTable.defaultProps = {
-  bootstrap4: false,
-  remote: false,
-  striped: false,
-  bordered: true,
-  hover: false,
-  condensed: false,
-  noDataIndication: null,
-  selectRow: {
-    mode: Const.ROW_SELECT_DISABLED,
-    selected: [],
-    hideSelectColumn: true
-  },
-  expandRow: {
-    renderer: undefined,
-    expanded: [],
-    nonExpandable: []
-  },
-  cellEdit: {
-    mode: null,
-    nonEditableRows: []
-  },
-  filterPosition: Const.FILTERS_POSITION_INLINE
-};
 
 export default BootstrapTable;

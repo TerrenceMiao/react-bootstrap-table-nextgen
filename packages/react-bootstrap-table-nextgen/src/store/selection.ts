@@ -2,9 +2,9 @@ import _ from '../utils';
 import { getRowByRowId } from './rows';
 
 export const getSelectionSummary = (
-  data = [],
+  data: any[] = [],
   keyField: any,
-  selected = []
+  selected: any[] = []
 ) => {
   let allRowsSelected = data.length > 0;
   let allRowsNotSelected = true;
@@ -24,7 +24,7 @@ export const getSelectionSummary = (
   };
 };
 
-export const selectableKeys = (data = [], keyField: any, skips = []) => {
+export const selectableKeys = (data: any[] = [], keyField: any, skips: any[] = []) => {
   if (skips.length === 0) {
     return data.map(row => _.get(row, keyField));
   }
@@ -40,6 +40,6 @@ export const unSelectableKeys = (selected: any, skips = []) => {
   return selected.filter((x: any) => _.contains(skips, x));
 };
 
-export const getSelectedRows = (data = [], keyField: any, selected: any) =>
+export const getSelectedRows = (data: any[] = [], keyField: any, selected: any) =>
   selected.map((k: any) => getRowByRowId(data, keyField, k)).filter((x: any) => !!x);
 

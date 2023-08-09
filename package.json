@@ -6,7 +6,7 @@
   "main": "index.js",
   "scripts": {
     "postinstall": "lerna bootstrap",
-    "build": "./node_modules/.bin/gulp prod",
+    "build": "tsc && ./node_modules/.bin/gulp prod",
     "lint": "eslint ./packages --ext .js --ext .jsx",
     "pretest": "yarn lint --cache",
     "test": "jest",
@@ -109,11 +109,19 @@
     "semver": "^7.5.2"
   },
   "dependencies": {
+    "@types/jest": "^29.5.3",
+    "@types/node": "^20.4.8",
+    "@types/prop-types": "^15.7.5",
+    "@types/react": "^18.2.18",
+    "@types/react-dom": "^18.2.7",
+    "@types/underscore": "^1.11.6",
     "classnames": "^2.3.1",
+    "csstype": "^3.1.2",
     "prop-types": "^15.8.1",
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
     "sass": "^1.56.1",
+    "typescript": "^5.1.6",
     "underscore": "^1.13.1"
   },
   "jest": {

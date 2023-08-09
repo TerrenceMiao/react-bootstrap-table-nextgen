@@ -1,60 +1,72 @@
-/* eslint react/prop-types: 0 */
-/* eslint react/require-default-props: 0 */
+import React, { Component, ReactNode } from "react";
 
-// @ts-expect-error TS(7016): Could not find a declaration file for module 'reac... Remove this comment to see the full error message
-import React from 'react';
-// @ts-expect-error TS(7016): Could not find a declaration file for module 'prop... Remove this comment to see the full error message
-import PropTypes from 'prop-types';
+import Const from "./const";
+import withRowExpansion from "./row-expand/row-consumer";
+import withRowSelection from "./row-selection/row-consumer";
+import RowAggregator from "./row/aggregate-row";
+import RowSection from "./row/row-section";
+import SimpleRow from "./row/simple-row";
+import _ from "./utils";
+import { RowProps } from "./row/should-updater";
 
-import _ from './utils';
-// @ts-expect-error TS(6142): Module './row/simple-row' was resolved to '/Users/... Remove this comment to see the full error message
-import SimpleRow from './row/simple-row';
-// @ts-expect-error TS(6142): Module './row/aggregate-row' was resolved to '/Use... Remove this comment to see the full error message
-import RowAggregator from './row/aggregate-row';
-// @ts-expect-error TS(6142): Module './row/row-section' was resolved to '/Users... Remove this comment to see the full error message
-import RowSection from './row/row-section';
-import Const from './const';
-// @ts-expect-error TS(6142): Module './row-selection/row-consumer' was resolved... Remove this comment to see the full error message
-import withRowSelection from './row-selection/row-consumer';
-// @ts-expect-error TS(6142): Module './row-expand/row-consumer' was resolved to... Remove this comment to see the full error message
-import withRowExpansion from './row-expand/row-consumer';
+interface BodyProps {
+  keyField: string;
+  data: any[];
+  columns: any[];
+  selectRow?: any;
+  cellEdit: any;
+  tabIndexCell: boolean;
+  isEmpty: boolean;
+  noDataIndication: string | (() => ReactNode);
+  visibleColumnSize: number;
+  rowStyle:
+    | React.CSSProperties
+    | ((row: any, index: number) => React.CSSProperties);
+  rowClasses: string | ((row: any, index: number) => string);
+  rowEvents: Record<string, any> | null;
+  expandRow: any;
+  className?: string;
+}
 
-class Body extends React.Component {
+class Body extends Component<BodyProps> {
   EditingCell: any;
   RowComponent: any;
-  props: any;
-  constructor(props: any) {
+
+  constructor(props: BodyProps) {
     super(props);
-    const {
-      keyField,
-      cellEdit,
-      selectRow,
-      expandRow
-    } = props;
+    const { keyField, cellEdit, selectRow, expandRow } = props;
 
     // Construct Editing Cell Component
     if (cellEdit.createContext) {
-      this.EditingCell = cellEdit.createEditingCell(_, cellEdit.options.onStartEdit);
+      this.EditingCell = cellEdit.createEditingCell(
+        _,
+        cellEdit.options.onStartEdit
+      );
     }
 
     // Construct Row Component
-    let RowComponent = SimpleRow;
-    const selectRowEnabled = selectRow.mode !== Const.ROW_SELECT_DISABLED;
-    const expandRowEnabled = !!expandRow.renderer;
+    let RowComponent: any;
+    
+    const selectRowEnabled = selectRow?.mode !== Const.ROW_SELECT_DISABLED;
+    const expandRowEnabled = !!expandRow?.renderer;
 
     if (expandRowEnabled) {
-      // @ts-expect-error TS(2322): Type '(props: any) => any' is not assignable to ty... Remove this comment to see the full error message
       RowComponent = withRowExpansion(RowAggregator);
+    } else if (selectRowEnabled) {
+      RowComponent = withRowSelection(
+        expandRowEnabled ? RowComponent : RowAggregator
+      );
+    } else if (cellEdit.createContext) {
+      RowComponent = cellEdit.withRowLevelCellEdit(
+        RowComponent,
+        selectRowEnabled,
+        keyField,
+        _
+      );
+    } else {
+      RowComponent = SimpleRow;
     }
 
-    if (selectRowEnabled) {
-      // @ts-expect-error TS(2322): Type '{ (props: any): any; displayName: string; }'... Remove this comment to see the full error message
-      RowComponent = withRowSelection(expandRowEnabled ? RowComponent : RowAggregator);
-    }
-
-    if (cellEdit.createContext) {
-      RowComponent = cellEdit.withRowLevelCellEdit(RowComponent, selectRowEnabled, keyField, _);
-    }
     this.RowComponent = RowComponent;
   }
 
@@ -73,37 +85,35 @@ class Body extends React.Component {
       rowClasses,
       rowEvents,
       expandRow,
-      className
+      className,
     } = this.props;
 
-    let content;
+    let content: ReactNode;
 
     if (isEmpty) {
-      const indication = _.isFunction(noDataIndication) ? noDataIndication() : noDataIndication;
+      const indication = _.isFunction(noDataIndication)
+        ? noDataIndication()
+        : noDataIndication;
       if (!indication) {
         return null;
       }
-      // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-      content = <RowSection content={ indication } colSpan={ visibleColumnSize } />;
+      content = <RowSection content={indication} colSpan={visibleColumnSize} />;
     } else {
-      const selectRowEnabled = selectRow.mode !== Const.ROW_SELECT_DISABLED;
-      const expandRowEnabled = !!expandRow.renderer;
+      const selectRowEnabled = selectRow?.mode !== Const.ROW_SELECT_DISABLED;
+      const expandRowEnabled = !!expandRow?.renderer;
 
-      const additionalRowProps = {};
+      const additionalRowProps: RowProps = {};
 
       if (cellEdit.createContext) {
-        // @ts-expect-error TS(2339): Property 'EditingCellComponent' does not exist on ... Remove this comment to see the full error message
         additionalRowProps.EditingCellComponent = this.EditingCell;
       }
 
       if (selectRowEnabled || expandRowEnabled) {
-        // @ts-expect-error TS(2339): Property 'expandRow' does not exist on type '{}'.
         additionalRowProps.expandRow = expandRow;
-        // @ts-expect-error TS(2339): Property 'selectRow' does not exist on type '{}'.
         additionalRowProps.selectRow = selectRow;
       }
 
-      content = data.map((row: any, index: any) => {
+      content = data.map((row, index) => {
         const key = _.get(row, keyField);
         const baseRowProps = {
           key,
@@ -116,32 +126,41 @@ class Body extends React.Component {
           rowIndex: index,
           visibleColumnSize,
           attrs: rowEvents || {},
-          ...additionalRowProps
+          ...additionalRowProps,
         };
 
-        // @ts-expect-error TS(2339): Property 'style' does not exist on type '{ key: an... Remove this comment to see the full error message
-        baseRowProps.style = _.isFunction(rowStyle) ? rowStyle(row, index) : rowStyle;
-        // @ts-expect-error TS(2339): Property 'className' does not exist on type '{ key... Remove this comment to see the full error message
-        baseRowProps.className = (_.isFunction(rowClasses) ? rowClasses(row, index) : rowClasses);
+        baseRowProps.style = _.isFunction(rowStyle)
+          ? rowStyle(row, index)
+          : rowStyle;
+        baseRowProps.className = _.isFunction(rowClasses)
+          ? rowClasses(row, index)
+          : rowClasses;
 
-        // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-        return <this.RowComponent { ...baseRowProps } />;
+        return <this.RowComponent {...baseRowProps} />;
       });
     }
 
-    return (
-      // @ts-expect-error TS(7026): JSX element implicitly has type 'any' because no i... Remove this comment to see the full error message
-      <tbody className={ className }>{ content }</tbody>
-    );
+    return <tbody className={className}>{content}</tbody>;
   }
 }
 
-// @ts-expect-error TS(2339): Property 'propTypes' does not exist on type 'typeo... Remove this comment to see the full error message
-Body.propTypes = {
-  keyField: PropTypes.string.isRequired,
-  data: PropTypes.array.isRequired,
-  columns: PropTypes.array.isRequired,
-  selectRow: PropTypes.object
-};
+// Body.propTypes = {
+//   keyField: PropTypes.string.isRequired,
+//   data: PropTypes.array.isRequired,
+//   columns: PropTypes.array.isRequired,
+//   selectRow: PropTypes.object,
+//   cellEdit: PropTypes.any.isRequired,
+//   tabIndexCell: PropTypes.bool.isRequired,
+//   isEmpty: PropTypes.bool.isRequired,
+//   noDataIndication: PropTypes.oneOfType([PropTypes.string, PropTypes.func])
+//     .isRequired,
+//   visibleColumnSize: PropTypes.number.isRequired,
+//   rowStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.func]).isRequired,
+//   rowClasses: PropTypes.oneOfType([PropTypes.string, PropTypes.func])
+//     .isRequired,
+//   rowEvents: PropTypes.object,
+//   expandRow: PropTypes.any.isRequired,
+//   className: PropTypes.string,
+// };
 
 export default Body;

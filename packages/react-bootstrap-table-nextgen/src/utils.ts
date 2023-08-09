@@ -1,15 +1,10 @@
 /* eslint no-empty: 0 */
 /* eslint no-param-reassign: 0 */
 /* eslint prefer-rest-params: 0 */
-// @ts-expect-error TS(7016): Could not find a declaration file for module 'unde... Remove this comment to see the full error message
-import _ from 'underscore';
+import _ from "underscore";
 
 function splitNested(str: any) {
-  return [str]
-    .join('.')
-    .replace(/\[/g, '.')
-    .replace(/\]/g, '')
-    .split('.');
+  return [str].join(".").replace(/\[/g, ".").replace(/\]/g, "").split(".");
 }
 
 function contains(list: any, value: any) {
@@ -39,7 +34,7 @@ function set(target: any, field: any, value: any, safe = false) {
   let level = 0;
   pathArray.reduce((a, b) => {
     level += 1;
-    if (typeof a[b] === 'undefined') {
+    if (typeof a[b] === "undefined") {
       if (!safe) throw new Error(`${a}.${b} is undefined`);
       a[b] = {};
       return a[b];
@@ -67,7 +62,7 @@ function isEmptyObject(obj: any) {
 }
 
 function isDefined(value: any) {
-  return typeof value !== 'undefined' && value !== null;
+  return typeof value !== "undefined" && value !== null;
 }
 
 function sleep(fn: any, ms: any) {
@@ -104,5 +99,5 @@ export default Object.assign(_, {
   isEmptyObject,
   sleep,
   debounce,
-  contains
+  contains,
 });

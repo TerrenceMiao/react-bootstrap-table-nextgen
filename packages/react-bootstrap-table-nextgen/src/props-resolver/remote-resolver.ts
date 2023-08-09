@@ -1,28 +1,44 @@
-// @ts-expect-error TS(7016): Could not find a declaration file for module 'even... Remove this comment to see the full error message
-import EventEmitter from 'events';
-import _ from '../utils';
+import EventEmitter from "events";
+import _ from "../utils";
 
-export default (ExtendBase: any) => class RemoteResolver extends ExtendBase {
-    constructor(props: any) {
+interface RemoteResolverProps {
+  remote: boolean | { [key: string]: any };
+  onTableChange: (action: string, state: any) => void;
+  data: any[];
+  pagination: {
+    options?: {
+      pageStartIndex?: number;
+    };
+  };
+  search: {
+    searchText: string;
+  };
+}
+
+export default (ExtendBase: any) =>
+  class RemoteResolver extends ExtendBase {
+    private remoteEmitter: EventEmitter;
+
+    constructor(props: RemoteResolverProps) {
       super(props);
       this.remoteEmitter = new EventEmitter();
-      this.remoteEmitter.on('paginationChange', this.handleRemotePageChange);
-      this.remoteEmitter.on('isRemotePagination', this.isRemotePagination);
+      this.remoteEmitter.on("paginationChange", this.handleRemotePageChange);
+      this.remoteEmitter.on("isRemotePagination", this.isRemotePagination);
     }
 
-    getNewestState = (state = {}) => {
-      let sortOrder;
-      let sortField;
-      let page;
-      let sizePerPage;
-      let searchText;
-      let filters = {};
+    getNewestState = (state: any = {}) => {
+      let sortOrder: string | undefined;
+      let sortField: string | undefined;
+      let page: number | undefined;
+      let sizePerPage: number | undefined;
+      let searchText: string | undefined;
+      let filters: any = {};
 
       if (this.sortContext) {
         sortOrder = this.sortContext.state.sortOrder;
-        sortField = this.sortContext.state.sortColumn ?
-          this.sortContext.state.sortColumn.dataField :
-          null;
+        sortField = this.sortContext.state.sortColumn
+          ? this.sortContext.state.sortColumn.dataField
+          : null;
       }
 
       if (this.filterContext) {
@@ -46,62 +62,79 @@ export default (ExtendBase: any) => class RemoteResolver extends ExtendBase {
         sizePerPage,
         searchText,
         ...state,
-        data: this.props.data
+        data: this.props.data,
       };
-    }
+    };
 
     isRemoteSearch = () => {
       const { remote } = this.props;
-      return remote === true || (_.isObject(remote) && remote.search) || this.isRemotePagination();
-    }
+      return (
+        remote === true ||
+        (_.isObject(remote) && remote.search) ||
+        this.isRemotePagination()
+      );
+    };
 
-    isRemotePagination = (e = {}) => {
+    isRemotePagination = (e: any = {}) => {
       const { remote } = this.props;
-      // @ts-expect-error TS(2339): Property 'result' does not exist on type '{}'.
-      e.result = (remote === true || (_.isObject(remote) && remote.pagination));
-      // @ts-expect-error TS(2339): Property 'result' does not exist on type '{}'.
+      e.result = remote === true || (_.isObject(remote) && remote.pagination);
       return e.result;
-    }
+    };
 
     isRemoteFiltering = () => {
       const { remote } = this.props;
-      return remote === true || (_.isObject(remote) && remote.filter) || this.isRemotePagination();
-    }
+      return (
+        remote === true ||
+        (_.isObject(remote) && remote.filter) ||
+        this.isRemotePagination()
+      );
+    };
 
     isRemoteSort = () => {
       const { remote } = this.props;
-      return remote === true || (_.isObject(remote) && remote.sort) || this.isRemotePagination();
-    }
+      return (
+        remote === true ||
+        (_.isObject(remote) && remote.sort) ||
+        this.isRemotePagination()
+      );
+    };
 
     isRemoteCellEdit = () => {
       const { remote } = this.props;
       return remote === true || (_.isObject(remote) && remote.cellEdit);
-    }
+    };
 
-    handleRemotePageChange = (page: any, sizePerPage: any) => {
-      this.props.onTableChange('pagination', this.getNewestState({ page, sizePerPage }));
-    }
+    handleRemotePageChange = (page: number, sizePerPage: number) => {
+      this.props.onTableChange(
+        "pagination",
+        this.getNewestState({ page, sizePerPage })
+      );
+    };
 
     handleRemoteFilterChange = (filters: any) => {
-      const newState = { filters };
+      const newState: { filters: any; page?: number } = { filters };
       if (this.isRemotePagination()) {
         const options = this.props.pagination.options || {};
-        // @ts-expect-error TS(2339): Property 'page' does not exist on type '{ filters:... Remove this comment to see the full error message
-        newState.page = _.isDefined(options.pageStartIndex) ? options.pageStartIndex : 1;
+        newState.page = _.isDefined(options.pageStartIndex)
+          ? options.pageStartIndex
+          : 1;
       }
-      this.props.onTableChange('filter', this.getNewestState(newState));
-    }
+      this.props.onTableChange("filter", this.getNewestState(newState));
+    };
 
-    handleRemoteSortChange = (sortField: any, sortOrder: any) => {
-      this.props.onTableChange('sort', this.getNewestState({ sortField, sortOrder }));
-    }
+    handleRemoteSortChange = (sortField: string, sortOrder: string) => {
+      this.props.onTableChange(
+        "sort",
+        this.getNewestState({ sortField, sortOrder })
+      );
+    };
 
-    handleRemoteCellChange = (rowId: any, dataField: any, newValue: any) => {
+    handleRemoteCellChange = (rowId: any, dataField: string, newValue: any) => {
       const cellEdit = { rowId, dataField, newValue };
-      this.props.onTableChange('cellEdit', this.getNewestState({ cellEdit }));
-    }
+      this.props.onTableChange("cellEdit", this.getNewestState({ cellEdit }));
+    };
 
-    handleRemoteSearchChange = (searchText: any) => {
-      this.props.onTableChange('search', this.getNewestState({ searchText }));
-    }
+    handleRemoteSearchChange = (searchText: string) => {
+      this.props.onTableChange("search", this.getNewestState({ searchText }));
+    };
   };

@@ -1,28 +1,87 @@
-/* eslint camelcase: 0 */
-/* eslint react/prop-types: 0 */
-// @ts-expect-error TS(7016): Could not find a declaration file for module 'reac... Remove this comment to see the full error message
-import React from 'react';
-// @ts-expect-error TS(7016): Could not find a declaration file for module 'prop... Remove this comment to see the full error message
-import PropTypes from 'prop-types';
-import Const from '../const';
-import _ from '../utils';
+import PropTypes from "prop-types";
+import React, { Component, createContext, ReactNode } from "react";
+import Const from "../const";
+import _ from "../utils";
 
-import dataOperator from '../store/operators';
-import { getSelectionSummary } from '../store/selection';
+import dataOperator from "../store/operators";
+import { getSelectionSummary } from "../store/selection";
 
-const SelectionContext = React.createContext();
-class SelectionProvider extends React.Component {
+export interface SelectionContextProps {
+  selected?: any[];
+  onRowSelect?: (
+    rowKey: any,
+    checked: boolean,
+    rowIndex: number,
+    e: any
+  ) => void;
+  onAllRowsSelect?: (e: any, isUnSelect: boolean) => void;
+  allRowsSelected?: boolean;
+  allRowsNotSelected?: boolean;
+  checkedStatus?: string;
+  mode?: string;
+  hideSelectColumn?: boolean;
+  clickToSelect?: boolean;
+  clickToSelectAndEditCell?: boolean;
+  onSelect?: (
+    row: any,
+    checked: boolean,
+    rowIndex: number,
+    e: any
+  ) => boolean | undefined;
+  onSelectAll?: (checked: boolean, selectedRows: any[], e: any) => void | any[];
+  nonSelectable?: any[];
+  hideSelectAll?: boolean;
+}
+
+interface SelectionProviderProps {
+  children: ReactNode;
+  data: any[];
+  keyField: string;
+  selectRow: {
+    selected?: any[];
+    mode?: string;
+    hideSelectColumn?: boolean;
+    clickToSelect?: boolean;
+    clickToSelectAndEditCell?: boolean;
+    onSelect?: (
+      row: any,
+      checked: boolean,
+      rowIndex: number,
+      e: any
+    ) => boolean;
+    onSelectAll?: (
+      checked: boolean,
+      selectedRows: any[],
+      e: any
+    ) => void | any[];
+    nonSelectable?: any[];
+  };
+}
+
+const SelectionContext = createContext<SelectionContextProps | undefined>(
+  undefined
+);
+
+class SelectionProvider extends Component<SelectionProviderProps> {
   static propTypes = {
     children: PropTypes.node.isRequired,
     data: PropTypes.array.isRequired,
-    keyField: PropTypes.string.isRequired
-  }
+    keyField: PropTypes.string.isRequired,
+    selectRow: PropTypes.shape({
+      selected: PropTypes.array,
+      mode: PropTypes.string,
+      hideSelectColumn: PropTypes.bool,
+      clickToSelect: PropTypes.bool,
+      clickToSelectAndEditCell: PropTypes.bool,
+      onSelect: PropTypes.func,
+      onSelectAll: PropTypes.func,
+      nonSelectable: PropTypes.array,
+    }),
+  };
 
-  forceUpdate: any;
-  props: any;
-  selected: any;
+  selected: any[];
 
-  constructor(props: any) {
+  constructor(props: SelectionProviderProps) {
     super(props);
     this.selected = props.selectRow.selected || [];
   }
@@ -32,14 +91,24 @@ class SelectionProvider extends React.Component {
     return this.selected;
   }
 
-  UNSAFE_componentWillReceiveProps(nextProps: any) {
-    if (nextProps.selectRow) {
-      this.selected = nextProps.selectRow.selected || this.selected;
+  componentDidUpdate(prevProps: SelectionProviderProps) {
+    const { selectRow } = this.props;
+    if (selectRow) {
+      this.selected = selectRow.selected || this.selected;
     }
   }
 
-  handleRowSelect = (rowKey: any, checked: any, rowIndex: any, e: any) => {
-    const { data, keyField, selectRow: { mode, onSelect } } = this.props;
+  handleRowSelect = (
+    rowKey: any,
+    checked: boolean,
+    rowIndex: number,
+    e: any
+  ) => {
+    const {
+      data,
+      keyField,
+      selectRow: { mode, onSelect },
+    } = this.props;
     const { ROW_SELECT_SINGLE } = Const;
 
     let currSelected = [...this.selected];
@@ -51,35 +120,36 @@ class SelectionProvider extends React.Component {
     }
 
     if (result === true || result === undefined) {
-      if (mode === ROW_SELECT_SINGLE) { // when select mode is radio
+      if (mode === ROW_SELECT_SINGLE) {
         currSelected = [rowKey];
-      } else if (checked) { // when select mode is checkbox
+      } else if (checked) {
         currSelected.push(rowKey);
       } else {
-        currSelected = currSelected.filter(value => value !== rowKey);
+        currSelected = currSelected.filter((value) => value !== rowKey);
       }
     }
     this.selected = currSelected;
     this.forceUpdate();
-  }
+  };
 
-  handleAllRowsSelect = (e: any, isUnSelect: any) => {
+  handleAllRowsSelect = (e: any, isUnSelect: boolean) => {
     const {
       data,
       keyField,
-      selectRow: {
-        onSelectAll,
-        nonSelectable
-      }
+      selectRow: { onSelectAll, nonSelectable },
     } = this.props;
     const { selected } = this;
 
     let currSelected;
 
     if (!isUnSelect) {
-      currSelected = selected.concat(dataOperator.selectableKeys(data, keyField, nonSelectable));
+      currSelected = selected.concat(
+        dataOperator.selectableKeys(data, keyField, nonSelectable)
+      );
     } else {
-      currSelected = selected.filter((s: any) => typeof data.find((d: any) => _.get(d, keyField) === s) === 'undefined');
+      currSelected = selected.filter(
+        (s) => typeof data.find((d) => _.get(d, keyField) === s) === "undefined"
+      );
     }
 
     let result;
@@ -99,39 +169,35 @@ class SelectionProvider extends React.Component {
     }
     this.selected = currSelected;
     this.forceUpdate();
-  }
+  };
 
   render() {
-    const {
-      allRowsSelected,
-      allRowsNotSelected
-    } = getSelectionSummary(
+    const { allRowsSelected, allRowsNotSelected } = getSelectionSummary(
       this.props.data,
       this.props.keyField,
       this.selected
     );
 
-    let checkedStatus;
+    let checkedStatus: string;
 
-    // checkbox status depending on selected rows counts
     if (allRowsSelected) checkedStatus = Const.CHECKBOX_STATUS_CHECKED;
-    else if (allRowsNotSelected) checkedStatus = Const.CHECKBOX_STATUS_UNCHECKED;
+    else if (allRowsNotSelected)
+      checkedStatus = Const.CHECKBOX_STATUS_UNCHECKED;
     else checkedStatus = Const.CHECKBOX_STATUS_INDETERMINATE;
 
     return (
-      // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
       <SelectionContext.Provider
-        value={ {
+        value={{
           ...this.props.selectRow,
           selected: this.selected,
           onRowSelect: this.handleRowSelect,
           onAllRowsSelect: this.handleAllRowsSelect,
           allRowsSelected,
           allRowsNotSelected,
-          checkedStatus
-        } }
+          checkedStatus,
+        }}
       >
-        { this.props.children }
+        {this.props.children}
       </SelectionContext.Provider>
     );
   }
@@ -139,5 +205,5 @@ class SelectionProvider extends React.Component {
 
 export default {
   Provider: SelectionProvider,
-  Consumer: SelectionContext.Consumer
+  Consumer: SelectionContext.Consumer,
 };

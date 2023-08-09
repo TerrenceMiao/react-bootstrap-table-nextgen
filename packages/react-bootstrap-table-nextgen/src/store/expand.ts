@@ -4,7 +4,7 @@ import { getRowByRowId } from './rows';
 export const isAnyExpands = (
   data: any,
   keyField: any,
-  expanded = []
+  expanded: any[] = []
 ) => {
   for (let i = 0; i < data.length; i += 1) {
     const rowKey = _.get(data[i], keyField);
@@ -15,7 +15,7 @@ export const isAnyExpands = (
   return false;
 };
 
-export const expandableKeys = (data: any, keyField: any, skips = []) => {
+export const expandableKeys = (data: any, keyField: any, skips: any[] = []) => {
   if (skips.length === 0) {
     return data.map((row: any) => _.get(row, keyField));
   }

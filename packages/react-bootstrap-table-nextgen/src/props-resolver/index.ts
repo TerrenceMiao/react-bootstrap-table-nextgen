@@ -1,14 +1,15 @@
-import _ from '../utils';
-import ColumnResolver from './column-resolver';
+import _ from "../utils";
+import ColumnResolver from "./column-resolver";
 
-export default (ExtendBase: any) => class TableResolver extends ColumnResolver(ExtendBase) {
+export default (ExtendBase: any) =>
+  class TableResolver extends ColumnResolver(ExtendBase) {
     validateProps() {
       const { keyField } = this.props;
       if (!keyField) {
-        throw new Error('Please specify a field as key via keyField');
+        throw new Error("Please specify a field as key via keyField");
       }
       if (this.visibleColumnSize(false) <= 0) {
-        throw new Error('No visible columns detected');
+        throw new Error("No visible columns detected");
       }
     }
 

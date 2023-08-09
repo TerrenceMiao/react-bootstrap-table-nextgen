@@ -1,12 +1,15 @@
-// @ts-expect-error TS(7016): Could not find a declaration file for module 'reac... Remove this comment to see the full error message
 import React from 'react';
-// @ts-expect-error TS(6142): Module '../contexts/row-expand-context' was resolv... Remove this comment to see the full error message
-import ExpansionContext from '../contexts/row-expand-context';
+import ExpansionContext, { RowExpandContextValue } from '../contexts/row-expand-context';
+import { ExpansionHeaderCellProps } from './expand-header-cell';
 
-export default (Component: any) => () => (
-  // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
+interface Props extends ExpansionHeaderCellProps {
+  expandRow?: RowExpandContextValue;
+}
+
+const withExpandContext = (Component: React.ComponentType<Props>) => () => (
   <ExpansionContext.Consumer>
-    // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-    { (expandRow: any) => <Component { ...expandRow } /> }
+    {expandRow => <Component expandRow={expandRow} />}
   </ExpansionContext.Consumer>
 );
+
+export default withExpandContext;

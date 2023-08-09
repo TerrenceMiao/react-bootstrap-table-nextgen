@@ -1,16 +1,41 @@
-/* eslint
-  react/require-default-props: 0
-  jsx-a11y/no-noninteractive-element-interactions: 0
-*/
-// @ts-expect-error TS(7016): Could not find a declaration file for module 'reac... Remove this comment to see the full error message
-import React, { Component } from 'react';
-// @ts-expect-error TS(7016): Could not find a declaration file for module 'prop... Remove this comment to see the full error message
-import PropTypes from 'prop-types';
-import Const from '../const';
-import _ from '../utils';
-import { BootstrapContext } from '../contexts/bootstrap';
+import PropTypes from "prop-types";
+import React, { Component, MouseEvent } from "react";
+import Const from "../const";
+import { BootstrapContext } from "../contexts/bootstrap";
+import _ from "../utils";
 
-export default class SelectionCell extends Component {
+interface SelectionCellProps {
+  mode: string;
+  rowKey: any;
+  selected: boolean;
+  onRowSelect: (
+    rowKey: any,
+    checked: boolean,
+    rowIndex: number,
+    e: MouseEvent
+  ) => void;
+  disabled?: boolean;
+  rowIndex?: number;
+  tabIndex?: number;
+  clickToSelect?: boolean;
+  selectionRenderer?: (args: {
+    mode: string;
+    checked: boolean;
+    disabled: boolean;
+    rowIndex?: number;
+    rowKey: any;
+  }) => React.ReactNode;
+  selectColumnStyle?:
+    | React.CSSProperties
+    | ((args: {
+        checked: boolean;
+        disabled: boolean;
+        rowIndex?: number;
+        rowKey: any;
+      }) => React.CSSProperties);
+}
+
+export default class SelectionCell extends Component<SelectionCellProps> {
   static propTypes = {
     mode: PropTypes.string.isRequired,
     rowKey: PropTypes.any,
@@ -21,17 +46,15 @@ export default class SelectionCell extends Component {
     tabIndex: PropTypes.number,
     clickToSelect: PropTypes.bool,
     selectionRenderer: PropTypes.func,
-    selectColumnStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.func])
-  }
+    selectColumnStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+  };
 
-  props: any;
-
-  constructor() {
-    super();
+  constructor(props: SelectionCellProps) {
+    super(props);
     this.handleClick = this.handleClick.bind(this);
   }
 
-  shouldComponentUpdate(nextProps: any) {
+  shouldComponentUpdate(nextProps: SelectionCellProps) {
     const shouldUpdate =
       this.props.rowIndex !== nextProps.rowIndex ||
       this.props.selected !== nextProps.selected ||
@@ -43,21 +66,19 @@ export default class SelectionCell extends Component {
     return shouldUpdate;
   }
 
-  handleClick(e: any) {
+  handleClick(e: MouseEvent<HTMLTableCellElement>) {
     const {
       mode: inputType,
       rowKey,
       selected,
       onRowSelect,
-      disabled,
-      rowIndex
+      disabled = false,
+      rowIndex = -1,
     } = this.props;
     e.stopPropagation();
     if (disabled) return;
 
-    const checked = inputType === Const.ROW_SELECT_SINGLE
-      ? true
-      : !selected;
+    const checked = inputType === Const.ROW_SELECT_SINGLE ? true : !selected;
 
     onRowSelect(rowKey, checked, rowIndex, e);
   }
@@ -67,58 +88,48 @@ export default class SelectionCell extends Component {
       rowKey,
       mode: inputType,
       selected,
-      disabled,
-      tabIndex,
+      disabled = false,
+      tabIndex = -1,
       rowIndex,
       selectionRenderer,
-      selectColumnStyle
+      selectColumnStyle,
     } = this.props;
 
-    const attrs = {};
-    // @ts-expect-error TS(2339): Property 'tabIndex' does not exist on type '{}'.
+    const attrs: React.HTMLAttributes<HTMLTableCellElement> = {};
     if (tabIndex !== -1) attrs.tabIndex = tabIndex;
 
-    // @ts-expect-error TS(2339): Property 'style' does not exist on type '{}'.
-    attrs.style = _.isFunction(selectColumnStyle) ?
-      selectColumnStyle({
-        checked: selected,
-        disabled,
-        rowIndex,
-        rowKey
-      }) :
-      selectColumnStyle;
+    attrs.style = _.isFunction(selectColumnStyle)
+      ? selectColumnStyle({
+          checked: selected,
+          disabled,
+          rowIndex,
+          rowKey,
+        })
+      : selectColumnStyle;
 
     return (
-      // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
       <BootstrapContext.Consumer>
-        {
-          ({
-            bootstrap4
-          }: any) => (
-            // @ts-expect-error TS(7026): JSX element implicitly has type 'any' because no i... Remove this comment to see the full error message
-            <td className="selection-cell" onClick={ this.handleClick } { ...attrs }>
-              {
-                selectionRenderer ? selectionRenderer({
-                  mode: inputType,
-                  checked: selected,
-                  disabled,
-                  rowIndex,
-                  rowKey
-                }) : (
-                  // @ts-expect-error TS(7026): JSX element implicitly has type 'any' because no i... Remove this comment to see the full error message
-                  <input
-                    type={ inputType }
-                    checked={ selected }
-                    disabled={ disabled }
-                    className={ bootstrap4 ? 'selection-input-4' : '' }
-                    onChange={ () => {} }
-                  />
-                )
-              }
-            // @ts-expect-error TS(7026): JSX element implicitly has type 'any' because no i... Remove this comment to see the full error message
-            </td>
-          )
-        }
+        {({ bootstrap4 }) => (
+          <td className="selection-cell" onClick={this.handleClick} {...attrs}>
+            {selectionRenderer ? (
+              selectionRenderer({
+                mode: inputType,
+                checked: selected,
+                disabled,
+                rowIndex,
+                rowKey,
+              })
+            ) : (
+              <input
+                type={inputType}
+                checked={selected}
+                disabled={disabled}
+                className={bootstrap4 ? "selection-input-4" : ""}
+                onChange={() => {}}
+              />
+            )}
+          </td>
+        )}
       </BootstrapContext.Consumer>
     );
   }

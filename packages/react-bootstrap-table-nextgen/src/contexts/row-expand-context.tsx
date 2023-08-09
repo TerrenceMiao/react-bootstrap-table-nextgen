@@ -1,39 +1,79 @@
-/* eslint camelcase: 0 */
-/* eslint react/prop-types: 0 */
-// @ts-expect-error TS(7016): Could not find a declaration file for module 'reac... Remove this comment to see the full error message
-import React from 'react';
-// @ts-expect-error TS(7016): Could not find a declaration file for module 'prop... Remove this comment to see the full error message
-import PropTypes from 'prop-types';
-import dataOperator from '../store/operators';
-import _ from '../utils';
+import PropTypes from "prop-types";
+import React, { Component, createContext, ReactNode } from "react";
+import dataOperator from "../store/operators";
+import _ from "../utils";
 
-const RowExpandContext = React.createContext();
+export interface RowExpandContextValue {
+  expanded: any[];
+  isClosing: any[];
+  nonExpandable?: any[];
+  onClosed: (closedRow: any) => void;
+  isAnyExpands: boolean;
+  onRowExpand: (
+    rowKey: any,
+    expanded: boolean,
+    rowIndex: number,
+    e: any
+  ) => void;
+  onAllRowExpand: (e: any, expandAll: boolean) => void;
+  onExpand?: (row: any, expanded: boolean, rowIndex: number, e: any) => void;
+  onExpandAll?: (expandAll: boolean, expandedRows: any[], e: any) => void;
+  onlyOneExpanding?: boolean;
+}
 
-class RowExpandProvider extends React.Component {
+interface RowExpandProviderProps {
+  children: ReactNode;
+  data: any[];
+  keyField: string;
+  expandRow: {
+    expanded?: any[];
+    isClosing?: any[];
+    onExpand?: (row: any, expanded: boolean, rowIndex: number, e: any) => void;
+    onExpandAll?: (expandAll: boolean, expandedRows: any[], e: any) => void;
+    onlyOneExpanding?: boolean;
+    nonExpandable?: any[];
+  };
+}
+
+const RowExpandContext = createContext<RowExpandContextValue | undefined>(
+  undefined
+);
+
+class RowExpandProvider extends Component<RowExpandProviderProps> {
   static propTypes = {
     children: PropTypes.node.isRequired,
     data: PropTypes.array.isRequired,
-    keyField: PropTypes.string.isRequired
+    keyField: PropTypes.string.isRequired,
+    expandRow: PropTypes.shape({
+      expanded: PropTypes.array,
+      isClosing: PropTypes.array,
+      onExpand: PropTypes.func,
+      onExpandAll: PropTypes.func,
+      onlyOneExpanding: PropTypes.bool,
+      nonExpandable: PropTypes.array,
+    }),
   };
 
-  props: any;
-  setState: any;
-
-  // @ts-expect-error TS(2729): Property 'props' is used before its initialization... Remove this comment to see the full error message
-  state = { expanded: this.props.expandRow.expanded || [],
-    // @ts-expect-error TS(2729): Property 'props' is used before its initialization... Remove this comment to see the full error message
-    isClosing: this.props.expandRow.isClosing || [] };
+  state = {
+    expanded: this.props.expandRow.expanded || [],
+    isClosing: this.props.expandRow.isClosing || [],
+  };
 
   onClosed = (closedRow: any) => {
-    this.setState({ isClosing: this.state.isClosing.filter((value: any) => value !== closedRow) });
+    this.setState({
+      isClosing: this.state.isClosing.filter((value) => value !== closedRow),
+    });
   };
 
-  UNSAFE_componentWillReceiveProps(nextProps: any) {
-    if (nextProps.expandRow) {
-      let nextExpanded = [...(nextProps.expandRow.expanded || this.state.expanded)];
-      const { nonExpandable = [] } = nextProps.expandRow;
-      nextExpanded = nextExpanded.filter(rowId => !_.contains(nonExpandable, rowId));
-      const isClosing = this.state.expanded.reduce((acc: any, cur: any) => {
+  componentDidUpdate(prevProps: RowExpandProviderProps) {
+    const { expandRow } = this.props;
+    if (expandRow) {
+      let nextExpanded = [...(expandRow.expanded || this.state.expanded)];
+      const { nonExpandable = [] } = expandRow;
+      nextExpanded = nextExpanded.filter(
+        (rowId) => !_.contains(nonExpandable, rowId)
+      );
+      const isClosing = this.state.expanded.reduce((acc, cur) => {
         if (!_.contains(nextExpanded, cur)) {
           acc.push(cur);
         }
@@ -42,17 +82,27 @@ class RowExpandProvider extends React.Component {
 
       this.setState(() => ({
         expanded: nextExpanded,
-        isClosing
+        isClosing,
       }));
     } else {
       this.setState(() => ({
-        expanded: this.state.expanded
+        expanded: this.state.expanded,
       }));
     }
   }
 
-  handleRowExpand = (rowKey: any, expanded: any, rowIndex: any, e: any) => {
-    const { data, keyField, expandRow: { onExpand, onlyOneExpanding, nonExpandable } } = this.props;
+  handleRowExpand = (
+    rowKey: any,
+    expanded: boolean,
+    rowIndex: number,
+    e: any
+  ) => {
+    const {
+      data,
+      keyField,
+      expandRow: { onExpand, onlyOneExpanding, nonExpandable },
+    } = this.props;
+
     if (nonExpandable && _.contains(nonExpandable, rowKey)) {
       return;
     }
@@ -67,37 +117,44 @@ class RowExpandProvider extends React.Component {
       } else currExpanded.push(rowKey);
     } else {
       isClosing.push(rowKey);
-      currExpanded = currExpanded.filter(value => value !== rowKey);
+      currExpanded = currExpanded.filter((value) => value !== rowKey);
     }
 
     if (onExpand) {
       const row = dataOperator.getRowByRowId(data, keyField, rowKey);
       onExpand(row, expanded, rowIndex, e);
     }
+
     this.setState(() => ({ expanded: currExpanded, isClosing }));
   };
 
-  handleAllRowExpand = (e: any, expandAll: any) => {
+  handleAllRowExpand = (e: any, expandAll: boolean) => {
     const {
       data,
       keyField,
-      expandRow: {
-        onExpandAll,
-        nonExpandable
-      }
+      expandRow: { onExpandAll, nonExpandable },
     } = this.props;
+
     const { expanded } = this.state;
 
-    let currExpanded: any;
+    let currExpanded: any[];
 
     if (expandAll) {
-      currExpanded = expanded.concat(dataOperator.expandableKeys(data, keyField, nonExpandable));
+      currExpanded = expanded.concat(
+        dataOperator.expandableKeys(data, keyField, nonExpandable)
+      );
     } else {
-      currExpanded = expanded.filter((s: any) => typeof data.find((d: any) => _.get(d, keyField) === s) === 'undefined');
+      currExpanded = expanded.filter(
+        (s) => typeof data.find((d) => _.get(d, keyField) === s) === "undefined"
+      );
     }
 
     if (onExpandAll) {
-      onExpandAll(expandAll, dataOperator.getExpandedRows(data, keyField, currExpanded), e);
+      onExpandAll(
+        expandAll,
+        dataOperator.getExpandedRows(data, keyField, currExpanded),
+        e
+      );
     }
 
     this.setState(() => ({ expanded: currExpanded }));
@@ -106,20 +163,23 @@ class RowExpandProvider extends React.Component {
   render() {
     const { data, keyField } = this.props;
     return (
-      // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
       <RowExpandContext.Provider
-        value={ {
+        value={{
           ...this.props.expandRow,
           nonExpandable: this.props.expandRow.nonExpandable,
           expanded: this.state.expanded,
           isClosing: this.state.isClosing,
           onClosed: this.onClosed,
-          isAnyExpands: dataOperator.isAnyExpands(data, keyField, this.state.expanded),
+          isAnyExpands: dataOperator.isAnyExpands(
+            data,
+            keyField,
+            this.state.expanded
+          ),
           onRowExpand: this.handleRowExpand,
-          onAllRowExpand: this.handleAllRowExpand
-        } }
+          onAllRowExpand: this.handleAllRowExpand,
+        }}
       >
-        { this.props.children }
+        {this.props.children}
       </RowExpandContext.Provider>
     );
   }
@@ -127,5 +187,5 @@ class RowExpandProvider extends React.Component {
 
 export default {
   Provider: RowExpandProvider,
-  Consumer: RowExpandContext.Consumer
+  Consumer: RowExpandContext.Consumer,
 };

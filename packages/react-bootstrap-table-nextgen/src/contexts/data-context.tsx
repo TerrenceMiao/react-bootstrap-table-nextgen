@@ -1,52 +1,83 @@
-/* eslint camelcase: 0 */
-// @ts-expect-error TS(7016): Could not find a declaration file for module 'reac... Remove this comment to see the full error message
-import React, { Component } from 'react';
-// @ts-expect-error TS(7016): Could not find a declaration file for module 'prop... Remove this comment to see the full error message
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
+import React, { Component, createContext, ReactNode } from "react";
 
-export default () => {
-  const DataContext = React.createContext();
+interface FilterProps {
+  data: any;
+}
 
-  class DataProvider extends Component {
-    static propTypes = {
-      data: PropTypes.array.isRequired,
-      children: PropTypes.node.isRequired
-    }
+interface SearchProps {
+  data: any;
+}
 
-    props: any;
-    setState: any;
+interface SortProps {
+  data: any;
+}
 
-    // @ts-expect-error TS(2729): Property 'props' is used before its initialization... Remove this comment to see the full error message
-    state = { data: this.props.data };
+interface PaginationProps {
+  data: any;
+}
 
-    getData = (filterProps: any, searchProps: any, sortProps: any, paginationProps: any) => {
-      if (paginationProps) return paginationProps.data;
-      else if (sortProps) return sortProps.data;
-      else if (searchProps) return searchProps.data;
-      else if (filterProps) return filterProps.data;
-      return this.props.data;
-    }
+interface DataProviderProps {
+  data: any[];
+  children: ReactNode;
+}
 
-    UNSAFE_componentWillReceiveProps(nextProps: any) {
-      this.setState(() => ({ data: nextProps.data }));
-    }
+interface DataContextValue {
+  data: any[];
+  getData: (
+    filterProps?: FilterProps,
+    searchProps?: SearchProps,
+    sortProps?: SortProps,
+    paginationProps?: PaginationProps
+  ) => any[];
+}
 
-    render() {
-      return (
-        // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-        <DataContext.Provider
-          value={ {
-            data: this.state.data,
-            getData: this.getData
-          } }
-        >
-          { this.props.children }
-        </DataContext.Provider>
-      );
+const DataContext = createContext<DataContextValue | undefined>(undefined);
+
+class DataProvider extends Component<DataProviderProps> {
+  static propTypes = {
+    data: PropTypes.array.isRequired,
+    children: PropTypes.node.isRequired,
+  };
+
+  state = { data: this.props.data };
+
+  getData = (
+    filterProps?: FilterProps,
+    searchProps?: SearchProps,
+    sortProps?: SortProps,
+    paginationProps?: PaginationProps
+  ) => {
+    if (paginationProps) return paginationProps.data;
+    else if (sortProps) return sortProps.data;
+    else if (searchProps) return searchProps.data;
+    else if (filterProps) return filterProps.data;
+    return this.props.data;
+  };
+
+  componentDidUpdate(prevProps: DataProviderProps) {
+    if (this.props.data !== prevProps.data) {
+      this.setState(() => ({ data: this.props.data }));
     }
   }
+
+  render() {
+    return (
+      <DataContext.Provider
+        value={{
+          data: this.state.data,
+          getData: this.getData,
+        }}
+      >
+        {this.props.children}
+      </DataContext.Provider>
+    );
+  }
+}
+
+export default () => {
   return {
     Provider: DataProvider,
-    Consumer: DataContext.Consumer
+    Consumer: DataContext.Consumer,
   };
 };

@@ -1,35 +1,48 @@
-import _ from './utils';
+import _ from "./utils";
 
-const events = [
-  'onClick',
-  'onDoubleClick',
-  'onMouseEnter',
-  'onMouseLeave',
-  'onContextMenu',
-  'onAuxClick'
+const events: string[] = [
+  "onClick",
+  "onDoubleClick",
+  "onMouseEnter",
+  "onMouseLeave",
+  "onContextMenu",
+  "onAuxClick",
 ];
 
-export default (ExtendBase: any) => class CellEventDelegater extends ExtendBase {
-    constructor(props: any) {
-      super(props);
-      this.createDefaultEventHandler = this.createDefaultEventHandler.bind(this);
+interface CellEventDelegaterProps {
+  column: any;
+  columnIndex?: number;
+  index: number;
+}
+
+export default function CellEventDelegater<
+  T extends new (...args: any[]) => any
+>(ExtendBase: T) {
+  return class extends ExtendBase {
+    constructor(...props: any[]) {
+      super(...props);
+      this.createDefaultEventHandler =
+        this.createDefaultEventHandler.bind(this);
     }
 
-    createDefaultEventHandler(cb: any) {
+    createDefaultEventHandler(
+      cb: (e: any, column: any, columnIndex: number) => void
+    ) {
       return (e: any) => {
-        const { column, columnIndex, index } = this.props;
-        cb(e, column, typeof columnIndex !== 'undefined' ? columnIndex : index);
+        const { column, columnIndex, index }: CellEventDelegaterProps =
+          this.props;
+        cb(e, column, typeof columnIndex !== "undefined" ? columnIndex : index);
       };
     }
 
-    delegate(attrs = {}) {
-      const newAttrs = { ...attrs };
+    delegate(attrs: Record<string, any> = {}): Record<string, any> {
+      const newAttrs: Record<string, any> = { ...attrs };
       Object.keys(attrs).forEach((attr) => {
-        if (_.contains(events, attr)) {
-          // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
+        if (_.includes(events, attr)) {
           newAttrs[attr] = this.createDefaultEventHandler(attrs[attr]);
         }
       });
       return newAttrs;
     }
   };
+}

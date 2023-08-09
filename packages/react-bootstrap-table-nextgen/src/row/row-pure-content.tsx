@@ -1,17 +1,17 @@
-/* eslint react/prop-types: 0 */
-/* eslint react/no-array-index-key: 0 */
-/* eslint no-plusplus: 0 */
-// @ts-expect-error TS(7016): Could not find a declaration file for module 'reac... Remove this comment to see the full error message
-import React from 'react';
+import React, { Component } from "react";
 
-import _ from '../utils';
-// @ts-expect-error TS(6142): Module '../cell' was resolved to '/Users/terrence/... Remove this comment to see the full error message
-import Cell from '../cell';
+import Cell from "../cell";
+import _ from "../utils";
+import { RowProps } from "./should-updater";
 
-export default class RowPureContent extends React.Component {
-  props: any;
-  shouldComponentUpdate(nextProps: any) {
-    if (typeof nextProps.shouldUpdate !== 'undefined') {
+interface RowPureContentProps extends RowProps {
+  onStart?: (rowIndex: number, columnIndex: number) => void;
+  shouldUpdate?: boolean;
+}
+
+export default class RowPureContent extends Component<RowPureContentProps> {
+  shouldComponentUpdate(nextProps: RowPureContentProps) {
+    if (typeof nextProps.shouldUpdate !== "undefined") {
       return nextProps.shouldUpdate;
     }
     return true;
@@ -30,36 +30,37 @@ export default class RowPureContent extends React.Component {
       clickToEdit,
       dbclickToEdit,
       EditingCellComponent,
-      tabIndexStart
+      tabIndexStart,
     } = this.props;
 
     let tabIndex = tabIndexStart;
 
-    return columns.map((column: any, index: any) => {
+    return columns?.map((column, index) => {
       const { dataField } = column;
       const content = _.get(row, dataField);
-      if (rowIndex === editingRowIdx && index === editingColIdx) {
+      if (rowIndex === editingRowIdx && index === editingColIdx && EditingCellComponent) {
         return (
-          // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
           <EditingCellComponent
-            key={ `${content}-${index}-editing` }
-            row={ row }
-            rowIndex={ rowIndex }
-            column={ column }
-            columnIndex={ index }
+            key={`${content}-${index}-editing`}
+            row={row}
+            rowIndex={rowIndex}
+            column={column}
+            columnIndex={index}
           />
         );
       }
       // render cell
       let cellTitle;
-      let cellStyle = {};
-      let cellAttrs = {
-        ...(_.isFunction(column.attrs) ? column.attrs(content, row, rowIndex, index) : column.attrs)
+      let cellStyle: React.CSSProperties = {};
+      let cellAttrs: React.HTMLAttributes<HTMLTableCellElement> = {
+        ...(typeof column.attrs === "function"
+          ? column.attrs(content, row, rowIndex, index)
+          : column.attrs),
       };
 
       if (column.events) {
-        const events = Object.assign({}, column.events);
-        Object.keys(Object.assign({}, column.events)).forEach((key) => {
+        const events = { ...column.events };
+        Object.keys(events).forEach((key) => {
           const originFn = events[key];
           events[key] = (...rest: any[]) => originFn(...rest, row, rowIndex);
         });
@@ -74,7 +75,7 @@ export default class RowPureContent extends React.Component {
         cellStyle = _.isFunction(column.style)
           ? column.style(content, row, rowIndex, index)
           : column.style;
-        cellStyle = Object.assign({}, cellStyle) || {};
+        cellStyle = { ...cellStyle } || {};
       }
 
       if (column.title) {
@@ -85,11 +86,9 @@ export default class RowPureContent extends React.Component {
       }
 
       if (column.align) {
-        // @ts-expect-error TS(2339): Property 'textAlign' does not exist on type '{}'.
-        cellStyle.textAlign =
-          _.isFunction(column.align)
-            ? column.align(content, row, rowIndex, index)
-            : column.align;
+        cellStyle.textAlign = _.isFunction(column.align)
+          ? column.align(content, row, rowIndex, index)
+          : column.align;
       }
 
       if (cellClasses) cellAttrs.className = cellClasses;
@@ -102,22 +101,21 @@ export default class RowPureContent extends React.Component {
       }
 
       if (tabIndexStart !== -1) {
-        cellAttrs.tabIndex = tabIndex++;
+        cellAttrs.tabIndex = tabIndex!++;
       }
 
       return (
-        // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
         <Cell
-          key={ `${content}-${index}` }
-          row={ row }
-          editable={ editableCell }
-          rowIndex={ rowIndex }
-          columnIndex={ index }
-          column={ column }
-          onStart={ onStart }
-          clickToEdit={ clickToEdit }
-          dbclickToEdit={ dbclickToEdit }
-          { ...cellAttrs }
+          key={`${content}-${index}`}
+          row={row}
+          editable={editableCell}
+          rowIndex={rowIndex ?? 0}
+          columnIndex={index}
+          column={column}
+          onStart={onStart}
+          clickToEdit={clickToEdit ?? false}
+          dbclickToEdit={dbclickToEdit ?? false}
+          {...cellAttrs}
         />
       );
     });

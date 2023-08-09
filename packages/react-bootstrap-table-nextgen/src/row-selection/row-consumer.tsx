@@ -1,22 +1,19 @@
-/* eslint react/prop-types: 0 */
-// @ts-expect-error TS(7016): Could not find a declaration file for module 'reac... Remove this comment to see the full error message
-import React from 'react';
-import cs from 'classnames';
-import _ from '../utils';
-// @ts-expect-error TS(6142): Module '../contexts/selection-context' was resolve... Remove this comment to see the full error message
-import SelectionContext from '../contexts/selection-context';
+import cs from "classnames";
+import React from "react";
+import SelectionContext from "../contexts/selection-context";
+import _ from "../utils";
 
-export default (Component: any) => {
+export default function withRowSelection<T extends React.ComponentType<any>>(
+  Component: T
+): React.FC<React.ComponentProps<T>> {
   const renderWithSelection = (props: any, selectRow: any) => {
     const key = props.value;
     const selected = _.contains(selectRow.selected, key);
-    const selectable = !selectRow.nonSelectable || !_.contains(selectRow.nonSelectable, key);
+    const selectable =
+      !selectRow.nonSelectable || !_.contains(selectRow.nonSelectable, key);
     const notSelectable = _.contains(selectRow.nonSelectable, key);
 
-    let {
-      style,
-      className
-    } = props;
+    let { style, className } = props;
 
     if (selected) {
       const selectedStyle = _.isFunction(selectRow.style)
@@ -29,7 +26,7 @@ export default (Component: any) => {
 
       style = {
         ...style,
-        ...selectedStyle
+        ...selectedStyle,
       };
       className = cs(className, selectedClasses) || undefined;
 
@@ -52,33 +49,31 @@ export default (Component: any) => {
 
       style = {
         ...style,
-        ...notSelectableStyle
+        ...notSelectableStyle,
       };
       className = cs(className, notSelectableClasses) || undefined;
     }
 
     return (
-      // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
       <Component
-        { ...props }
-        style={ style }
-        className={ className }
-        selectRow={ selectRow }
-        selected={ selected }
-        selectable={ selectable }
+        {...props}
+        style={style}
+        className={className}
+        selectRow={selectRow}
+        selected={selected}
+        selectable={selectable}
       />
     );
   };
 
-  function withConsumer(props: any) {
-    return (
-      // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-      <SelectionContext.Consumer>
-        { (selectRow: any) => renderWithSelection(props, selectRow) }
-      </SelectionContext.Consumer>
-    );
-  }
+  const WithSelectionRowConsumer: React.FC<React.ComponentProps<T>> = (
+    props
+  ) => (
+    <SelectionContext.Consumer>
+      {(selectRow) => renderWithSelection(props, selectRow)}
+    </SelectionContext.Consumer>
+  );
 
-  withConsumer.displayName = 'WithSelectionRowConsumer';
-  return withConsumer;
-};
+  WithSelectionRowConsumer.displayName = "WithSelectionRowConsumer";
+  return WithSelectionRowConsumer;
+}

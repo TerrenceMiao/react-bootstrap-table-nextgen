@@ -1,40 +1,68 @@
-/* eslint camelcase: 0 */
-/* eslint react/require-default-props: 0 */
-// @ts-expect-error TS(7016): Could not find a declaration file for module 'reac... Remove this comment to see the full error message
-import React from 'react';
-// @ts-expect-error TS(7016): Could not find a declaration file for module 'prop... Remove this comment to see the full error message
-import PropTypes from 'prop-types';
-import Const from '../const';
+import PropTypes from "prop-types";
+import React, { Component, createContext, ReactNode } from "react";
+import Const from "../const";
+
+interface SortContextValue {
+  data: any[];
+  sortOrder: string;
+  onSort: (column: any) => void;
+  sortField: string | null;
+}
+
+interface SortProviderProps {
+  data: any[];
+  columns: any[];
+  children: ReactNode;
+  defaultSorted?: Array<{ dataField: string; order: string }>;
+  sort?: {
+    dataField: string;
+    order: string;
+    sortFunc: (a: any, b: any, order: string, dataField: string) => number;
+  };
+  defaultSortDirection: string;
+}
+
+type DataOperator = {
+  nextOrder: (
+    column: any,
+    state: { sortOrder: string; sortColumn: any },
+    defaultSortDirection: string
+  ) => string;
+  sort: (data: any[], order: string, sortColumn: any) => any[];
+};
+
+type HandleSortChange = (dataField: string, sortOrder: string) => void;
+
+const SortContext = createContext<SortContextValue | undefined>(undefined);
 
 export default (
-  dataOperator: any,
-  isRemoteSort: any,
-  handleSortChange: any
+  dataOperator: DataOperator,
+  isRemoteSort: () => boolean,
+  handleSortChange: HandleSortChange
 ) => {
-  const SortContext = React.createContext();
-
-  class SortProvider extends React.Component {
+  class SortProvider extends Component<
+    SortProviderProps,
+    { sortOrder: any; sortColumn: any }
+  > {
     static propTypes = {
       data: PropTypes.array.isRequired,
       columns: PropTypes.array.isRequired,
       children: PropTypes.node.isRequired,
-      defaultSorted: PropTypes.arrayOf(PropTypes.shape({
-        dataField: PropTypes.string.isRequired,
-        order: PropTypes.oneOf([Const.SORT_DESC, Const.SORT_ASC]).isRequired
-      })),
+      defaultSorted: PropTypes.arrayOf(
+        PropTypes.shape({
+          dataField: PropTypes.string.isRequired,
+          order: PropTypes.oneOf([Const.SORT_DESC, Const.SORT_ASC]).isRequired,
+        })
+      ),
       sort: PropTypes.shape({
         dataField: PropTypes.string,
         order: PropTypes.oneOf([Const.SORT_DESC, Const.SORT_ASC]),
-        sortFunc: PropTypes.func
+        sortFunc: PropTypes.func,
       }),
-      defaultSortDirection: PropTypes.oneOf([Const.SORT_DESC, Const.SORT_ASC])
-    }
+      defaultSortDirection: PropTypes.oneOf([Const.SORT_DESC, Const.SORT_ASC]),
+    };
 
-    props: any;
-    setState: any;
-    state: any;
-
-    constructor(props: any) {
+    constructor(props: SortProviderProps) {
       super(props);
       let sortOrder;
       let sortColumn;
@@ -57,20 +85,20 @@ export default (
       }
     }
 
-    UNSAFE_componentWillReceiveProps(nextProps: any) {
-      const { sort, columns } = nextProps;
+    componentDidUpdate(prevProps: SortProviderProps) {
+      const { sort, columns } = this.props;
       if (sort && sort.dataField && sort.order) {
         this.setState({
           sortOrder: sort.order,
-          sortColumn: columns.find((col: any) => col.dataField === sort.dataField)
+          sortColumn: columns.find((col) => col.dataField === sort.dataField),
         });
       }
     }
 
-    initSort(sortField: any, sortOrder: any) {
+    initSort(sortField: string, sortOrder: string) {
       let sortColumn;
       const { columns } = this.props;
-      const sortColumns = columns.filter((col: any) => col.dataField === sortField);
+      const sortColumns = columns.filter((col) => col.dataField === sortField);
       if (sortColumns.length > 0) {
         sortColumn = sortColumns[0];
 
@@ -82,7 +110,11 @@ export default (
     }
 
     handleSort = (column: any) => {
-      const sortOrder = dataOperator.nextOrder(column, this.state, this.props.defaultSortDirection);
+      const sortOrder = dataOperator.nextOrder(
+        column,
+        this.state,
+        this.props.defaultSortDirection
+      );
 
       if (column.onSort) {
         column.onSort(column.dataField, sortOrder);
@@ -93,36 +125,38 @@ export default (
       }
       this.setState(() => ({
         sortOrder,
-        sortColumn: column
+        sortColumn: column,
       }));
-    }
+    };
 
     render() {
       let { data } = this.props;
       const { sort } = this.props;
       const { sortOrder, sortColumn } = this.state;
       if (!isRemoteSort() && sortColumn) {
-        const sortFunc = sortColumn.sortFunc ? sortColumn.sortFunc : (sort && sort.sortFunc);
+        const sortFunc = sortColumn.sortFunc
+          ? sortColumn.sortFunc
+          : sort && sort.sortFunc;
         data = dataOperator.sort(data, sortOrder, { ...sortColumn, sortFunc });
       }
 
       return (
-        // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
         <SortContext.Provider
-          value={ {
+          value={{
             data,
             sortOrder,
             onSort: this.handleSort,
-            sortField: sortColumn ? sortColumn.dataField : null
-          } }
+            sortField: sortColumn ? sortColumn.dataField : null,
+          }}
         >
-          { this.props.children }
+          {this.props.children}
         </SortContext.Provider>
       );
     }
   }
+
   return {
     Provider: SortProvider,
-    Consumer: SortContext.Consumer
+    Consumer: SortContext.Consumer,
   };
 };
