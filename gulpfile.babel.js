@@ -56,6 +56,22 @@ function scripts() {
     .pipe(gulp.dest(PKG_PATH));
 }
 
+function declaration() {
+  return gulp
+    .src([
+      `./packages/+(${JS_PKGS})/**/*.d.ts`,
+      `!packages/+(${JS_PKGS})/${JS_SKIPS}/**/*.d.ts`,
+    ])
+    .pipe(rename((path) => {
+      if (path.dirname.indexOf('src') > -1) {
+        path.dirname = path.dirname.replace('src', `${LIB}/src`);
+      } else {
+        path.dirname += `/${LIB}`;
+      }
+    }))
+    .pipe(gulp.dest(PKG_PATH));
+}
+
 function styles() {
   return gulp
     .src([
@@ -86,7 +102,7 @@ function umd(done) {
   done();
 }
 
-const buildJS = gulp.parallel(umd, scripts);
+const buildJS = gulp.parallel(umd, scripts, declaration);
 const buildCSS = styles;
 const build = gulp.series(clean, gulp.parallel(buildJS, buildCSS));
 

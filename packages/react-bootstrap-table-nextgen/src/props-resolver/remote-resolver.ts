@@ -19,7 +19,7 @@ export interface RemoteResolverProps {
 
 export default (ExtendBase: any) =>
   class RemoteResolver extends ExtendBase {
-    protected remoteEmitter: EventEmitter;
+    public remoteEmitter: EventEmitter;
 
     constructor(props: RemoteResolverProps) {
       super(props);

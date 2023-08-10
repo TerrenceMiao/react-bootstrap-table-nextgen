@@ -22,3 +22,5 @@ storybook-static
 # build
 dist
 lib
+
+*.d.ts

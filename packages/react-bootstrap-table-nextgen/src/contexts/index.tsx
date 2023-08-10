@@ -12,7 +12,7 @@ import RowExpandContext from "./row-expand-context";
 import SelectionContext from "./selection-context";
 import createSortContext from "./sort-context";
 
-interface BootstrapTableContainerProps extends RemoteResolverProps {
+export interface BootstrapTableContainerProps extends RemoteResolverProps {
   registerExposedAPI?: (emitter: EventEmitter) => void;
   columns: any[]; // Add proper type here
   columnToggle?: any; // Add proper type here
