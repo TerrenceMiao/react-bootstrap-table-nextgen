@@ -1,24 +1,24 @@
 /* eslint no-nested-ternary: 0 */
 /* eslint no-lonely-if: 0 */
 /* eslint no-underscore-dangle: 0 */
-import _ from '../utils';
-import Const from '../const';
+import Const from "../const";
+import _ from "../utils";
 
 function comparator(a: any, b: any) {
   let result;
-  if (typeof b === 'string') {
+  if (typeof b === "string") {
     result = b.localeCompare(a);
   } else {
-    result = a > b ? -1 : ((a < b) ? 1 : 0);
+    result = a > b ? -1 : a < b ? 1 : 0;
   }
   return result;
 }
 
-export const sort = (data: any, sortOrder: any, {
-  dataField,
-  sortFunc,
-  sortValue
-}: any) => {
+export const sort = (
+  data: any,
+  sortOrder: any,
+  { dataField, sortFunc, sortValue }: any
+) => {
   const _data = [...data];
   _data.sort((a, b) => {
     let result;
@@ -28,8 +28,8 @@ export const sort = (data: any, sortOrder: any, {
       valueA = sortValue(valueA, a);
       valueB = sortValue(valueB, b);
     } else {
-      valueA = _.isDefined(valueA) ? valueA : '';
-      valueB = _.isDefined(valueB) ? valueB : '';
+      valueA = _.isDefined(valueA) ? valueA : "";
+      valueB = _.isDefined(valueB) ? valueB : "";
     }
 
     if (sortFunc) {
@@ -48,10 +48,7 @@ export const sort = (data: any, sortOrder: any, {
 
 export const nextOrder = (
   currentSortColumn: any,
-  {
-    sortOrder,
-    sortColumn
-  }: any,
+  { sortOrder, sortColumn }: any,
   defaultOrder = Const.SORT_DESC
 ) => {
   if (!sortColumn || currentSortColumn.dataField !== sortColumn.dataField) return defaultOrder;

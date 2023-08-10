@@ -1,6 +1,6 @@
-import React from 'react';
-import ExpansionContext, { RowExpandContextValue } from '../contexts/row-expand-context';
-import { ExpansionHeaderCellProps } from './expand-header-cell';
+import React from "react";
+import ExpansionContext, { RowExpandContextValue } from "../contexts/row-expand-context";
+import { ExpansionHeaderCellProps } from "./expand-header-cell";
 
 interface Props extends ExpansionHeaderCellProps {
   expandRow?: RowExpandContextValue;
@@ -8,7 +8,7 @@ interface Props extends ExpansionHeaderCellProps {
 
 const withExpandContext = (Component: React.ComponentType<Props>) => () => (
   <ExpansionContext.Consumer>
-    {expandRow => <Component expandRow={expandRow} />}
+    {expandRow => <Component expandRow={ expandRow } />}
   </ExpansionContext.Consumer>
 );
 

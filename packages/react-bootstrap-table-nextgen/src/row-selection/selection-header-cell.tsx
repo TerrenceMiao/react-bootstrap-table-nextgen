@@ -12,16 +12,18 @@ interface CheckBoxProps {
 export const CheckBox: React.FC<CheckBoxProps> = ({
   className,
   checked,
-  indeterminate,
+  indeterminate
 }) => (
   <input
     type="checkbox"
-    checked={checked}
-    className={className}
-    ref={(input) => {
-      if (input) input.indeterminate = indeterminate;
-    }}
-    onChange={() => {}}
+    checked={ checked }
+    className={ className }
+    ref={ (input) => {
+      if (input) {
+        input.indeterminate = indeterminate;
+      }
+    } }
+    onChange={ () => {} }
   />
 );
 
@@ -86,7 +88,7 @@ export default class SelectionHeaderCell extends Component<SelectionHeaderCellPr
     const {
       CHECKBOX_STATUS_CHECKED,
       CHECKBOX_STATUS_INDETERMINATE,
-      ROW_SELECT_MULTIPLE,
+      ROW_SELECT_MULTIPLE
     } = Const;
 
     const {
@@ -94,7 +96,7 @@ export default class SelectionHeaderCell extends Component<SelectionHeaderCellPr
       checkedStatus,
       selectionHeaderRenderer,
       hideSelectAll,
-      headerColumnStyle,
+      headerColumnStyle
     } = this.props;
     if (hideSelectAll) {
       return <th data-row-selection />;
@@ -121,20 +123,20 @@ export default class SelectionHeaderCell extends Component<SelectionHeaderCellPr
             content = selectionHeaderRenderer({
               mode,
               checked,
-              indeterminate,
+              indeterminate
             });
           } else if (mode === ROW_SELECT_MULTIPLE) {
             content = (
               <CheckBox
-                {...this.props}
-                checked={checked}
-                className={bootstrap4 ? "selection-input-4" : ""}
-                indeterminate={indeterminate}
+                { ...this.props }
+                checked={ checked }
+                className={ bootstrap4 ? "selection-input-4" : "" }
+                indeterminate={ indeterminate }
               />
             );
           }
           return (
-            <th className="selection-cell-header" data-row-selection {...attrs}>
+            <th className="selection-cell-header" data-row-selection { ...attrs }>
               {content}
             </th>
           );

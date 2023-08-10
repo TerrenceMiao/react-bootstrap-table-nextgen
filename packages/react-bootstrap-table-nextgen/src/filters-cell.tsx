@@ -37,10 +37,10 @@ const FiltersCell: React.FC<FiltersCellProps> = (props) => {
   } else if (filter) {
     filterElm = (
       <filter.Filter
-        {...filter.props}
-        filterState={currFilters![column.dataField]}
-        onFilter={onFilter}
-        column={column}
+        { ...filter.props }
+        filterState={ currFilters![column.dataField] }
+        onFilter={ onFilter }
+        column={ column }
       />
     );
   }

@@ -25,7 +25,7 @@ const Filters: React.FC<FiltersProps> = (props) => {
     onExternalFilter,
     className,
     selectRow,
-    expandRow,
+    expandRow
   } = props;
 
   function renderContent() {
@@ -35,12 +35,12 @@ const Filters: React.FC<FiltersProps> = (props) => {
     columns.forEach((column, i) => {
       filterColumns.push(
         <FiltersCell
-          index={i}
-          key={column.dataField}
-          column={column}
-          currFilters={currFilters}
-          onExternalFilter={onExternalFilter}
-          onFilter={onFilter}
+          index={ i }
+          key={ column.dataField }
+          column={ column }
+          currFilters={ currFilters }
+          onExternalFilter={ onExternalFilter }
+          onFilter={ onFilter }
         />
       );
 
@@ -55,18 +55,18 @@ const Filters: React.FC<FiltersProps> = (props) => {
 
   return (
     <tbody
-      className={className}
-      style={{
+      className={ className }
+      style={ {
         display:
           filterPosition === Const.FILTERS_POSITION_TOP
             ? "table-header-group"
-            : "table-footer-group",
-      }}
+            : "table-footer-group"
+      } }
     >
       <RowTemplate
-        renderContent={renderContent}
-        selectRow={selectRow}
-        expandRow={expandRow}
+        renderContent={ renderContent }
+        selectRow={ selectRow }
+        expandRow={ expandRow }
         cellEl="td"
       />
     </tbody>

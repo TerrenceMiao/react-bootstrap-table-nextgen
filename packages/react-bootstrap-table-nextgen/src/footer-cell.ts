@@ -1,9 +1,9 @@
 import cs from "classnames";
 import React, { Component, ReactNode } from "react";
 
+import { Property } from "csstype";
 import eventDelegater from "./cell-event-delegater";
 import _ from "./utils";
-import { Property } from "csstype";
 
 interface FooterCellProps {
   columnData?: any[];
@@ -34,13 +34,13 @@ class FooterCell extends eventDelegater(Component)<FooterCellProps> {
       footerEvents,
       footerClasses,
       footerStyle,
-      footerAttrs,
+      footerAttrs
     } = column!;
 
     const delegateEvents = this.delegate(footerEvents);
     const cellAttrs = {
       ...(_.isFunction(footerAttrs) ? footerAttrs(column, index!) : footerAttrs),
-      ...delegateEvents,
+      ...delegateEvents
     };
 
     let text = "";

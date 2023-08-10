@@ -64,7 +64,7 @@ export default (ExtendBase: any) =>
         sizePerPage,
         searchText,
         ...state,
-        data: this.props.data,
+        data: this.props.data
       };
     };
 

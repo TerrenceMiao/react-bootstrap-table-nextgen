@@ -1,5 +1,5 @@
-import _ from '../utils';
-import { getRowByRowId } from './rows';
+import _ from "../utils";
+import { getRowByRowId } from "./rows";
 
 export const isAnyExpands = (
   data: any,
@@ -8,7 +8,7 @@ export const isAnyExpands = (
 ) => {
   for (let i = 0; i < data.length; i += 1) {
     const rowKey = _.get(data[i], keyField);
-    if (typeof expanded.find(x => x === rowKey) !== 'undefined') {
+    if (typeof expanded.find(x => x === rowKey) !== "undefined") {
       return true;
     }
   }

@@ -45,7 +45,7 @@ const RowTemplate: React.FC<RowTemplateProps> = (props) => {
     }
   }
 
-  return <tr {...rest}>{childrens}</tr>;
+  return <tr { ...rest }>{childrens}</tr>;
 };
 
 // RowTemplate.propTypes = {

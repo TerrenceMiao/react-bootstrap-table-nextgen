@@ -26,7 +26,7 @@ export default function withRowSelection<T extends React.ComponentType<any>>(
 
       style = {
         ...style,
-        ...selectedStyle,
+        ...selectedStyle
       };
       className = cs(className, selectedClasses) || undefined;
 
@@ -49,19 +49,19 @@ export default function withRowSelection<T extends React.ComponentType<any>>(
 
       style = {
         ...style,
-        ...notSelectableStyle,
+        ...notSelectableStyle
       };
       className = cs(className, notSelectableClasses) || undefined;
     }
 
     return (
       <Component
-        {...props}
-        style={style}
-        className={className}
-        selectRow={selectRow}
-        selected={selected}
-        selectable={selectable}
+        { ...props }
+        style={ style }
+        className={ className }
+        selectRow={ selectRow }
+        selected={ selected }
+        selectable={ selectable }
       />
     );
   };

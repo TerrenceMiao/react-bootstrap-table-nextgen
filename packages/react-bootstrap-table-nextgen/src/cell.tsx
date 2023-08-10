@@ -76,7 +76,7 @@ class Cell extends eventDelegater(Component)<CellProps> {
     }
 
     return (
-      <td {...attrs}>
+      <td { ...attrs }>
         {typeof content === "boolean" ? `${content}` : content}
       </td>
     );

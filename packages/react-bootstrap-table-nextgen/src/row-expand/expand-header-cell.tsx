@@ -30,16 +30,16 @@ export default class ExpansionHeaderCell extends Component<ExpansionHeaderCellPr
   render() {
     const { isAnyExpands, expandHeaderColumnRenderer } = this.props;
     const attrs = {
-      onClick: this.handleCheckBoxClick,
+      onClick: this.handleCheckBoxClick
     };
 
     return (
-      <th className="expand-cell-header" data-row-selection {...attrs}>
+      <th className="expand-cell-header" data-row-selection { ...attrs }>
         {expandHeaderColumnRenderer
-          ? expandHeaderColumnRenderer({ isAnyExpands: isAnyExpands ?? false})
+          ? expandHeaderColumnRenderer({ isAnyExpands: isAnyExpands ?? false })
           : isAnyExpands
-          ? "(-)"
-          : "(+)"}
+            ? "(-)"
+            : "(+)"}
       </th>
     );
   }

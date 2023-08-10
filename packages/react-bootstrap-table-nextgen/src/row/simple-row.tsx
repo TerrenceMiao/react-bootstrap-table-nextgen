@@ -30,11 +30,11 @@ class SimpleRow extends shouldUpdater(
     const tabIndexStart = this.props.rowIndex! * visibleColumnSize! + 1;
 
     return (
-      <tr style={style} className={className} {...trAttrs}>
+      <tr style={ style } className={ className } { ...trAttrs }>
         <RowPureContent
-          shouldUpdate={this.shouldUpdateRowContent}
-          tabIndexStart={tabIndexCell ? tabIndexStart : -1}
-          {...rest}
+          shouldUpdate={ this.shouldUpdateRowContent }
+          tabIndexStart={ tabIndexCell ? tabIndexStart : -1 }
+          { ...rest }
         />
       </tr>
     );

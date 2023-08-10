@@ -4,7 +4,7 @@ import { BootstrapContext } from "../contexts/bootstrap";
 const SortSymbol: FC = () => (
   <BootstrapContext.Consumer>
     {({ bootstrap4 }) =>
-      bootstrap4 ? (
+      (bootstrap4 ? (
         <span className="order-4" />
       ) : (
         <span className="order">
@@ -15,8 +15,7 @@ const SortSymbol: FC = () => (
             <span className="caret" />
           </span>
         </span>
-      )
-    }
+      ))}
   </BootstrapContext.Consumer>
 );
 

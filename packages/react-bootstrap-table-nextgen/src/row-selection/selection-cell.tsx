@@ -46,7 +46,7 @@ export default class SelectionCell extends Component<SelectionCellProps> {
     tabIndex: PropTypes.number,
     clickToSelect: PropTypes.bool,
     selectionRenderer: PropTypes.func,
-    selectColumnStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+    selectColumnStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.func])
   };
 
   constructor(props: SelectionCellProps) {
@@ -73,7 +73,7 @@ export default class SelectionCell extends Component<SelectionCellProps> {
       selected,
       onRowSelect,
       disabled = false,
-      rowIndex = -1,
+      rowIndex = -1
     } = this.props;
     e.stopPropagation();
     if (disabled) return;
@@ -92,7 +92,7 @@ export default class SelectionCell extends Component<SelectionCellProps> {
       tabIndex = -1,
       rowIndex,
       selectionRenderer,
-      selectColumnStyle,
+      selectColumnStyle
     } = this.props;
 
     const attrs: React.HTMLAttributes<HTMLTableCellElement> = {};
@@ -100,32 +100,32 @@ export default class SelectionCell extends Component<SelectionCellProps> {
 
     attrs.style = _.isFunction(selectColumnStyle)
       ? selectColumnStyle({
-          checked: selected,
-          disabled,
-          rowIndex,
-          rowKey,
-        })
+        checked: selected,
+        disabled,
+        rowIndex,
+        rowKey
+      })
       : selectColumnStyle;
 
     return (
       <BootstrapContext.Consumer>
         {({ bootstrap4 }) => (
-          <td className="selection-cell" onClick={this.handleClick} {...attrs}>
+          <td className="selection-cell" onClick={ this.handleClick } { ...attrs }>
             {selectionRenderer ? (
               selectionRenderer({
                 mode: inputType,
                 checked: selected,
                 disabled,
                 rowIndex,
-                rowKey,
+                rowKey
               })
             ) : (
               <input
-                type={inputType}
-                checked={selected}
-                disabled={disabled}
-                className={bootstrap4 ? "selection-input-4" : ""}
-                onChange={() => {}}
+                type={ inputType }
+                checked={ selected }
+                disabled={ disabled }
+                className={ bootstrap4 ? "selection-input-4" : "" }
+                onChange={ () => {} }
               />
             )}
           </td>

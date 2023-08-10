@@ -36,7 +36,7 @@ module.exports = {
     new webpack.optimize.AggressiveMergingPlugin(),
     new ESLintPlugin({
       // Plugin options
-      extensions: ['js', 'jsx'],
+      extensions: ['ts', 'tsx'],
       eslintPath: require.resolve('eslint'),
       exclude: ['/node_modules/'],
       // ESLint class options

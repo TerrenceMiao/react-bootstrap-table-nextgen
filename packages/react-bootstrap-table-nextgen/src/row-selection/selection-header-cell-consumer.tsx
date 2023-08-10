@@ -1,6 +1,6 @@
 import React from "react";
 import SelectionContext, {
-  SelectionContextProps,
+  SelectionContextProps
 } from "../contexts/selection-context";
 
 interface Props extends SelectionContextProps {
@@ -10,7 +10,7 @@ interface Props extends SelectionContextProps {
 const withSelectionContext = (Component: React.ComponentType<Props>) => () =>
   (
     <SelectionContext.Consumer>
-      {(selectRow) => <Component selectRow={selectRow} />}
+      {(selectRow) => <Component selectRow={ selectRow } />}
     </SelectionContext.Consumer>
   );
 

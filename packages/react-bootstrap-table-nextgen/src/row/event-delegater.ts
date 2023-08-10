@@ -7,7 +7,7 @@ const events: string[] = [
   "onMouseEnter",
   "onMouseLeave",
   "onContextMenu",
-  "onAuxClick",
+  "onAuxClick"
 ];
 
 interface RowEventDelegaterProps {
@@ -24,7 +24,7 @@ interface RowEventDelegaterProps {
 }
 
 export default function RowEventDelegater<
-  T extends new (...args: any[]) => any
+  T extends new(...args: any[]) => any
 >(ExtendBase: T) {
   return class extends ExtendBase {
     clickNum: number = 0;
@@ -50,7 +50,7 @@ export default function RowEventDelegater<
           expanded,
           expandRow,
           selectRow,
-          DELAY_FOR_DBCLICK,
+          DELAY_FOR_DBCLICK
         }: RowEventDelegaterProps = this.props;
 
         const clickFn = () => {

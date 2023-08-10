@@ -19,13 +19,13 @@ const ExpandRow: React.FC<ExpandRowProps> = ({
   ...rest
 }) => (
   <tr>
-    <td className={cs("reset-expansion-style", className)} {...rest}>
+    <td className={ cs("reset-expansion-style", className) } { ...rest }>
       <CSSTransition
         appear
-        in={expanded}
-        timeout={400}
+        in={ expanded }
+        timeout={ 400 }
         classNames="row-expand-slide"
-        onExited={onClosed}
+        onExited={ onClosed }
       >
         <div>
           <div className="row-expansion-style">{children}</div>
@@ -39,14 +39,14 @@ ExpandRow.propTypes = {
   children: PropTypes.node,
   expanded: PropTypes.bool,
   onClosed: PropTypes.func,
-  className: PropTypes.string,
+  className: PropTypes.string
 };
 
 ExpandRow.defaultProps = {
   children: null,
   expanded: false,
   onClosed: undefined,
-  className: "",
+  className: ""
 };
 
 export default ExpandRow;

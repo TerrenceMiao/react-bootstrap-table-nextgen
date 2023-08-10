@@ -1,4 +1,4 @@
-import Const from '../const';
+import Const from "../const";
 
 export const typeConvert = (type: any, value: any) => {
   if (type === Const.TYPE_STRING) {
@@ -6,10 +6,10 @@ export const typeConvert = (type: any, value: any) => {
   } else if (type === Const.TYPE_NUMBER) {
     return Number(value);
   } else if (type === Const.TYPE_BOOLEAN) {
-    if (typeof value === 'boolean') {
+    if (typeof value === "boolean") {
       return value;
     }
-    return value === 'true';
+    return value === "true";
   } else if (type === Const.TYPE_DATE) {
     return new Date(value);
   }

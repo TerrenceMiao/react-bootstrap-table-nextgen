@@ -99,5 +99,5 @@ export default Object.assign(_, {
   isEmptyObject,
   sleep,
   debounce,
-  contains,
+  contains
 });

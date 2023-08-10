@@ -51,15 +51,15 @@ export default (
       defaultSorted: PropTypes.arrayOf(
         PropTypes.shape({
           dataField: PropTypes.string.isRequired,
-          order: PropTypes.oneOf([Const.SORT_DESC, Const.SORT_ASC]).isRequired,
+          order: PropTypes.oneOf([Const.SORT_DESC, Const.SORT_ASC]).isRequired
         })
       ),
       sort: PropTypes.shape({
         dataField: PropTypes.string,
         order: PropTypes.oneOf([Const.SORT_DESC, Const.SORT_ASC]),
-        sortFunc: PropTypes.func,
+        sortFunc: PropTypes.func
       }),
-      defaultSortDirection: PropTypes.oneOf([Const.SORT_DESC, Const.SORT_ASC]),
+      defaultSortDirection: PropTypes.oneOf([Const.SORT_DESC, Const.SORT_ASC])
     };
 
     constructor(props: SortProviderProps) {
@@ -90,7 +90,7 @@ export default (
       if (sort && sort.dataField && sort.order) {
         this.setState({
           sortOrder: sort.order,
-          sortColumn: columns.find((col) => col.dataField === sort.dataField),
+          sortColumn: columns.find((col) => col.dataField === sort.dataField)
         });
       }
     }
@@ -125,7 +125,7 @@ export default (
       }
       this.setState(() => ({
         sortOrder,
-        sortColumn: column,
+        sortColumn: column
       }));
     };
 
@@ -142,12 +142,12 @@ export default (
 
       return (
         <SortContext.Provider
-          value={{
+          value={ {
             data,
             sortOrder,
             onSort: this.handleSort,
-            sortField: sortColumn ? sortColumn.dataField : null,
-          }}
+            sortField: sortColumn ? sortColumn.dataField : null
+          } }
         >
           {this.props.children}
         </SortContext.Provider>
@@ -157,6 +157,6 @@ export default (
 
   return {
     Provider: SortProvider,
-    Consumer: SortContext.Consumer,
+    Consumer: SortContext.Consumer
   };
 };

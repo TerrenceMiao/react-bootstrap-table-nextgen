@@ -32,24 +32,24 @@ export default (
 
     return [
       <Component
-        {...props}
-        key={key}
-        expanded={expanded}
-        expandable={expandable}
-        expandRow={{ ...expandRow }}
-        className={cs(props.className, parentClassName)}
+        { ...props }
+        key={ key }
+        expanded={ expanded }
+        expandable={ expandable }
+        expandRow={ { ...expandRow } }
+        className={ cs(props.className, parentClassName) }
       />,
       expanded || isClosing ? (
         <ExpandRow
-          key={`${key}-expanding`}
-          colSpan={props.visibleColumnSize!}
-          expanded={expanded}
-          onClosed={() => expandRow.onClosed(key)}
-          className={className}
+          key={ `${key}-expanding` }
+          colSpan={ props.visibleColumnSize! }
+          expanded={ expanded }
+          onClosed={ () => expandRow.onClosed(key) }
+          className={ className }
         >
           {expandRow.renderer(props.row, props.rowIndex)}
         </ExpandRow>
-      ) : null,
+      ) : null
     ];
   };
 

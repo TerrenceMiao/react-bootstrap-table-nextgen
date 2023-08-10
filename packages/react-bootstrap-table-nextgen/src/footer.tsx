@@ -30,10 +30,10 @@ const Footer: React.FC<FooterProps> = (props) => {
 
       return (
         <FooterCell
-          index={i}
-          key={column.dataField}
-          column={column}
-          columnData={columnData}
+          index={ i }
+          key={ column.dataField }
+          column={ column }
+          columnData={ columnData }
         />
       );
     });
@@ -42,10 +42,10 @@ const Footer: React.FC<FooterProps> = (props) => {
   return (
     <tfoot>
       <RowTemplate
-        renderContent={renderContent}
-        selectRow={selectRow}
-        expandRow={expandRow}
-        className={className}
+        renderContent={ renderContent }
+        selectRow={ selectRow }
+        expandRow={ expandRow }
+        className={ className }
         cellEl="th"
       />
     </tfoot>

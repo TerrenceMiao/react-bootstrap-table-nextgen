@@ -1,4 +1,4 @@
-import _ from '../utils';
+import _ from "../utils";
 
 export const matchRow = (keyField: any, id: any) => (row: any) => _.get(row, keyField) === id;
 

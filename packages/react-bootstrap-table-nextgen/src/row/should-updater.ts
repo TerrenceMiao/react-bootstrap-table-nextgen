@@ -26,7 +26,7 @@ export interface RowProps {
   value?: any;
 }
 
-export default function RowShouldUpdater<T extends new (...args: any[]) => any>(
+export default function RowShouldUpdater<T extends new(...args: any[]) => any>(
   ExtendBase: T
 ) {
   return class extends ExtendBase {

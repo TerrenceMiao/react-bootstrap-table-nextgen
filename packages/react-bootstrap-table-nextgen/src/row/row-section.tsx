@@ -9,7 +9,7 @@ const RowSection: FC<RowSectionProps> = ({ content, colSpan = 1 }) => (
   <tr>
     <td
       data-toggle="collapse"
-      colSpan={colSpan}
+      colSpan={ colSpan }
       className="react-bs-table-no-data"
     >
       {content}

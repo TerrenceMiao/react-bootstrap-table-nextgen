@@ -38,7 +38,7 @@ const Header: React.FC<HeaderProps> = (props) => {
     onExternalFilter,
     filterPosition,
     globalSortCaret,
-    wrapperClasses,
+    wrapperClasses
   } = props;
 
   let SelectionHeaderCellComp: React.FC = () => null;
@@ -62,18 +62,18 @@ const Header: React.FC<HeaderProps> = (props) => {
 
     return (
       <HeaderCell
-        index={i}
-        key={column.dataField}
-        column={column}
-        onSort={onSort}
-        sorting={currSort}
-        sortOrder={sortOrder}
-        globalSortCaret={globalSortCaret}
-        isLastSorting={isLastSorting}
-        onFilter={onFilter}
-        currFilters={currFilters}
-        onExternalFilter={onExternalFilter}
-        filterPosition={filterPosition}
+        index={ i }
+        key={ column.dataField }
+        column={ column }
+        onSort={ onSort }
+        sorting={ currSort }
+        sortOrder={ sortOrder }
+        globalSortCaret={ globalSortCaret }
+        isLastSorting={ isLastSorting }
+        onFilter={ onFilter }
+        currFilters={ currFilters }
+        onExternalFilter={ onExternalFilter }
+        filterPosition={ filterPosition }
       />
     );
   });
@@ -95,8 +95,8 @@ const Header: React.FC<HeaderProps> = (props) => {
   }
 
   return (
-    <thead className={wrapperClasses}>
-      <tr className={className}>{childrens}</tr>
+    <thead className={ wrapperClasses }>
+      <tr className={ className }>{childrens}</tr>
     </thead>
   );
 };

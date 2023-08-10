@@ -9,7 +9,7 @@ const Caption: FC<CaptionProps> = (props) => {
   if (!props.children) return null;
 
   const caption = props.bootstrap4 ? (
-    <caption style={{ captionSide: "top" }}>{props.children}</caption>
+    <caption style={ { captionSide: "top" } }>{props.children}</caption>
   ) : (
     <caption>{props.children}</caption>
   );

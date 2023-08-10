@@ -74,26 +74,26 @@ class RowAggregator extends shouldUpdater(
     const childrens = [
       <RowPureContent
         key="row"
-        row={row}
-        columns={columns}
-        keyField={keyField}
-        rowIndex={rowIndex}
-        shouldUpdate={this.shouldUpdateRowContent}
-        tabIndexStart={tabIndexCell ? tabIndexStart : -1}
-        {...rest}
-      />,
+        row={ row }
+        columns={ columns }
+        keyField={ keyField }
+        rowIndex={ rowIndex }
+        shouldUpdate={ this.shouldUpdateRowContent }
+        tabIndexStart={ tabIndexCell ? tabIndexStart : -1 }
+        { ...rest }
+      />
     ];
 
     if (!hideSelectColumn) {
       const selectCell = (
         <SelectionCell
-          {...selectRow}
+          { ...selectRow }
           key="selection-cell"
-          rowKey={key}
-          rowIndex={rowIndex}
-          selected={selected}
-          disabled={!selectable}
-          tabIndex={tabIndexCell ? tabIndexStart++ : -1}
+          rowKey={ key }
+          rowIndex={ rowIndex }
+          selected={ selected }
+          disabled={ !selectable }
+          tabIndex={ tabIndexCell ? tabIndexStart += 1 : -1 }
         />
       );
       if (this.isRenderFunctionColumnInLeft(selectColumnPosition)) {
@@ -106,13 +106,13 @@ class RowAggregator extends shouldUpdater(
     if (showExpandColumn) {
       const expandCell = (
         <ExpandCell
-          {...expandRow}
+          { ...expandRow }
           key="expand-cell"
-          rowKey={key}
-          rowIndex={rowIndex}
-          expanded={expanded}
-          expandable={expandable}
-          tabIndex={tabIndexCell ? tabIndexStart++ : -1}
+          rowKey={ key }
+          rowIndex={ rowIndex }
+          expanded={ expanded }
+          expandable={ expandable }
+          tabIndex={ tabIndexCell ? tabIndexStart += 1 : -1 }
         />
       );
       if (this.isRenderFunctionColumnInLeft(expandColumnPosition)) {
@@ -123,7 +123,7 @@ class RowAggregator extends shouldUpdater(
     }
 
     return (
-      <tr style={style} className={className} {...newAttrs}>
+      <tr style={ style } className={ className } { ...newAttrs }>
         {childrens}
       </tr>
     );

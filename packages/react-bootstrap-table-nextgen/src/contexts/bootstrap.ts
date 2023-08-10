@@ -5,5 +5,5 @@ interface BootstrapContextValue {
 }
 
 export const BootstrapContext = React.createContext<BootstrapContextValue>({
-  bootstrap4: false,
+  bootstrap4: false
 });

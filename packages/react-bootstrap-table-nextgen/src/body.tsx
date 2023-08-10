@@ -46,7 +46,7 @@ class Body extends Component<BodyProps> {
 
     // Construct Row Component
     let RowComponent: any;
-    
+
     const selectRowEnabled = selectRow?.mode !== Const.ROW_SELECT_DISABLED;
     const expandRowEnabled = !!expandRow?.renderer;
 
@@ -85,7 +85,7 @@ class Body extends Component<BodyProps> {
       rowClasses,
       rowEvents,
       expandRow,
-      className,
+      className
     } = this.props;
 
     let content: ReactNode;
@@ -97,7 +97,7 @@ class Body extends Component<BodyProps> {
       if (!indication) {
         return null;
       }
-      content = <RowSection content={indication} colSpan={visibleColumnSize} />;
+      content = <RowSection content={ indication } colSpan={ visibleColumnSize } />;
     } else {
       const selectRowEnabled = selectRow?.mode !== Const.ROW_SELECT_DISABLED;
       const expandRowEnabled = !!expandRow?.renderer;
@@ -126,7 +126,7 @@ class Body extends Component<BodyProps> {
           rowIndex: index,
           visibleColumnSize,
           attrs: rowEvents || {},
-          ...additionalRowProps,
+          ...additionalRowProps
         };
 
         baseRowProps.style = _.isFunction(rowStyle)
@@ -136,11 +136,11 @@ class Body extends Component<BodyProps> {
           ? rowClasses(row, index)
           : rowClasses;
 
-        return <this.RowComponent {...baseRowProps} />;
+        return <this.RowComponent { ...baseRowProps } />;
       });
     }
 
-    return <tbody className={className}>{content}</tbody>;
+    return <tbody className={ className }>{content}</tbody>;
   }
 }
 

@@ -126,7 +126,7 @@ class HeaderCell extends eventDelegater(Component)<HeaderCellProps> {
       filterPosition,
       onExternalFilter,
       sortCaret,
-      globalSortCaret,
+      globalSortCaret
     } = this.props;
 
     const {
@@ -142,7 +142,7 @@ class HeaderCell extends eventDelegater(Component)<HeaderCellProps> {
       headerStyle,
       headerAttrs,
       headerSortingClasses,
-      headerSortingStyle,
+      headerSortingStyle
     } = column;
 
     const sortCaretfunc = sortCaret || globalSortCaret;
@@ -156,7 +156,7 @@ class HeaderCell extends eventDelegater(Component)<HeaderCellProps> {
     const cellAttrs: React.HTMLAttributes<HTMLTableHeaderCellElement> = {
       ...customAttrs,
       ...delegateEvents,
-      tabIndex: _.isDefined(customAttrs.tabIndex) ? customAttrs.tabIndex : 0,
+      tabIndex: _.isDefined(customAttrs.tabIndex) ? customAttrs.tabIndex : 0
     };
 
     let sortSymbol: React.ReactNode;
@@ -189,13 +189,14 @@ class HeaderCell extends eventDelegater(Component)<HeaderCellProps> {
       cellAttrs["aria-label"] = sorting
         ? `${text} sort ${sortOrder}`
         : `${text} sortable`;
-        cellAttrs.onKeyUp = (e) => {
-          if (e.key === "Enter") {
-            onSort?.(column);
-            // TODO
-            // Argument of type 'KeyboardEvent<HTMLTableHeaderCellElement>' is not assignable to parameter of type 'MouseEvent<HTMLTableHeaderCellElement, MouseEvent>'.
-            // if (_.isFunction(customClick)) customClick(e);
-          }
+      cellAttrs.onKeyUp = (e) => {
+        if (e.key === "Enter") {
+          onSort?.(column);
+          // TODO
+          // Error: Argument of type 'KeyboardEvent<HTMLTableHeaderCellElement>' is not assignable to
+          // parameter of type 'MouseEvent<HTMLTableHeaderCellElement, MouseEvent>'.
+          // if (_.isFunction(customClick)) customClick(e);
+        }
       };
       cellAttrs.onClick = (e) => {
         onSort?.(column);
@@ -207,7 +208,7 @@ class HeaderCell extends eventDelegater(Component)<HeaderCellProps> {
         sortSymbol = sortCaretfunc ? (
           sortCaretfunc(sortOrder || Const.SORT_DESC, column)
         ) : (
-          <SortCaret order={sortOrder!} />
+          <SortCaret order={ sortOrder! } />
         );
 
         cellClasses = cs(
@@ -221,7 +222,7 @@ class HeaderCell extends eventDelegater(Component)<HeaderCellProps> {
           ...cellStyle,
           ...(_.isFunction(headerSortingStyle)
             ? headerSortingStyle(column, sortOrder!, isLastSorting!, index)
-            : headerSortingStyle),
+            : headerSortingStyle)
         };
       } else {
         sortSymbol = sortCaretfunc ? (
@@ -263,10 +264,10 @@ class HeaderCell extends eventDelegater(Component)<HeaderCellProps> {
       } else if (filter) {
         const filterElement = (
           <filter.Filter
-            {...filter.props}
-            filterState={currFilters?.[column.dataField]}
-            onFilter={onFilter}
-            column={column}
+            { ...filter.props }
+            filterState={ currFilters?.[column.dataField] }
+            onFilter={ onFilter }
+            column={ column }
           />
         );
         children = (
@@ -278,7 +279,7 @@ class HeaderCell extends eventDelegater(Component)<HeaderCellProps> {
       }
     }
 
-    return <th {...cellAttrs}>{children}</th>;
+    return <th { ...cellAttrs }>{children}</th>;
   }
 }
 
