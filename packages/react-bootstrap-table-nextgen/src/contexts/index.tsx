@@ -131,7 +131,8 @@ export default (Base: any) =>
     }
 
     // TODO
-    UNSAFE_componentWillReceiveProps(nextProps: BootstrapTableContainerProps) {
+    // UNSAFE_componentWillReceiveProps(nextProps: BootstrapTableContainerProps) {
+    getDerivedStateFromProps(nextProps: BootstrapTableContainerProps) {
       if (nextProps.columns.filter((col) => col.sort).length <= 0) {
         this.SortContext = null;
       } else if (!this.SortContext) {
