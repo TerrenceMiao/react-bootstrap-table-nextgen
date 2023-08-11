@@ -7,7 +7,7 @@
  *
  * @return {Array} - products array
  */
-export const productsGenerator = (quantity = 5, callback) => {
+export const productsGenerator = (quantity = 5, callback: any) => {
   if (callback) return Array.from({ length: quantity }, callback);
 
   // if no given callback, retrun default product format.
