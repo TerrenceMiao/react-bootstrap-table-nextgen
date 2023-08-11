@@ -186,6 +186,7 @@ class HeaderCell extends eventDelegater(Component)<HeaderCellProps> {
 
     if (sort) {
       const customClick = cellAttrs.onClick;
+      const customKeyDown = cellAttrs.onKeyDown;
       cellAttrs["aria-label"] = sorting
         ? `${text} sort ${sortOrder}`
         : `${text} sortable`;
@@ -196,6 +197,7 @@ class HeaderCell extends eventDelegater(Component)<HeaderCellProps> {
           // Error: Argument of type 'KeyboardEvent<HTMLTableHeaderCellElement>' is not assignable to
           // parameter of type 'MouseEvent<HTMLTableHeaderCellElement, MouseEvent>'.
           // if (_.isFunction(customClick)) customClick(e);
+          if (_.isFunction(customKeyDown)) customKeyDown(e);
         }
       };
       cellAttrs.onClick = (e) => {
