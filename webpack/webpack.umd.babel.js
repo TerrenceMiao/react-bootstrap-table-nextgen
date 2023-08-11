@@ -21,11 +21,17 @@ module.exports = {
     }
   }],
   module: {
-    rules: [{
-      test: /\.js?$/,
-      use: ['babel-loader'],
-      exclude: /node_modules/
-    }]
+    rules: [
+      {
+        test: /\.tsx?$/,
+        use: ['ts-loader']
+      },
+      {
+        test: /\.js?$/,
+        use: ['babel-loader'],
+        exclude: /node_modules/
+      }
+    ]
   },
   optimization: {
     minimize: true,
