@@ -64,13 +64,14 @@
     "import/prefer-default-export": 0,
     "import/no-extraneous-dependencies": 0,
     // TODO
-    "quotes": ["error", "double"],
-    "max-len": ["error", { "code": 120 }],
+    "quotes": "off",
+    "max-len": ["error", { "code": 150 }],
     "no-unused-vars": "off",
     "no-param-reassign": "off",
     "no-nested-ternary": "off",
     "no-return-assign": "off",
     "comma-dangle": "off",
+    "react/jsx-curly-newline": 0,
     "react/jsx-curly-spacing": 0,
     "react/require-default-props": 0,
     "react/no-array-index-key": 0
