@@ -1,27 +1,22 @@
 import EventEmitter from "events";
+import { Component } from "react";
 import _ from "../utils";
 
-export interface RemoteResolverProps {
-  remote: boolean | { [key: string]: any };
-  onTableChange: (action: string, state: any) => void;
-  data: any[];
-  pagination: {
-    options?: {
-      pageStartIndex?: number;
-    },
-    createContext:(isRemotePagination?: any, handleRemotePageChange?: any) => void;
-  };
-  search: {
-    searchText: string,
-    searchContext: (_: any, isRemoteSearch: any, handleRemoteSearchChange: any) => void;
-  };
-}
-
 export default (ExtendBase: any) =>
-  class RemoteResolver extends ExtendBase {
+  class RemoteResolver extends Component<typeof ExtendBase> {
     public remoteEmitter: EventEmitter;
+    public DataContext: any;
+    public sortContext: any;
+    public ColumnManagementContext: any;
+    public selectionContext: any;
+    public rowExpandContext: any;
+    public cellEditContext: any;
+    public filterContext: any;
+    public paginationContext: any;
+    public searchContext: any;
+    public table: any;
 
-    constructor(props: RemoteResolverProps) {
+    constructor(props: any) {
       super(props);
       this.remoteEmitter = new EventEmitter();
       this.remoteEmitter.on("paginationChange", this.handleRemotePageChange);
@@ -64,7 +59,7 @@ export default (ExtendBase: any) =>
         sizePerPage,
         searchText,
         ...state,
-        data: this.props.data
+        data: this.props.data,
       };
     };
 

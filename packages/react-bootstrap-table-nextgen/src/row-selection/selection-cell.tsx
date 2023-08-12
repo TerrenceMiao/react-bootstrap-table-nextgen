@@ -5,10 +5,10 @@ import { BootstrapContext } from "../contexts/bootstrap";
 import _ from "../utils";
 
 interface SelectionCellProps {
-  mode: string;
+  mode?: string;
   rowKey: any;
   selected: boolean;
-  onRowSelect: (
+  onRowSelect?: (
     rowKey: any,
     checked: boolean,
     rowIndex: number,
@@ -36,18 +36,18 @@ interface SelectionCellProps {
 }
 
 export default class SelectionCell extends Component<SelectionCellProps> {
-  static propTypes = {
-    mode: PropTypes.string.isRequired,
-    rowKey: PropTypes.any,
-    selected: PropTypes.bool,
-    onRowSelect: PropTypes.func,
-    disabled: PropTypes.bool,
-    rowIndex: PropTypes.number,
-    tabIndex: PropTypes.number,
-    clickToSelect: PropTypes.bool,
-    selectionRenderer: PropTypes.func,
-    selectColumnStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.func])
-  };
+  // static propTypes = {
+  //   mode: PropTypes.string.isRequired,
+  //   rowKey: PropTypes.any,
+  //   selected: PropTypes.bool,
+  //   onRowSelect: PropTypes.func,
+  //   disabled: PropTypes.bool,
+  //   rowIndex: PropTypes.number,
+  //   tabIndex: PropTypes.number,
+  //   clickToSelect: PropTypes.bool,
+  //   selectionRenderer: PropTypes.func,
+  //   selectColumnStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.func])
+  // };
 
   constructor(props: SelectionCellProps) {
     super(props);
@@ -80,7 +80,7 @@ export default class SelectionCell extends Component<SelectionCellProps> {
 
     const checked = inputType === Const.ROW_SELECT_SINGLE ? true : !selected;
 
-    onRowSelect(rowKey, checked, rowIndex, e);
+    onRowSelect!(rowKey, checked, rowIndex, e);
   }
 
   render() {
@@ -113,7 +113,7 @@ export default class SelectionCell extends Component<SelectionCellProps> {
           <td className="selection-cell" onClick={ this.handleClick } { ...attrs }>
             {selectionRenderer ? (
               selectionRenderer({
-                mode: inputType,
+                mode: inputType!,
                 checked: selected,
                 disabled,
                 rowIndex,

@@ -4,12 +4,15 @@ import Const from "../const";
 
 export interface SelectRow {
   hideSelectColumn: boolean;
-  selectColumnPosition: string;
+  selectColumnPosition?: string;
+  selected?: any[];
+  mode?: string;
 }
 
 export interface ExpandRow {
-  showExpandColumn: boolean;
-  expandColumnPosition: string;
+  showExpandColumn?: boolean;
+  expandColumnPosition?: string;
+  nonExpandable?: any[];
 }
 
 interface RowTemplateProps {

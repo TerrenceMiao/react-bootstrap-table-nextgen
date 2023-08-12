@@ -1,8 +1,8 @@
 import _ from "../utils";
 import ColumnResolver from "./column-resolver";
 
-export default (ExtendBase: any) =>
-  class TableResolver extends ColumnResolver(ExtendBase) {
+export default (Base: any) =>
+  class TableResolver extends ColumnResolver(Base) {
     validateProps() {
       const { keyField } = this.props;
       if (!keyField) {

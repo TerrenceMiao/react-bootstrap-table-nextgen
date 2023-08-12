@@ -1,5 +1,7 @@
+import { Component } from "react";
+
 export default (ExtendBase: any) =>
-  class ColumnResolver extends ExtendBase {
+  class ColumnResolver extends Component<typeof ExtendBase> {
     visibleColumnSize(includeSelectColumn = true) {
       let columnLen;
       if (this.props.columnToggle && this.props.columnToggle.toggles) {

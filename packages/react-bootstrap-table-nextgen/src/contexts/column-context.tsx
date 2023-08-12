@@ -1,7 +1,8 @@
 import React, { ReactNode } from "react";
 
 interface ColumnManagementProviderProps {
-  columns: any[]; // Replace "any" with the actual column type
+  data?: any;
+  columns: any[];
   toggles?: { [dataField: string]: boolean };
   children: ReactNode;
 }

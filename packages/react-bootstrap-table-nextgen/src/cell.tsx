@@ -9,9 +9,9 @@ interface CellProps {
   column: any;
   columnIndex: number;
   onStart?: (rowIndex: number, columnIndex: number) => void;
-  editable: boolean;
-  clickToEdit: boolean;
-  dbclickToEdit: boolean;
+  editable?: boolean;
+  clickToEdit?: boolean;
+  dbclickToEdit?: boolean;
   title?: string;
   className?: string;
   style?: React.CSSProperties;

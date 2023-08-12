@@ -1,8 +1,6 @@
 import EventEmitter from "events";
 import React from "react";
-import RemoteResolver, {
-  RemoteResolverProps
-} from "../props-resolver/remote-resolver";
+import RemoteResolver from "../props-resolver/remote-resolver";
 import dataOperator from "../store/operators";
 import _ from "../utils";
 import { BootstrapContext } from "./bootstrap";
@@ -12,38 +10,9 @@ import RowExpandContext from "./row-expand-context";
 import SelectionContext from "./selection-context";
 import createSortContext from "./sort-context";
 
-export interface BootstrapTableContainerProps extends RemoteResolverProps {
-  registerExposedAPI?: (emitter: EventEmitter) => void;
-  columns: any[]; // Add proper type here
-  columnToggle?: any; // Add proper type here
-  selectRow?: any; // Add proper type here
-  expandRow?: any; // Add proper type here
-  cellEdit?: any; // Add proper type here
-  filter?: any; // Add proper type here
-  setDependencyModules?: (utils: any) => void; // Add proper type here
-  setPaginationRemoteEmitter?: (emitter: EventEmitter) => void;
-  defaultSorted?: any; // Add proper type here
-  defaultSortDirection?: any; // Add proper type here
-  sort?: any; // Add proper type here
-  bootstrap4?: boolean;
-  onDataSizeChange?: (size: number) => void;
-  id?: string;
-  dataChangeListener?: any; // Add proper type here
-}
-
-export default (Base: any) =>
+const withContext = (Base: any) =>
   class BootstrapTableContainer extends RemoteResolver(Base) {
-    DataContext: any; // Add proper type here
-    SortContext: any; // Add proper type here
-    ColumnManagementContext: any; // Add proper type here
-    SelectionContext: any; // Add proper type here
-    RowExpandContext: any; // Add proper type here
-    CellEditContext: any; // Add proper type here
-    FilterContext: any; // Add proper type here
-    PaginationContext: any; // Add proper type here
-    SearchContext: any; // Add proper type here
-
-    constructor(props: BootstrapTableContainerProps) {
+    constructor(props: any) {
       super(props);
       this.DataContext = createDataContext();
 
@@ -69,8 +38,8 @@ export default (Base: any) =>
         props.registerExposedAPI(exposedAPIEmitter);
       }
 
-      if (props.columns.filter((col) => col.sort).length > 0) {
-        this.SortContext = createSortContext(
+      if (props.columns.filter((col: any) => col.sort).length > 0) {
+        this.sortContext = createSortContext(
           dataOperator,
           this.isRemoteSort,
           this.handleRemoteSortChange
@@ -79,21 +48,21 @@ export default (Base: any) =>
 
       if (
         props.columnToggle ||
-        props.columns.filter((col) => col.hidden).length > 0
+        props.columns.filter((col: any) => col.hidden).length > 0
       ) {
         this.ColumnManagementContext = createColumnMgtContext();
       }
 
       if (props.selectRow) {
-        this.SelectionContext = SelectionContext;
+        this.selectionContext = SelectionContext;
       }
 
       if (props.expandRow) {
-        this.RowExpandContext = RowExpandContext;
+        this.rowExpandContext = RowExpandContext;
       }
 
       if (props.cellEdit && props.cellEdit.createContext) {
-        this.CellEditContext = props.cellEdit.createContext(
+        this.cellEditContext = props.cellEdit.createContext(
           _,
           dataOperator,
           this.isRemoteCellEdit,
@@ -102,7 +71,7 @@ export default (Base: any) =>
       }
 
       if (props.filter) {
-        this.FilterContext = props.filter.createContext(
+        this.filterContext = props.filter.createContext(
           _,
           this.isRemoteFiltering,
           this.handleRemoteFilterChange
@@ -110,11 +79,11 @@ export default (Base: any) =>
       }
 
       if (props.pagination) {
-        this.PaginationContext = props.pagination.createContext();
+        this.paginationContext = props.pagination.createContext();
       }
 
       if (props.search && props.search.searchContext) {
-        this.SearchContext = props.search.searchContext(
+        this.searchContext = props.search.searchContext(
           _,
           this.isRemoteSearch,
           this.handleRemoteSearchChange
@@ -132,30 +101,30 @@ export default (Base: any) =>
 
     // TODO
     // UNSAFE_componentWillReceiveProps(nextProps: BootstrapTableContainerProps) {
-    getDerivedStateFromProps(nextProps: BootstrapTableContainerProps) {
-      if (nextProps.columns.filter((col) => col.sort).length <= 0) {
-        this.SortContext = null;
-      } else if (!this.SortContext) {
-        this.SortContext = createSortContext(
+    getDerivedStateFromProps(nextProps: any) {
+      if (nextProps.columns.filter((col: any) => col.sort).length <= 0) {
+        this.sortContext = null;
+      } else if (!this.sortContext) {
+        this.sortContext = createSortContext(
           dataOperator,
           this.isRemoteSort,
           this.handleRemoteSortChange
         );
       }
       if (!nextProps.pagination && this.props.pagination) {
-        this.PaginationContext = null;
+        this.paginationContext = null;
       }
       if (nextProps.pagination && !this.props.pagination) {
-        this.PaginationContext = nextProps.pagination.createContext(
+        this.paginationContext = nextProps.pagination.createContext(
           this.isRemotePagination,
           this.handleRemotePageChange
         );
       }
       if (!nextProps.cellEdit && this.props.cellEdit) {
-        this.CellEditContext = null;
+        this.cellEditContext = null;
       }
       if (nextProps.cellEdit && !this.props.cellEdit) {
-        this.CellEditContext = nextProps.cellEdit.createContext(
+        this.cellEditContext = nextProps.cellEdit.createContext(
           _,
           dataOperator,
           this.isRemoteCellEdit,
@@ -181,19 +150,19 @@ export default (Base: any) =>
         columnToggleProps: any
       ) => (
         <Base
-          ref={ (n: any) => (this.table = n) }
-          { ...this.props }
-          { ...sortProps }
-          { ...filterProps }
-          { ...searchProps }
-          { ...paginationProps }
-          { ...columnToggleProps }
-          data={ rootProps.getData(
+          ref={(n: any) => (this.table = n)}
+          {...this.props}
+          {...sortProps}
+          {...filterProps}
+          {...searchProps}
+          {...paginationProps}
+          {...columnToggleProps}
+          data={rootProps.getData(
             filterProps,
             searchProps,
             sortProps,
             paginationProps
-          ) }
+          )}
         />
       );
     }
@@ -207,7 +176,7 @@ export default (Base: any) =>
         paginationProps: any
       ) => (
         <this.ColumnManagementContext.Provider
-          { ...baseProps }
+          {...baseProps}
           toggles={
             this.props.columnToggle ? this.props.columnToggle.toggles : null
           }
@@ -221,7 +190,8 @@ export default (Base: any) =>
                 sortProps,
                 paginationProps,
                 columnToggleProps
-              )}
+              )
+            }
           </this.ColumnManagementContext.Consumer>
         </this.ColumnManagementContext.Provider>
       );
@@ -242,16 +212,16 @@ export default (Base: any) =>
         sortProps: any,
         paginationProps: any
       ) => (
-        <this.SelectionContext.Provider
-          { ...baseProps }
-          ref={ (n: any) => (this.selectionContext = n) }
-          selectRow={ this.props.selectRow }
-          data={ rootProps.getData(
+        <this.selectionContext.Provider
+          {...baseProps}
+          ref={(n: any) => (this.selectionContext = n)}
+          selectRow={this.props.selectRow}
+          data={rootProps.getData(
             filterProps,
             searchProps,
             sortProps,
             paginationProps
-          ) }
+          )}
         >
           {base(
             rootProps,
@@ -260,7 +230,7 @@ export default (Base: any) =>
             sortProps,
             paginationProps
           )}
-        </this.SelectionContext.Provider>
+        </this.selectionContext.Provider>
       );
     }
 
@@ -279,16 +249,16 @@ export default (Base: any) =>
         sortProps: any,
         paginationProps: any
       ) => (
-        <this.RowExpandContext.Provider
-          { ...baseProps }
-          ref={ (n: any) => (this.rowExpandContext = n) }
-          expandRow={ this.props.expandRow }
-          data={ rootProps.getData(
+        <this.rowExpandContext.Provider
+          {...baseProps}
+          ref={(n: any) => (this.rowExpandContext = n)}
+          expandRow={this.props.expandRow}
+          data={rootProps.getData(
             filterProps,
             searchProps,
             sortProps,
             paginationProps
-          ) }
+          )}
         >
           {base(
             rootProps,
@@ -297,7 +267,7 @@ export default (Base: any) =>
             sortProps,
             paginationProps
           )}
-        </this.RowExpandContext.Provider>
+        </this.rowExpandContext.Provider>
       );
     }
 
@@ -315,17 +285,17 @@ export default (Base: any) =>
         searchProps: any,
         sortProps: any
       ) => (
-        <this.PaginationContext.Provider
-          ref={ (n: any) => (this.paginationContext = n) }
-          pagination={ this.props.pagination }
-          data={ rootProps.getData(filterProps, searchProps, sortProps) }
-          bootstrap4={ this.props.bootstrap4 }
-          isRemotePagination={ this.isRemotePagination }
-          remoteEmitter={ this.remoteEmitter }
-          onDataSizeChange={ this.props.onDataSizeChange }
-          tableId={ this.props.id }
+        <this.paginationContext.Provider
+          ref={(n: any) => (this.paginationContext = n)}
+          pagination={this.props.pagination}
+          data={rootProps.getData(filterProps, searchProps, sortProps)}
+          bootstrap4={this.props.bootstrap4}
+          isRemotePagination={this.isRemotePagination}
+          remoteEmitter={this.remoteEmitter}
+          onDataSizeChange={this.props.onDataSizeChange}
+          tableId={this.props.id}
         >
-          <this.PaginationContext.Consumer>
+          <this.paginationContext.Consumer>
             {(paginationProps: any) =>
               base(
                 rootProps,
@@ -333,9 +303,10 @@ export default (Base: any) =>
                 searchProps,
                 sortProps,
                 paginationProps
-              )}
-          </this.PaginationContext.Consumer>
-        </this.PaginationContext.Provider>
+              )
+            }
+          </this.paginationContext.Consumer>
+        </this.paginationContext.Provider>
       );
     }
 
@@ -352,19 +323,20 @@ export default (Base: any) =>
         filterProps: any,
         searchProps: any
       ) => (
-        <this.SortContext.Provider
-          { ...baseProps }
-          ref={ (n: any) => (this.sortContext = n) }
-          defaultSorted={ this.props.defaultSorted }
-          defaultSortDirection={ this.props.defaultSortDirection }
-          sort={ this.props.sort }
-          data={ rootProps.getData(filterProps, searchProps) }
+        <this.sortContext.Provider
+          {...baseProps}
+          ref={(n: any) => (this.sortContext = n)}
+          defaultSorted={this.props.defaultSorted}
+          defaultSortDirection={this.props.defaultSortDirection}
+          sort={this.props.sort}
+          data={rootProps.getData(filterProps, searchProps)}
         >
-          <this.SortContext.Consumer>
+          <this.sortContext.Consumer>
             {(sortProps: any) =>
-              base(rootProps, filterProps, searchProps, sortProps)}
-          </this.SortContext.Consumer>
-        </this.SortContext.Provider>
+              base(rootProps, filterProps, searchProps, sortProps)
+            }
+          </this.sortContext.Consumer>
+        </this.sortContext.Provider>
       );
     }
 
@@ -380,33 +352,33 @@ export default (Base: any) =>
         },
         filterProps: any
       ) => (
-        <this.SearchContext.Provider
-          { ...baseProps }
-          ref={ (n: any) => (this.searchContext = n) }
-          data={ rootProps.getData(filterProps) }
-          searchText={ this.props.search.searchText }
-          dataChangeListener={ this.props.dataChangeListener }
+        <this.searchContext.Provider
+          {...baseProps}
+          ref={(n: any) => (this.searchContext = n)}
+          data={rootProps.getData(filterProps)}
+          searchText={this.props.search.searchText}
+          dataChangeListener={this.props.dataChangeListener}
         >
-          <this.SearchContext.Consumer>
+          <this.searchContext.Consumer>
             {(searchProps: any) => base(rootProps, filterProps, searchProps)}
-          </this.SearchContext.Consumer>
-        </this.SearchContext.Provider>
+          </this.searchContext.Consumer>
+        </this.searchContext.Provider>
       );
     }
 
     renderWithFilterCtx(base: any, baseProps: any) {
       return (rootProps: any) => (
-        <this.FilterContext.Provider
-          { ...baseProps }
-          ref={ (n: any) => (this.filterContext = n) }
-          data={ rootProps.getData() }
-          filter={ this.props.filter.options || {} }
-          dataChangeListener={ this.props.dataChangeListener }
+        <this.filterContext.Provider
+          {...baseProps}
+          ref={(n: any) => (this.filterContext = n)}
+          data={rootProps.getData()}
+          filter={this.props.filter.options || {}}
+          dataChangeListener={this.props.dataChangeListener}
         >
-          <this.FilterContext.Consumer>
+          <this.filterContext.Consumer>
             {(filterProps: any) => base(rootProps, filterProps)}
-          </this.FilterContext.Consumer>
-        </this.FilterContext.Provider>
+          </this.filterContext.Consumer>
+        </this.filterContext.Provider>
       );
     }
 
@@ -419,15 +391,15 @@ export default (Base: any) =>
           paginationProps?: any
         ) => any;
       }) => (
-        <this.CellEditContext.Provider
-          { ...baseProps }
-          ref={ (n: any) => (this.cellEditContext = n) }
-          selectRow={ this.props.selectRow }
-          cellEdit={ this.props.cellEdit }
-          data={ rootProps.getData() }
+        <this.cellEditContext.Provider
+          {...baseProps}
+          ref={(n: any) => (this.cellEditContext = n)}
+          selectRow={this.props.selectRow}
+          cellEdit={this.props.cellEdit}
+          data={rootProps.getData()}
         >
           {base(rootProps)}
-        </this.CellEditContext.Provider>
+        </this.cellEditContext.Provider>
       );
     }
 
@@ -441,40 +413,42 @@ export default (Base: any) =>
         base = this.renderWithColumnManagementCtx(base, baseProps);
       }
 
-      if (this.SelectionContext) {
+      if (this.selectionContext) {
         base = this.renderWithSelectionCtx(base, baseProps);
       }
 
-      if (this.RowExpandContext) {
+      if (this.rowExpandContext) {
         base = this.renderWithRowExpandCtx(base, baseProps);
       }
 
-      if (this.PaginationContext) {
+      if (this.paginationContext) {
         base = this.renderWithPaginationCtx(base);
       }
 
-      if (this.SortContext) {
+      if (this.sortContext) {
         base = this.renderWithSortCtx(base, baseProps);
       }
 
-      if (this.SearchContext) {
+      if (this.searchContext) {
         base = this.renderWithSearchCtx(base, baseProps);
       }
 
-      if (this.FilterContext) {
+      if (this.filterContext) {
         base = this.renderWithFilterCtx(base, baseProps);
       }
 
-      if (this.CellEditContext) {
+      if (this.cellEditContext) {
         base = this.renderWithCellEditCtx(base, baseProps);
       }
 
       return (
-        <BootstrapContext.Provider value={ { bootstrap4 } }>
-          <this.DataContext.Provider { ...baseProps } data={ this.props.data }>
+        <BootstrapContext.Provider value={{ bootstrap4 }}>
+          <this.DataContext.Provider {...baseProps} data={this.props.data}>
             <this.DataContext.Consumer>{base}</this.DataContext.Consumer>
           </this.DataContext.Provider>
         </BootstrapContext.Provider>
       );
     }
   };
+
+export default withContext;

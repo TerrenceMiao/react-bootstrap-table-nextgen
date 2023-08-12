@@ -15,15 +15,15 @@ interface BodyProps {
   columns: any[];
   selectRow?: any;
   cellEdit: any;
-  tabIndexCell: boolean;
-  isEmpty: boolean;
-  noDataIndication: string | (() => ReactNode);
-  visibleColumnSize: number;
-  rowStyle:
+  tabIndexCell?: boolean;
+  isEmpty?: boolean;
+  noDataIndication?: string | (() => ReactNode);
+  visibleColumnSize?: number;
+  rowStyle?:
     | React.CSSProperties
     | ((row: any, index: number) => React.CSSProperties);
-  rowClasses: string | ((row: any, index: number) => string);
-  rowEvents: Record<string, any> | null;
+  rowClasses?: string | ((row: any, index: number) => string);
+  rowEvents?: Record<string, any> | null;
   expandRow: any;
   className?: string;
 }

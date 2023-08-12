@@ -1,5 +1,5 @@
 /* eslint react/prefer-stateless-function: 0 */
-import React from 'react';
+import React, { Component } from 'react';
 import sinon from 'sinon';
 import { shallow } from 'enzyme';
 
@@ -7,7 +7,7 @@ import Container from '../../index';
 // import remoteResolver from '../../src/props-resolver/remote-resolver';
 
 describe('remoteResolver', () => {
-  let wrapper;
+  let wrapper: any;
 
   const keyField = 'id';
 
@@ -27,7 +27,7 @@ describe('remoteResolver', () => {
     name: 'B'
   }];
 
-  const shallowContainer = (props) => {
+  const shallowContainer = (props?: any) => {
     wrapper = shallow(
       <Container
         keyField={ keyField }
