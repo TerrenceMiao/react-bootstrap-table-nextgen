@@ -73,6 +73,7 @@
     "comma-dangle": "off",
     "react/jsx-curly-newline": 0,
     "react/jsx-curly-spacing": 0,
+    "react/prefer-stateless-function": 0,
     "react/require-default-props": 0,
     "react/no-array-index-key": 0
   },
