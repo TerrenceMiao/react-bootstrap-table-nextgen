@@ -24,3 +24,4 @@ storybook-static
 lib
 dist
 *.js.map
+*.test.tsx.snap

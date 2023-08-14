@@ -134,9 +134,9 @@
   },
   "jest": {
     "collectCoverageFrom": [
-      "packages/*/src/**/*.js",
-      "packages/*/index.js",
-      "!packages/react-bootstrap-table-nextgen-example/**/*.js"
+      "packages/*/src/**/*.{ts,tsx}",
+      "packages/*/index.ts",
+      "!packages/react-bootstrap-table-nextgen-example/**/*.{ts,tsx}"
     ],
     "roots": [
       "<rootDir>/packages"
@@ -149,7 +149,7 @@
     ],
     "testEnvironment": "node",
     "testMatch": [
-      "**/test/**/*.test.js"
+      "**/test/**/*.test.{ts,tsx}"
     ]
   }
 }
