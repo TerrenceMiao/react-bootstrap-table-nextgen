@@ -53,8 +53,6 @@ describe("DataContext", () => {
     onSelectAll?: () => void;
   } = {
     mode: "checkbox",
-    selected: [0],
-    onSelectAll: () => {},
   };
 
   function shallowContext(selectRow = defaultSelectRow) {

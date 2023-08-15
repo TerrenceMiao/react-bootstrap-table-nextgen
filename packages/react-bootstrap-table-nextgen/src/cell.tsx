@@ -88,11 +88,4 @@ class Cell extends eventDelegater(Component)<CellProps> {
   }
 }
 
-// Cell.propTypes = {
-//   row: PropTypes.object.isRequired,
-//   rowIndex: PropTypes.number.isRequired,
-//   column: PropTypes.object.isRequired,
-//   columnIndex: PropTypes.number.isRequired,
-// };
-
 export default Cell;
