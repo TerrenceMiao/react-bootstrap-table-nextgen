@@ -30,7 +30,7 @@ export default class RowPureContent extends Component<RowPureContentProps> {
       clickToEdit,
       dbclickToEdit,
       EditingCellComponent,
-      tabIndexStart
+      tabIndexStart,
     } = this.props;
 
     let tabIndex = tabIndexStart;
@@ -38,14 +38,18 @@ export default class RowPureContent extends Component<RowPureContentProps> {
     return columns?.map((column, index) => {
       const { dataField } = column;
       const content = _.get(row, dataField);
-      if (rowIndex === editingRowIdx && index === editingColIdx && EditingCellComponent) {
+      if (
+        rowIndex === editingRowIdx &&
+        index === editingColIdx &&
+        EditingCellComponent
+      ) {
         return (
           <EditingCellComponent
-            key={ `${content}-${index}-editing` }
-            row={ row }
-            rowIndex={ rowIndex }
-            column={ column }
-            columnIndex={ index }
+            key={`${content}-${index}-editing`}
+            row={row}
+            rowIndex={rowIndex}
+            column={column}
+            columnIndex={index}
           />
         );
       }
@@ -55,7 +59,7 @@ export default class RowPureContent extends Component<RowPureContentProps> {
       let cellAttrs: React.HTMLAttributes<HTMLTableCellElement> = {
         ...(typeof column.attrs === "function"
           ? column.attrs(content, row, rowIndex, index)
-          : column.attrs)
+          : column.attrs),
       };
 
       if (column.events) {
@@ -107,16 +111,16 @@ export default class RowPureContent extends Component<RowPureContentProps> {
 
       return (
         <Cell
-          key={ `${content}-${index}` }
-          row={ row }
-          editable={ editableCell }
-          rowIndex={ rowIndex ?? 0 }
-          columnIndex={ index }
-          column={ column }
-          onStart={ onStart }
-          clickToEdit={ clickToEdit ?? false }
-          dbclickToEdit={ dbclickToEdit ?? false }
-          { ...cellAttrs }
+          key={`${content}-${index}`}
+          row={row}
+          editable={editableCell.toString()}
+          rowindex={rowIndex ?? 0}
+          columnindex={index}
+          column={column}
+          onStart={onStart}
+          clicktoedit={clickToEdit ?? "false"}
+          dbclicktoedit={dbclickToEdit ?? "false"}
+          {...cellAttrs}
         />
       );
     });

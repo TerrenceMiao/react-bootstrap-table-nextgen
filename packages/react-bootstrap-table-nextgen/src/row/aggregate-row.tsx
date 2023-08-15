@@ -62,10 +62,10 @@ class RowAggregator extends shouldUpdater(
     } = this.props;
     const key = _.get(row, keyField);
     const { hideSelectColumn, selectColumnPosition, clickToSelect } = selectRow;
-    const { showExpandColumn, expandColumnPosition } = expandRow;
+    const { showExpandColumn = undefined, expandColumnPosition = undefined } = expandRow ?? {};
 
     const newAttrs = this.delegate({ ...attrs });
-    if (clickToSelect || !!expandRow.renderer) {
+    if (clickToSelect || (expandRow && !!expandRow.renderer)) {
       newAttrs.onClick = this.createClickEventHandler(newAttrs.onClick);
     }
 

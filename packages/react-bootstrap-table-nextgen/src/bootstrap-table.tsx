@@ -14,12 +14,12 @@ interface BootstrapTableProps {
   keyField: string;
   data: any[];
   columns: any[];
-  bootstrap4?: boolean;
-  remote?: boolean | { pagination: boolean };
-  noDataIndication?: React.ReactNode | (() => React.ReactNode);
-  striped?: boolean;
-  bordered?: boolean;
-  hover?: boolean;
+  bootstrap4: boolean;
+  remote: boolean | { pagination: boolean };
+  noDataIndication: React.ReactNode | (() => React.ReactNode);
+  striped: boolean;
+  bordered: boolean;
+  hover: boolean;
   tabIndexCell?: boolean;
   id?: string;
   classes?: string;
@@ -27,20 +27,20 @@ interface BootstrapTableProps {
   bodyClasses?: string;
   wrapperClasses?: string;
   headerWrapperClasses?: string;
-  condensed?: boolean;
+  condensed: boolean;
   caption?: React.ReactNode | string;
   pagination?: any;
   filter?: any;
-  cellEdit?: any;
-  selectRow?: any;
-  expandRow?: any;
+  cellEdit: any;
+  selectRow: any;
+  expandRow: any;
   rowStyle?:
     | React.CSSProperties
     | ((row: any, rowIndex: number) => React.CSSProperties);
   rowEvents?: Record<string, any>;
   rowClasses?: string | ((row: any, rowIndex: number) => string);
   filtersClasses?: string;
-  filterPosition?: string;
+  filterPosition: string;
   footerClasses?: string;
   defaultSorted?: Array<{ dataField: string; order: string }>;
   sort?: {
@@ -63,11 +63,39 @@ interface BootstrapTableProps {
   setDependencyModules?: (deps: Record<string, any>) => void;
 }
 
+const DefaultBootstrapTableProps: BootstrapTableProps = {
+  keyField: '',
+  data: [],
+  columns: [],
+  bootstrap4: false,
+  remote: false,
+  striped: false,
+  bordered: true,
+  hover: false,
+  condensed: false,
+  noDataIndication: null,
+  selectRow: {
+    mode: Const.ROW_SELECT_DISABLED,
+    selected: [],
+    hideSelectColumn: true,
+  },
+  expandRow: {
+    renderer: undefined,
+    expanded: [],
+    nonExpandable: [],
+  },
+  cellEdit: {
+    mode: null,
+    nonEditableRows: [],
+  },
+  filterPosition: Const.FILTERS_POSITION_INLINE,
+};
+
 class BootstrapTable extends PropsBaseResolver(
   React.Component<BootstrapTableProps>
 ) {
   constructor(props: BootstrapTableProps) {
-    super(props);
+    super({ ...DefaultBootstrapTableProps, props });
     this.validateProps();
   }
 

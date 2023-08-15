@@ -1,8 +1,8 @@
 import _ from "../utils";
 
 export interface RowProps {
-  clickToEdit?: boolean;
-  dbclickToEdit?: boolean;
+  clickToEdit?: string;
+  dbclickToEdit?: string;
   editable?: boolean;
   editingRowIdx?: number | null;
   editingColIdx?: number;

@@ -5,13 +5,13 @@ import _ from "./utils";
 
 interface CellProps {
   row: any;
-  rowIndex: number;
+  rowindex: number;
   column: any;
-  columnIndex: number;
+  columnindex: number;
   onStart?: (rowIndex: number, columnIndex: number) => void;
-  editable?: boolean;
-  clickToEdit?: boolean;
-  dbclickToEdit?: boolean;
+  editable?: string;
+  clicktoedit?: string;
+  dbclicktoedit?: string;
   title?: string;
   className?: string;
   style?: React.CSSProperties;
@@ -43,8 +43,13 @@ class Cell extends eventDelegater(Component)<CellProps> {
 
   createHandleEditingCell(originFunc: (e: MouseEvent) => void) {
     return (e: MouseEvent) => {
-      const { onStart, rowIndex, columnIndex, clickToEdit, dbclickToEdit } =
-        this.props;
+      const {
+        onStart,
+        rowindex: rowIndex,
+        columnindex: columnIndex,
+        clicktoedit: clickToEdit,
+        dbclicktoedit: dbclickToEdit,
+      } = this.props;
       if ((clickToEdit || dbclickToEdit) && _.isFunction(originFunc)) {
         originFunc(e);
       }
@@ -64,19 +69,19 @@ class Cell extends eventDelegater(Component)<CellProps> {
       content = column.formatter(
         content,
         row,
-        this.props.rowIndex,
+        this.props.rowindex,
         formatExtraData
       );
     }
 
-    if (this.props.clickToEdit && this.props.editable) {
+    if (this.props.clicktoedit && this.props.editable) {
       attrs.onClick = this.createHandleEditingCell(attrs.onClick);
-    } else if (this.props.dbclickToEdit && this.props.editable) {
+    } else if (this.props.dbclicktoedit && this.props.editable) {
       attrs.onDoubleClick = this.createHandleEditingCell(attrs.onDoubleClick);
     }
 
     return (
-      <td { ...attrs }>
+      <td {...attrs}>
         {typeof content === "boolean" ? `${content}` : content}
       </td>
     );

@@ -78,7 +78,7 @@ const Header: React.FC<HeaderProps> = (props) => {
     );
   });
 
-  if (!selectRow?.hideSelectColumn) {
+  if (selectRow && !selectRow.hideSelectColumn) {
     if (isRenderFunctionColumnInLeft(selectRow.selectColumnPosition)) {
       childrens.unshift(<SelectionHeaderCellComp key="selection" />);
     } else {

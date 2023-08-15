@@ -37,7 +37,7 @@ class Body extends Component<BodyProps> {
     const { keyField, cellEdit, selectRow, expandRow } = props;
 
     // Construct Editing Cell Component
-    if (cellEdit.createContext) {
+    if (cellEdit?.createContext) {
       this.EditingCell = cellEdit.createEditingCell(
         _,
         cellEdit.options.onStartEdit
@@ -56,7 +56,7 @@ class Body extends Component<BodyProps> {
       RowComponent = withRowSelection(
         expandRowEnabled ? RowComponent : RowAggregator
       );
-    } else if (cellEdit.createContext) {
+    } else if (cellEdit?.createContext) {
       RowComponent = cellEdit.withRowLevelCellEdit(
         RowComponent,
         selectRowEnabled,
@@ -104,7 +104,7 @@ class Body extends Component<BodyProps> {
 
       const additionalRowProps: RowProps = {};
 
-      if (cellEdit.createContext) {
+      if (cellEdit?.createContext) {
         additionalRowProps.EditingCellComponent = this.EditingCell;
       }
 

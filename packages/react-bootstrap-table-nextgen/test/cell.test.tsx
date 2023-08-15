@@ -24,7 +24,7 @@ describe("Cell", () => {
 
     beforeEach(() => {
       wrapper = shallow(
-        <Cell row={row} columnIndex={1} rowIndex={1} column={column} />
+        <Cell row={row} columnindex={1} rowindex={1} column={column} />
       );
     });
 
@@ -45,8 +45,8 @@ describe("Cell", () => {
       wrapper = shallow(
         <Cell
           row={aRowWithBoolValue}
-          columnIndex={1}
-          rowIndex={1}
+          columnindex={1}
+          rowindex={1}
           column={column}
         />
       );
@@ -77,7 +77,7 @@ describe("Cell", () => {
 
     beforeEach(() => {
       wrapper = shallow(
-        <Cell row={row} columnIndex={1} rowIndex={rowIndex} column={column} />
+        <Cell row={row} columnindex={1} rowindex={rowIndex} column={column} />
       );
     });
 
@@ -123,11 +123,11 @@ describe("Cell", () => {
         wrapper = shallow(
           <Cell
             row={row}
-            rowIndex={rowIndex}
+            rowindex={rowIndex}
             column={column}
-            columnIndex={columnIndex}
-            editable
-            clickToEdit
+            columnindex={columnIndex}
+            editable={"false"}
+            clicktoedit={"false"}
             onStart={onStartCallBack}
           />
         );
@@ -163,11 +163,11 @@ describe("Cell", () => {
         wrapper = shallow(
           <Cell
             row={row}
-            rowIndex={1}
+            rowindex={1}
             column={column}
-            columnIndex={1}
-            editable
-            dbclickToEdit
+            columnindex={1}
+            editable={"false"}
+            dbclicktoedit={"false"}
             onStart={onStartCallBack}
           />
         );

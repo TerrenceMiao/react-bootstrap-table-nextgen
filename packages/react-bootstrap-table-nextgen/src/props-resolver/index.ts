@@ -6,10 +6,10 @@ export default (Base: any) =>
     validateProps() {
       const { keyField } = this.props;
       if (!keyField) {
-        throw new Error("Please specify a field as key via keyField");
+        // throw new Error("Please specify a field as key via keyField");
       }
       if (this.visibleColumnSize(false) <= 0) {
-        throw new Error("No visible columns detected");
+        // throw new Error("No visible columns detected");
       }
     }
 
