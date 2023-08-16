@@ -99,9 +99,7 @@ const withContext = (Base: any) =>
       }
     }
 
-    // TODO
-    // UNSAFE_componentWillReceiveProps(nextProps: BootstrapTableContainerProps) {
-    getDerivedStateFromProps(nextProps: any) {
+    componentDidUpdate(nextProps: any) {
       if (nextProps.columns.filter((col: any) => col.sort).length <= 0) {
         this.sortContext = null;
       } else if (!this.sortContext) {

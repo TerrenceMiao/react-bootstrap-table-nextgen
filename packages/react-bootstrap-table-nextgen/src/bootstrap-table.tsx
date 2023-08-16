@@ -64,7 +64,7 @@ interface BootstrapTableProps {
 }
 
 const DefaultBootstrapTableProps: BootstrapTableProps = {
-  keyField: '',
+  keyField: "",
   data: [],
   columns: [],
   bootstrap4: false,
@@ -99,9 +99,7 @@ class BootstrapTable extends PropsBaseResolver(
     this.validateProps();
   }
 
-  // TODO
-  // UNSAFE_componentWillReceiveProps(nextProps: BootstrapTableProps) {
-  getDerivedStateFromProps(nextProps: BootstrapTableProps) {
+  componentDidUpdate(nextProps: BootstrapTableProps) {
     if (nextProps.onDataSizeChange && !nextProps.pagination) {
       if (nextProps.data.length !== this.props.data.length) {
         nextProps.onDataSizeChange({ dataSize: nextProps.data.length });

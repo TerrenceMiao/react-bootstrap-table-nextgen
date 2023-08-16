@@ -75,8 +75,8 @@ class SelectionProvider extends Component<SelectionProviderProps> {
       clickToSelectAndEditCell: PropTypes.bool,
       onSelect: PropTypes.func,
       onSelectAll: PropTypes.func,
-      nonSelectable: PropTypes.array
-    })
+      nonSelectable: PropTypes.array,
+    }),
   };
 
   selected: any[];
@@ -91,10 +91,9 @@ class SelectionProvider extends Component<SelectionProviderProps> {
     return this.selected;
   }
 
-  componentDidUpdate(prevProps: SelectionProviderProps) {
-    const { selectRow } = this.props;
-    if (selectRow) {
-      this.selected = selectRow.selected || this.selected;
+  componentDidUpdate(nextProps: SelectionProviderProps) {
+    if (nextProps.selectRow) {
+      this.selected = nextProps.selectRow.selected || this.selected;
     }
   }
 
@@ -107,7 +106,7 @@ class SelectionProvider extends Component<SelectionProviderProps> {
     const {
       data,
       keyField,
-      selectRow: { mode, onSelect }
+      selectRow: { mode, onSelect },
     } = this.props;
     const { ROW_SELECT_SINGLE } = Const;
 
@@ -136,7 +135,7 @@ class SelectionProvider extends Component<SelectionProviderProps> {
     const {
       data,
       keyField,
-      selectRow: { onSelectAll, nonSelectable }
+      selectRow: { onSelectAll, nonSelectable },
     } = this.props;
     const { selected } = this;
 
@@ -181,20 +180,21 @@ class SelectionProvider extends Component<SelectionProviderProps> {
     let checkedStatus: string;
 
     if (allRowsSelected) checkedStatus = Const.CHECKBOX_STATUS_CHECKED;
-    else if (allRowsNotSelected) checkedStatus = Const.CHECKBOX_STATUS_UNCHECKED;
+    else if (allRowsNotSelected)
+      checkedStatus = Const.CHECKBOX_STATUS_UNCHECKED;
     else checkedStatus = Const.CHECKBOX_STATUS_INDETERMINATE;
 
     return (
       <SelectionContext.Provider
-        value={ {
+        value={{
           ...this.props.selectRow,
           selected: this.selected,
           onRowSelect: this.handleRowSelect,
           onAllRowsSelect: this.handleAllRowsSelect,
           allRowsSelected,
           allRowsNotSelected,
-          checkedStatus
-        } }
+          checkedStatus,
+        }}
       >
         {this.props.children}
       </SelectionContext.Provider>
@@ -204,5 +204,5 @@ class SelectionProvider extends Component<SelectionProviderProps> {
 
 export default {
   Provider: SelectionProvider,
-  Consumer: SelectionContext.Consumer
+  Consumer: SelectionContext.Consumer,
 };
