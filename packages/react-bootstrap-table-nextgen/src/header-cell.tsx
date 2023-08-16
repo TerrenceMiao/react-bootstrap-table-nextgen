@@ -32,10 +32,22 @@ interface HeaderCellProps {
     headerStyle?:
       | React.CSSProperties
       | ((column: any, index: number) => React.CSSProperties);
-    headerSortingClasses?: string | ((column: any, sortOrder: string, isLastSorting: boolean, index: number) => string);
+    headerSortingClasses?:
+      | string
+      | ((
+          column: any,
+          sortOrder: string,
+          isLastSorting: boolean,
+          index: number
+        ) => string);
     headerSortingStyle?:
       | React.CSSProperties
-      | ((column: any, sortOrder: string, isLastSorting: boolean, index: number) => React.CSSProperties);
+      | ((
+          column: any,
+          sortOrder: string,
+          isLastSorting: boolean,
+          index: number
+        ) => React.CSSProperties);
     style?:
       | React.CSSProperties
       | ((cell: any, row: any, rowIndex: number) => React.CSSProperties);
@@ -103,7 +115,7 @@ interface HeaderCellProps {
   onSort?: (column: any) => void;
   sorting?: boolean;
   sortOrder?: string;
-  sortCaret?: (order: string, column: any) => React.ReactNode;
+  sortCaret?: any;
   isLastSorting?: boolean;
   onFilter?: (filterData: Record<string, any>) => void;
   filterPosition?: string;
@@ -126,7 +138,7 @@ class HeaderCell extends eventDelegater(Component)<HeaderCellProps> {
       filterPosition,
       onExternalFilter,
       sortCaret,
-      globalSortCaret
+      globalSortCaret,
     } = this.props;
 
     const {
@@ -142,7 +154,7 @@ class HeaderCell extends eventDelegater(Component)<HeaderCellProps> {
       headerStyle,
       headerAttrs,
       headerSortingClasses,
-      headerSortingStyle
+      headerSortingStyle,
     } = column;
 
     const sortCaretfunc = sortCaret || globalSortCaret;
@@ -156,10 +168,11 @@ class HeaderCell extends eventDelegater(Component)<HeaderCellProps> {
     const cellAttrs: React.HTMLAttributes<HTMLTableHeaderCellElement> = {
       ...customAttrs,
       ...delegateEvents,
-      tabIndex: _.isDefined(customAttrs.tabIndex) ? customAttrs.tabIndex : 0
+      tabIndex: _.isDefined(customAttrs.tabIndex) ? customAttrs.tabIndex : 0,
     };
 
     let sortSymbol: React.ReactNode;
+    let filterElement: React.ReactNode;
     let cellStyle: React.CSSProperties = {};
     let cellClasses = _.isFunction(headerClasses)
       ? headerClasses(column, index)
@@ -210,7 +223,7 @@ class HeaderCell extends eventDelegater(Component)<HeaderCellProps> {
         sortSymbol = sortCaretfunc ? (
           sortCaretfunc(sortOrder || Const.SORT_DESC, column)
         ) : (
-          <SortCaret order={ sortOrder! } />
+          <SortCaret order={sortOrder!} />
         );
 
         cellClasses = cs(
@@ -224,11 +237,11 @@ class HeaderCell extends eventDelegater(Component)<HeaderCellProps> {
           ...cellStyle,
           ...(_.isFunction(headerSortingStyle)
             ? headerSortingStyle(column, sortOrder!, isLastSorting!, index)
-            : headerSortingStyle)
+            : headerSortingStyle),
         };
       } else {
         sortSymbol = sortCaretfunc ? (
-          sortCaretfunc("", column)
+          sortCaretfunc(undefined, column)
         ) : (
           <SortSymbol />
         );
@@ -238,110 +251,44 @@ class HeaderCell extends eventDelegater(Component)<HeaderCellProps> {
     if (cellClasses) cellAttrs.className = cs(cellAttrs.className, cellClasses);
     if (!_.isEmptyObject(cellStyle)) cellAttrs.style = cellStyle;
 
-    let children: React.ReactNode;
-    if (headerFormatter) {
-      children = headerFormatter(column, index, { sortElement: sortSymbol });
-    } else {
-      children = (
-        <>
-          {text}
-          {sortSymbol}
-        </>
-      );
-    }
-
     if (filterPosition === Const.FILTERS_POSITION_INLINE) {
       if (filterRenderer) {
         const onCustomFilter = onExternalFilter?.(
           column,
           filter?.props.type || ""
         );
-        const filterElement = filterRenderer(onCustomFilter!, column);
-        children = (
-          <>
-            {children}
-            {filterElement}
-          </>
-        );
+        filterElement = filterRenderer(onCustomFilter!, column);
       } else if (filter) {
-        const filterElement = (
+        filterElement = (
           <filter.Filter
-            { ...filter.props }
-            filterState={ currFilters?.[column.dataField] }
-            onFilter={ onFilter }
-            column={ column }
+            {...filter.props}
+            filterState={currFilters?.[column.dataField]}
+            onFilter={onFilter}
+            column={column}
           />
-        );
-        children = (
-          <>
-            {children}
-            {filterElement}
-          </>
         );
       }
     }
 
-    return <th { ...cellAttrs }>{children}</th>;
+    const children: React.ReactNode = headerFormatter
+      ? headerFormatter(column, index, {
+          sortElement: sortSymbol,
+          filterElement,
+        })
+      : text;
+
+    if (headerFormatter) {
+      return React.createElement("th", cellAttrs, children);
+    }
+
+    return React.createElement(
+      "th",
+      cellAttrs,
+      children,
+      sortSymbol,
+      filterElement
+    );
   }
 }
-
-// HeaderCell.propTypes = {
-//   column: PropTypes.shape({
-//     dataField: PropTypes.string.isRequired,
-//     text: PropTypes.string.isRequired,
-//     type: PropTypes.oneOf([
-//       Const.TYPE_STRING,
-//       Const.TYPE_NUMBER,
-//       Const.TYPE_BOOLEAN,
-//       Const.TYPE_DATE,
-//     ]),
-//     isDummyField: PropTypes.bool,
-//     hidden: PropTypes.bool,
-//     headerFormatter: PropTypes.func,
-//     formatter: PropTypes.func,
-//     formatExtraData: PropTypes.any,
-//     headerClasses: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
-//     classes: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
-//     headerStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-//     style: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-//     headerTitle: PropTypes.oneOfType([PropTypes.bool, PropTypes.func]),
-//     title: PropTypes.oneOfType([PropTypes.bool, PropTypes.func]),
-//     headerEvents: PropTypes.object,
-//     events: PropTypes.object,
-//     headerAlign: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
-//     align: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
-//     headerAttrs: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-//     attrs: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-//     sort: PropTypes.bool,
-//     sortFunc: PropTypes.func,
-//     onSort: PropTypes.func,
-//     editor: PropTypes.object,
-//     editable: PropTypes.oneOfType([PropTypes.bool, PropTypes.func]),
-//     editCellStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-//     editCellClasses: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
-//     editorStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-//     editorClasses: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
-//     editorRenderer: PropTypes.func,
-//     validator: PropTypes.func,
-//     filter: PropTypes.object,
-//     filterRenderer: PropTypes.func,
-//     filterValue: PropTypes.func,
-//     searchable: PropTypes.bool,
-//   }).isRequired,
-//   index: PropTypes.number.isRequired,
-//   onSort: PropTypes.func,
-//   sorting: PropTypes.bool,
-//   sortOrder: PropTypes.oneOf([Const.SORT_ASC, Const.SORT_DESC]),
-//   sortCaret: PropTypes.func,
-//   isLastSorting: PropTypes.bool,
-//   onFilter: PropTypes.func,
-//   filterPosition: PropTypes.oneOf([
-//     Const.FILTERS_POSITION_INLINE,
-//     Const.FILTERS_POSITION_BOTTOM,
-//     Const.FILTERS_POSITION_TOP,
-//   ]),
-//   currFilters: PropTypes.object,
-//   onExternalFilter: PropTypes.func,
-// };
 
 export default HeaderCell;

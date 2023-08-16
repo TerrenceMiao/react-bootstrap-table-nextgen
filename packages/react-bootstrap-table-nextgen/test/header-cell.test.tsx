@@ -410,6 +410,7 @@ describe("HeaderCell", () => {
 
   describe("when column.sort is enable", () => {
     let column: any;
+    let sortCaret: any;
     let onSortCallBack: any;
 
     beforeEach(() => {
@@ -466,9 +467,15 @@ describe("HeaderCell", () => {
 
       describe("when sortCaret is defined ", () => {
         beforeEach(() => {
-          column = { ...column, sortCaret: jest.fn() };
+          column = { ...column };
+          sortCaret = jest.fn();
           wrapper = shallow(
-            <HeaderCell column={column} index={index} onSort={onSortCallBack} />
+            <HeaderCell
+              column={column}
+              index={index}
+              sortCaret={sortCaret}
+              onSort={onSortCallBack}
+            />
           );
         });
 
@@ -477,8 +484,8 @@ describe("HeaderCell", () => {
         });
 
         it("should call column.sortCaret correctly", () => {
-          expect(column.sortCaret).toHaveBeenCalledTimes(1);
-          expect(column.sortCaret).toHaveBeenCalledWith(undefined, column);
+          expect(sortCaret).toHaveBeenCalledTimes(1);
+          expect(sortCaret).toHaveBeenCalledWith(undefined, column);
         });
       });
     });
@@ -512,10 +519,12 @@ describe("HeaderCell", () => {
 
       describe("when sortCaret is defined ", () => {
         beforeEach(() => {
-          column = { ...column, sortCaret: jest.fn() };
+          column = { ...column };
+          sortCaret = jest.fn();
           wrapper = shallow(
             <HeaderCell
               column={column}
+              sortCaret={sortCaret}
               index={index}
               onSort={onSortCallBack}
               sortOrder={Const.SORT_ASC}
@@ -529,8 +538,8 @@ describe("HeaderCell", () => {
         });
 
         it("should call column.sortCaret correctly", () => {
-          expect(column.sortCaret).toHaveBeenCalledTimes(1);
-          expect(column.sortCaret).toHaveBeenCalledWith(Const.SORT_ASC, column);
+          expect(sortCaret).toHaveBeenCalledTimes(1);
+          expect(sortCaret).toHaveBeenCalledWith(Const.SORT_ASC, column);
         });
       });
 
