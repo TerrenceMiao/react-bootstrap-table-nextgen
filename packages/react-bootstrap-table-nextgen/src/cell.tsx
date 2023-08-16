@@ -36,7 +36,29 @@ class Cell extends eventDelegater(Component)<CellProps> {
 
     if (shouldUpdate) return true;
 
-    // Other comparisons here
+    // if (nextProps.formatter)
+
+    shouldUpdate =
+      (nextProps.column.formatter
+        ? !_.isEqual(this.props.row, nextProps.row)
+        : false) ||
+      this.props.column.hidden !== nextProps.column.hidden ||
+      this.props.column.isDummyField !== nextProps.column.isDummyField ||
+      this.props.rowindex !== nextProps.rowindex ||
+      this.props.columnindex !== nextProps.columnindex ||
+      this.props.className !== nextProps.className ||
+      this.props.title !== nextProps.title ||
+      this.props.editable !== nextProps.editable ||
+      this.props.clicktoedit !== nextProps.clicktoedit ||
+      this.props.dbclicktoedit !== nextProps.dbclicktoedit ||
+      !_.isEqual(this.props.style, nextProps.style) ||
+      !_.isEqual(
+        this.props.column.formatExtraData,
+        nextProps.column.formatExtraData
+      ) ||
+      !_.isEqual(this.props.column.events, nextProps.column.events) ||
+      !_.isEqual(this.props.column.attrs, nextProps.column.attrs) ||
+      this.props.tabIndex !== nextProps.tabIndex;
 
     return shouldUpdate;
   }

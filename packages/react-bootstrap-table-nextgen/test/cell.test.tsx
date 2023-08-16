@@ -61,7 +61,7 @@ describe("Cell", () => {
   });
 
   describe("when column.formatter prop is defined", () => {
-    const rowIndex = 1;
+    const rowindex = 1;
     const column = {
       dataField: "id",
       text: "ID",
@@ -71,13 +71,13 @@ describe("Cell", () => {
     const formatterResult = <h3>{row[column.dataField]}</h3>;
     const formatter = sinon
       .stub()
-      .withArgs(row[column.dataField], row, rowIndex, column.formatExtraData)
+      .withArgs(row[column.dataField], row, rowindex, column.formatExtraData)
       .returns(formatterResult);
     column.formatter = formatter; // defined column formatter
 
     beforeEach(() => {
       wrapper = shallow(
-        <Cell row={row} columnindex={1} rowindex={rowIndex} column={column} />
+        <Cell row={row} columnindex={1} rowindex={rowindex} column={column} />
       );
     });
 
@@ -97,7 +97,7 @@ describe("Cell", () => {
         formatter.calledWith(
           row[column.dataField],
           row,
-          rowIndex,
+          rowindex,
           column.formatExtraData
         )
       ).toBe(true);
@@ -106,8 +106,8 @@ describe("Cell", () => {
 
   describe("when editable prop is true", () => {
     let onStartCallBack: any;
-    const rowIndex = 1;
-    const columnIndex = 1;
+    const rowindex = 1;
+    const columnindex = 1;
     const column = {
       dataField: "id",
       text: "ID",
@@ -115,17 +115,17 @@ describe("Cell", () => {
     };
 
     beforeEach(() => {
-      onStartCallBack = sinon.stub().withArgs(rowIndex, columnIndex);
+      onStartCallBack = sinon.stub().withArgs(rowindex, columnindex);
     });
 
-    describe("and clickToEdit is true", () => {
+    describe("and clicktoedit is true", () => {
       beforeEach(() => {
         wrapper = shallow(
           <Cell
             row={row}
-            rowindex={rowIndex}
+            rowindex={rowindex}
             column={column}
-            columnindex={columnIndex}
+            columnindex={columnindex}
             editable={"false"}
             clicktoedit={"false"}
             onStart={onStartCallBack}
@@ -141,7 +141,7 @@ describe("Cell", () => {
       it("should call onStart correctly when clicking cell", () => {
         wrapper.find("td").simulate("click");
         expect(onStartCallBack.callCount).toBe(1);
-        expect(onStartCallBack.calledWith(rowIndex, columnIndex)).toBe(true);
+        expect(onStartCallBack.calledWith(rowindex, columnindex)).toBe(true);
       });
 
       describe("if when column.events.onClick prop is defined", () => {
@@ -158,7 +158,7 @@ describe("Cell", () => {
       });
     });
 
-    describe("and dbclickToEdit is true", () => {
+    describe("and dbclicktoedit is true", () => {
       beforeEach(() => {
         wrapper = shallow(
           <Cell
@@ -181,7 +181,7 @@ describe("Cell", () => {
       it("should call onStart correctly when double clicking cell", () => {
         wrapper.find("td").simulate("doubleclick");
         expect(onStartCallBack.callCount).toBe(1);
-        expect(onStartCallBack.calledWith(rowIndex, columnIndex)).toBe(true);
+        expect(onStartCallBack.calledWith(rowindex, columnindex)).toBe(true);
       });
 
       describe("if when column.events.onDoubleClick prop is defined", () => {
@@ -209,8 +209,8 @@ describe("Cell", () => {
         beforeEach(() => {
           props = {
             row,
-            columnIndex: 1,
-            rowIndex: 1,
+            columnindex: 1,
+            rowindex: 1,
             column,
           };
           wrapper = shallow(<Cell {...props} />);
@@ -230,8 +230,8 @@ describe("Cell", () => {
       beforeEach(() => {
         props = {
           row,
-          columnIndex: 1,
-          rowIndex: 1,
+          columnindex: 1,
+          rowindex: 1,
           tabIndex: 5,
           column,
         };
@@ -254,8 +254,8 @@ describe("Cell", () => {
         beforeEach(() => {
           props = {
             row,
-            columnIndex: 1,
-            rowIndex: 1,
+            columnindex: 1,
+            rowindex: 1,
             tabIndex: 5,
             column,
           };
@@ -274,8 +274,8 @@ describe("Cell", () => {
         beforeEach(() => {
           props = {
             row,
-            columnIndex: 1,
-            rowIndex: 1,
+            columnindex: 1,
+            rowindex: 1,
             tabIndex: 5,
             column,
           };
@@ -301,8 +301,8 @@ describe("Cell", () => {
         beforeEach(() => {
           props = {
             row,
-            columnIndex: 1,
-            rowIndex: 1,
+            columnindex: 1,
+            rowindex: 1,
             column,
           };
           wrapper = shallow(<Cell {...props} />);
@@ -325,8 +325,8 @@ describe("Cell", () => {
       beforeEach(() => {
         props = {
           row,
-          columnIndex: 1,
-          rowIndex: 1,
+          columnindex: 1,
+          rowindex: 1,
           column,
         };
         wrapper = shallow(<Cell {...props} />);
@@ -338,38 +338,38 @@ describe("Cell", () => {
       });
     });
 
-    describe("when props.rowIndex is change", () => {
+    describe("when props.rowindex is change", () => {
       const column = { dataField: "name", text: "Product Name" };
       beforeEach(() => {
         props = {
           row,
-          columnIndex: 1,
-          rowIndex: 1,
+          columnindex: 1,
+          rowindex: 1,
           column,
         };
         wrapper = shallow(<Cell {...props} />);
       });
 
       it("should return true", () => {
-        nextProps = { ...props, rowIndex: 2 };
+        nextProps = { ...props, rowindex: 2 };
         expect(wrapper.instance().shouldComponentUpdate(nextProps)).toBe(true);
       });
     });
 
-    describe("when props.columnIndex is change", () => {
+    describe("when props.columnindex is change", () => {
       const column = { dataField: "name", text: "Product Name" };
       beforeEach(() => {
         props = {
           row,
-          columnIndex: 1,
-          rowIndex: 1,
+          columnindex: 1,
+          rowindex: 1,
           column,
         };
         wrapper = shallow(<Cell {...props} />);
       });
 
       it("should return true", () => {
-        nextProps = { ...props, columnIndex: 2 };
+        nextProps = { ...props, columnindex: 2 };
         expect(wrapper.instance().shouldComponentUpdate(nextProps)).toBe(true);
       });
     });
@@ -379,8 +379,8 @@ describe("Cell", () => {
       beforeEach(() => {
         props = {
           row,
-          columnIndex: 1,
-          rowIndex: 1,
+          columnindex: 1,
+          rowindex: 1,
           column,
           className: "test",
         };
@@ -398,8 +398,8 @@ describe("Cell", () => {
       beforeEach(() => {
         props = {
           row,
-          columnIndex: 1,
-          rowIndex: 1,
+          columnindex: 1,
+          rowindex: 1,
           column,
           title: "test",
         };
@@ -417,8 +417,8 @@ describe("Cell", () => {
       beforeEach(() => {
         props = {
           row,
-          columnIndex: 1,
-          rowIndex: 1,
+          columnindex: 1,
+          rowindex: 1,
           column,
         };
         wrapper = shallow(<Cell {...props} />);
@@ -430,38 +430,38 @@ describe("Cell", () => {
       });
     });
 
-    describe("when props.clickToEdit is change", () => {
+    describe("when props.clicktoedit is change", () => {
       const column = { dataField: "name", text: "Product Name" };
       beforeEach(() => {
         props = {
           row,
-          columnIndex: 1,
-          rowIndex: 1,
+          columnindex: 1,
+          rowindex: 1,
           column,
         };
         wrapper = shallow(<Cell {...props} />);
       });
 
       it("should return true", () => {
-        nextProps = { ...props, clickToEdit: true };
+        nextProps = { ...props, clicktoedit: true };
         expect(wrapper.instance().shouldComponentUpdate(nextProps)).toBe(true);
       });
     });
 
-    describe("when props.dbclickToEdit is change", () => {
+    describe("when props.dbclicktoedit is change", () => {
       const column = { dataField: "name", text: "Product Name" };
       beforeEach(() => {
         props = {
           row,
-          columnIndex: 1,
-          rowIndex: 1,
+          columnindex: 1,
+          rowindex: 1,
           column,
         };
         wrapper = shallow(<Cell {...props} />);
       });
 
       it("should return true", () => {
-        nextProps = { ...props, dbclickToEdit: true };
+        nextProps = { ...props, dbclicktoedit: true };
         expect(wrapper.instance().shouldComponentUpdate(nextProps)).toBe(true);
       });
     });
@@ -471,8 +471,8 @@ describe("Cell", () => {
       beforeEach(() => {
         props = {
           row,
-          columnIndex: 1,
-          rowIndex: 1,
+          columnindex: 1,
+          rowindex: 1,
           column,
           style: {},
         };
@@ -494,8 +494,8 @@ describe("Cell", () => {
       beforeEach(() => {
         props = {
           row,
-          columnIndex: 1,
-          rowIndex: 1,
+          columnindex: 1,
+          rowindex: 1,
           column,
         };
         wrapper = shallow(<Cell {...props} />);
@@ -519,8 +519,8 @@ describe("Cell", () => {
       beforeEach(() => {
         props = {
           row,
-          columnIndex: 1,
-          rowIndex: 1,
+          columnindex: 1,
+          rowindex: 1,
           column,
         };
         wrapper = shallow(<Cell {...props} />);
@@ -544,8 +544,8 @@ describe("Cell", () => {
       beforeEach(() => {
         props = {
           row,
-          columnIndex: 1,
-          rowIndex: 1,
+          columnindex: 1,
+          rowindex: 1,
           column,
         };
         wrapper = shallow(<Cell {...props} />);
