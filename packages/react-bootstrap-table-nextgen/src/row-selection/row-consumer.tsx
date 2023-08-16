@@ -7,7 +7,7 @@ export default function withRowSelection<T extends React.ComponentType<any>>(
   Component: T
 ): React.FC<React.ComponentProps<T>> {
   const renderWithSelection = (props: any, selectRow: any) => {
-    if (selectRow) {
+    if (!selectRow) {
       return null;
     }
 
