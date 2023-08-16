@@ -179,10 +179,13 @@ class SelectionProvider extends Component<SelectionProviderProps> {
 
     let checkedStatus: string;
 
-    if (allRowsSelected) checkedStatus = Const.CHECKBOX_STATUS_CHECKED;
-    else if (allRowsNotSelected)
+    if (allRowsSelected) {
+      checkedStatus = Const.CHECKBOX_STATUS_CHECKED;
+    } else if (allRowsNotSelected) {
       checkedStatus = Const.CHECKBOX_STATUS_UNCHECKED;
-    else checkedStatus = Const.CHECKBOX_STATUS_INDETERMINATE;
+    } else {
+      checkedStatus = Const.CHECKBOX_STATUS_INDETERMINATE;
+    }
 
     return (
       <SelectionContext.Provider
