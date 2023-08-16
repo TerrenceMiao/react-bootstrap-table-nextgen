@@ -26,16 +26,21 @@ describe("Utils", () => {
 
   describe("set", () => {
     const newValue = "test";
-    const data = {
+    const data: {
+      name: string;
+      address: {
+        road: string;
+        postal: string;
+        city: { name: string };
+        not?: { existing: any };
+      };
+    } = {
       name: "A",
       address: {
         road: "BCD",
         postal: "1234-12345",
         city: {
           name: "B",
-        },
-        not: {
-          existing: {},
         },
       },
     };
@@ -59,7 +64,7 @@ describe("Utils", () => {
       expect(() => {
         _.set(data, "address.not.existing", newValue, true);
       }).not.toThrow();
-      expect(data.address.not.existing).toEqual({});
+      expect(data.address.not?.existing).toEqual({});
     });
   });
 
