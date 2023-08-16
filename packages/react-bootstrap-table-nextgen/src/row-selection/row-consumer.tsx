@@ -7,6 +7,10 @@ export default function withRowSelection<T extends React.ComponentType<any>>(
   Component: T
 ): React.FC<React.ComponentProps<T>> {
   const renderWithSelection = (props: any, selectRow: any) => {
+    if (selectRow) {
+      return null;
+    }
+
     const key = props.value;
     const selected = _.contains(selectRow.selected, key);
     const selectable =
@@ -26,7 +30,7 @@ export default function withRowSelection<T extends React.ComponentType<any>>(
 
       style = {
         ...style,
-        ...selectedStyle
+        ...selectedStyle,
       };
       className = cs(className, selectedClasses) || undefined;
 
@@ -49,19 +53,19 @@ export default function withRowSelection<T extends React.ComponentType<any>>(
 
       style = {
         ...style,
-        ...notSelectableStyle
+        ...notSelectableStyle,
       };
       className = cs(className, notSelectableClasses) || undefined;
     }
 
     return (
       <Component
-        { ...props }
-        style={ style }
-        className={ className }
-        selectRow={ selectRow }
-        selected={ selected }
-        selectable={ selectable }
+        {...props}
+        style={style}
+        className={className}
+        selectRow={selectRow}
+        selected={selected}
+        selectable={selectable}
       />
     );
   };

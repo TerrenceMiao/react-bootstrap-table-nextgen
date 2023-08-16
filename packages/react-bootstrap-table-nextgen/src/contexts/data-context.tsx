@@ -1,4 +1,3 @@
-import PropTypes from "prop-types";
 import React, { Component, createContext, ReactNode } from "react";
 
 interface FilterProps {
@@ -35,11 +34,6 @@ interface DataContextValue {
 const DataContext = createContext<DataContextValue | undefined>(undefined);
 
 class DataProvider extends Component<DataProviderProps> {
-  static propTypes = {
-    data: PropTypes.array.isRequired,
-    children: PropTypes.node.isRequired
-  };
-
   state = { data: this.props.data };
 
   getData = (
@@ -55,19 +49,19 @@ class DataProvider extends Component<DataProviderProps> {
     return this.props.data;
   };
 
-  componentDidUpdate(prevProps: DataProviderProps) {
-    if (this.props.data !== prevProps.data) {
-      this.setState(() => ({ data: this.props.data }));
+  componentDidUpdate(nextProps: DataProviderProps) {
+    if (this.props.data !== nextProps.data) {
+      this.setState(() => ({ data: nextProps.data }));
     }
   }
 
   render() {
     return (
       <DataContext.Provider
-        value={ {
+        value={{
           data: this.state.data,
-          getData: this.getData
-        } }
+          getData: this.getData,
+        }}
       >
         {this.props.children}
       </DataContext.Provider>
@@ -77,5 +71,5 @@ class DataProvider extends Component<DataProviderProps> {
 
 export default () => ({
   Provider: DataProvider,
-  Consumer: DataContext.Consumer
+  Consumer: DataContext.Consumer,
 });
