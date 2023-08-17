@@ -16,7 +16,7 @@ interface BootstrapTableProps {
   columns: any[];
   bootstrap4: boolean;
   remote: boolean | { pagination: boolean };
-  noDataIndication: React.ReactNode | (() => React.ReactNode);
+  noDataIndication: any;
   striped: boolean;
   bordered: boolean;
   hover: boolean;
@@ -31,6 +31,7 @@ interface BootstrapTableProps {
   caption?: React.ReactNode | string;
   pagination?: any;
   filter?: any;
+  currFilters?: any;
   cellEdit: any;
   selectRow: any;
   expandRow: any;
@@ -42,6 +43,8 @@ interface BootstrapTableProps {
   filtersClasses?: string;
   filterPosition: string;
   footerClasses?: string;
+  sortField?: string;
+  sortOrder?: string;
   defaultSorted?: Array<{ dataField: string; order: string }>;
   sort?: {
     dataField: string;
@@ -50,11 +53,12 @@ interface BootstrapTableProps {
     sortCaret?: (order: string, column: any) => JSX.Element;
   };
   defaultSortDirection?: string;
-  overlay?: (loading: boolean) => JSX.Element;
+  loading?: boolean;
+  overlay?: (loading: boolean) => any;
   onTableChange?: (type: string, newState: Record<string, any>) => void;
-  onSort?: (field: string, order: string) => void;
+  onSort?: () => void;
   onFilter?: (filterData: Record<string, any>) => void;
-  onExternalFilter?: (filterData: Record<string, any>) => void;
+  onExternalFilter?: () => () => void;
   onDataSizeChange?: (options: { dataSize: number }) => void;
   search?: {
     searchText: string;
@@ -63,45 +67,48 @@ interface BootstrapTableProps {
   setDependencyModules?: (deps: Record<string, any>) => void;
 }
 
-const DefaultBootstrapTableProps: BootstrapTableProps = {
-  keyField: "",
-  data: [],
-  columns: [],
-  bootstrap4: false,
-  remote: false,
-  striped: false,
-  bordered: true,
-  hover: false,
-  condensed: false,
-  noDataIndication: null,
-  selectRow: {
-    mode: Const.ROW_SELECT_DISABLED,
-    selected: [],
-    hideSelectColumn: true,
-  },
-  expandRow: {
-    renderer: undefined,
-    expanded: [],
-    nonExpandable: [],
-  },
-  cellEdit: {
-    mode: null,
-    nonEditableRows: [],
-  },
-  filterPosition: Const.FILTERS_POSITION_INLINE,
-};
+let propsWithDefault: BootstrapTableProps;
 
 class BootstrapTable extends PropsBaseResolver(
   React.Component<BootstrapTableProps>
 ) {
   constructor(props: BootstrapTableProps) {
-    super({ ...DefaultBootstrapTableProps, props });
+    propsWithDefault = { ...props };
+    propsWithDefault.keyField = props.keyField ?? "";
+    propsWithDefault.data = props.data ?? [];
+    propsWithDefault.columns = props.columns ?? [];
+    propsWithDefault.bootstrap4 = props.bootstrap4 ?? false;
+    propsWithDefault.remote = props.remote ?? false;
+    propsWithDefault.striped = props.striped ?? false;
+    propsWithDefault.bordered = props.bordered ?? true;
+    propsWithDefault.hover = props.hover ?? false;
+    propsWithDefault.condensed = props.condensed ?? false;
+    propsWithDefault.noDataIndication = props.noDataIndication ?? null;
+    propsWithDefault.selectRow = props.selectRow ?? {
+      mode: Const.ROW_SELECT_DISABLED,
+      selected: [],
+      hideSelectColumn: true,
+    };
+    propsWithDefault.expandRow = props.expandRow ?? {
+      renderer: undefined,
+      expanded: [],
+      nonExpandable: [],
+    };
+    propsWithDefault.cellEdit = props.cellEdit ?? {
+      mode: null,
+      nonEditableRows: [],
+    };
+    propsWithDefault.filterPosition =
+      props.filterPosition ?? Const.FILTERS_POSITION_INLINE;
+
+    super(propsWithDefault);
+
     this.validateProps();
   }
 
   componentDidUpdate(nextProps: BootstrapTableProps) {
     if (nextProps.onDataSizeChange && !nextProps.pagination) {
-      if (nextProps.data.length !== this.props.data.length) {
+      if (nextProps.data.length !== propsWithDefault.data.length) {
         nextProps.onDataSizeChange({ dataSize: nextProps.data.length });
       }
     }
@@ -111,9 +118,9 @@ class BootstrapTable extends PropsBaseResolver(
   getData = () => this.visibleRows();
 
   render() {
-    const { loading, overlay } = this.props;
+    const { loading, overlay } = propsWithDefault;
     if (overlay) {
-      const LoadingOverlay = overlay(loading);
+      const LoadingOverlay = overlay(loading!);
       return <LoadingOverlay>{this.renderTable()}</LoadingOverlay>;
     }
     return this.renderTable();
@@ -141,7 +148,7 @@ class BootstrapTable extends PropsBaseResolver(
       expandRow,
       cellEdit,
       filterPosition,
-    } = this.props;
+    } = propsWithDefault;
 
     const tableWrapperClass = cs("react-bootstrap-table", wrapperClasses);
 
@@ -174,15 +181,17 @@ class BootstrapTable extends PropsBaseResolver(
           {tableCaption}
           <Header
             columns={columns}
-            className={this.props.headerClasses}
-            wrapperClasses={this.props.headerWrapperClasses}
-            sortField={this.props.sortField}
-            sortOrder={this.props.sortOrder}
-            onSort={this.props.onSort}
-            globalSortCaret={this.props.sort && this.props.sort.sortCaret}
-            onFilter={this.props.onFilter}
-            currFilters={this.props.currFilters}
-            onExternalFilter={this.props.onExternalFilter}
+            className={propsWithDefault.headerClasses}
+            wrapperClasses={propsWithDefault.headerWrapperClasses}
+            sortField={propsWithDefault.sortField}
+            sortOrder={propsWithDefault.sortOrder}
+            onSort={propsWithDefault.onSort}
+            globalSortCaret={
+              propsWithDefault.sort && propsWithDefault.sort.sortCaret
+            }
+            onFilter={propsWithDefault.onFilter}
+            currFilters={propsWithDefault.currFilters}
+            onExternalFilter={propsWithDefault.onExternalFilter}
             selectRow={selectRow}
             expandRow={expandRow}
             filterPosition={filterPosition}
@@ -190,18 +199,18 @@ class BootstrapTable extends PropsBaseResolver(
           {hasFilters && filterPosition !== Const.FILTERS_POSITION_INLINE && (
             <Filters
               columns={columns}
-              className={this.props.filtersClasses}
-              onSort={this.props.onSort}
-              onFilter={this.props.onFilter}
-              currFilters={this.props.currFilters}
-              filterPosition={this.props.filterPosition}
-              onExternalFilter={this.props.onExternalFilter}
+              className={propsWithDefault.filtersClasses}
+              onSort={propsWithDefault.onSort}
+              onFilter={propsWithDefault.onFilter}
+              currFilters={propsWithDefault.currFilters}
+              filterPosition={propsWithDefault.filterPosition}
+              onExternalFilter={propsWithDefault.onExternalFilter}
               selectRow={selectRow}
               expandRow={expandRow}
             />
           )}
           <Body
-            className={this.props.bodyClasses}
+            className={propsWithDefault.bodyClasses}
             data={this.getData()}
             keyField={keyField}
             tabIndexCell={tabIndexCell}
@@ -222,7 +231,7 @@ class BootstrapTable extends PropsBaseResolver(
               columns={columns}
               selectRow={selectRow}
               expandRow={expandRow}
-              className={this.props.footerClasses}
+              className={propsWithDefault.footerClasses}
             />
           )}
         </table>

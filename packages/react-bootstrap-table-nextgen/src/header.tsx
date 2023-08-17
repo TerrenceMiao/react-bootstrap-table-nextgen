@@ -1,4 +1,3 @@
-import PropTypes from "prop-types";
 import React from "react";
 
 import Const from "./const";
@@ -38,7 +37,7 @@ const Header: React.FC<HeaderProps> = (props) => {
     onExternalFilter,
     filterPosition,
     globalSortCaret,
-    wrapperClasses
+    wrapperClasses,
   } = props;
 
   let SelectionHeaderCellComp: React.FC = () => null;
@@ -62,18 +61,18 @@ const Header: React.FC<HeaderProps> = (props) => {
 
     return (
       <HeaderCell
-        index={ i }
-        key={ column.dataField }
-        column={ column }
-        onSort={ onSort }
-        sorting={ currSort }
-        sortOrder={ sortOrder }
-        globalSortCaret={ globalSortCaret }
-        isLastSorting={ isLastSorting }
-        onFilter={ onFilter }
-        currFilters={ currFilters }
-        onExternalFilter={ onExternalFilter }
-        filterPosition={ filterPosition }
+        index={i}
+        key={column.dataField}
+        column={column}
+        onSort={onSort}
+        sorting={currSort}
+        sortOrder={sortOrder}
+        globalSortCaret={globalSortCaret}
+        isLastSorting={isLastSorting}
+        onFilter={onFilter}
+        currFilters={currFilters}
+        onExternalFilter={onExternalFilter}
+        filterPosition={filterPosition}
       />
     );
   });
@@ -95,30 +94,10 @@ const Header: React.FC<HeaderProps> = (props) => {
   }
 
   return (
-    <thead className={ wrapperClasses }>
-      <tr className={ className }>{childrens}</tr>
+    <thead className={wrapperClasses}>
+      <tr className={className}>{childrens}</tr>
     </thead>
   );
 };
-
-// Header.propTypes = {
-//   columns: PropTypes.array.isRequired,
-//   onSort: PropTypes.func,
-//   onFilter: PropTypes.func,
-//   sortField: PropTypes.string,
-//   sortOrder: PropTypes.string,
-//   selectRow: PropTypes.object,
-//   currFilters: PropTypes.object,
-//   onExternalFilter: PropTypes.func,
-//   globalSortCaret: PropTypes.func,
-//   className: PropTypes.string,
-//   wrapperClasses: PropTypes.string,
-//   expandRow: PropTypes.object,
-//   filterPosition: PropTypes.oneOf([
-//     Const.FILTERS_POSITION_TOP,
-//     Const.FILTERS_POSITION_INLINE,
-//     Const.FILTERS_POSITION_BOTTOM,
-//   ]),
-// };
 
 export default Header;
