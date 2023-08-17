@@ -37,7 +37,7 @@ export const selectableKeys = (
     .map((row) => _.get(row, keyField));
 };
 
-export const unSelectableKeys = (selected?: any, skips?: any[]) => {
+export const unSelectableKeys = (selected?: any, skips: any[] = []) => {
   if (skips?.length === 0) {
     return [];
   }
