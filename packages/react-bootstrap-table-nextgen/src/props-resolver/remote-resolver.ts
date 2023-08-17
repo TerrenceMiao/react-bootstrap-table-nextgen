@@ -6,14 +6,14 @@ export default (ExtendBase: any) =>
   class RemoteResolver extends Component<typeof ExtendBase> {
     public remoteEmitter: EventEmitter;
     public DataContext: any;
-    public sortContext: any;
+    public SortContext: any;
     public ColumnManagementContext: any;
-    public selectionContext: any;
+    public SelectionContext: any;
     public rowExpandContext: any;
-    public cellEditContext: any;
-    public filterContext: any;
-    public paginationContext: any;
-    public searchContext: any;
+    public CellEditContext: any;
+    public FilterContext: any;
+    public PaginationContext: any;
+    public SearchContext: any;
     public table: any;
 
     constructor(props: any) {
@@ -31,23 +31,23 @@ export default (ExtendBase: any) =>
       let searchText: string | undefined;
       let filters: any = {};
 
-      if (this.sortContext) {
-        sortOrder = this.sortContext.state.sortOrder;
-        sortField = this.sortContext.state.sortColumn
-          ? this.sortContext.state.sortColumn.dataField
+      if (this.SortContext) {
+        sortOrder = this.SortContext.state.sortOrder;
+        sortField = this.SortContext.state.sortColumn
+          ? this.SortContext.state.sortColumn.dataField
           : null;
       }
 
-      if (this.filterContext) {
-        filters = this.filterContext.currFilters;
+      if (this.FilterContext) {
+        filters = this.FilterContext.currFilters;
       }
 
-      if (this.paginationContext) {
-        page = this.paginationContext.currPage;
-        sizePerPage = this.paginationContext.currSizePerPage;
+      if (this.PaginationContext) {
+        page = this.PaginationContext.currPage;
+        sizePerPage = this.PaginationContext.currSizePerPage;
       }
 
-      if (this.searchContext) {
+      if (this.SearchContext) {
         searchText = this.props.search.searchText;
       }
 
