@@ -28,7 +28,7 @@ describe("TableResolver", () => {
   ];
 
   const ExtendBase = baseResolver(Component);
-  const BootstrapTableMock = extendTo(ExtendBase);
+  const BootstrapTableMock: any = extendTo(ExtendBase);
   let wrapper: any;
 
   describe("visibleRows", () => {
