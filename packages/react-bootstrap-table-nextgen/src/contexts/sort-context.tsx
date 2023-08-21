@@ -1,10 +1,28 @@
-import PropTypes from "prop-types";
-import React, { Component, createContext, ReactNode } from "react";
-import Const from "../const";
+import React, { Component, ReactNode } from "react";
+import { SORT_ASC, SORT_DESC } from "../..";
 
+type DataOperator = {
+  nextOrder: (
+    column: any,
+    state: { sortOrder: string | undefined; sortColumn: any | undefined },
+    defaultSortDirection: string
+  ) => string;
+  sort: (
+    data: any[],
+    order: string | undefined,
+    sortColumn: any | undefined
+  ) => any[];
+};
+
+type HandleSortChange = (
+  dataField: string,
+  sortOrder: string | undefined
+) => void;
+
+//
 interface SortContextValue {
   data: any[];
-  sortOrder: string;
+  sortOrder: string | undefined;
   onSort: (column: any) => void;
   sortField: string | null;
 }
@@ -13,60 +31,58 @@ interface SortProviderProps {
   data: any[];
   columns: any[];
   children: ReactNode;
-  defaultSorted?: Array<{ dataField: string; order: string }>;
+  defaultSorted?: Array<{
+    dataField: string;
+    order: typeof SORT_ASC | typeof SORT_DESC;
+  }>;
   sort?: {
     dataField: string;
-    order: string;
+    order: typeof SORT_ASC | typeof SORT_DESC;
     sortFunc: (a: any, b: any, order: string, dataField: string) => number;
   };
-  defaultSortDirection: string;
+  defaultSortDirection: typeof SORT_ASC | typeof SORT_DESC;
 }
-
-type DataOperator = {
-  nextOrder: (
-    column: any,
-    state: { sortOrder: string; sortColumn: any },
-    defaultSortDirection: string
-  ) => string;
-  sort: (data: any[], order: string, sortColumn: any) => any[];
-};
-
-type HandleSortChange = (dataField: string, sortOrder: string) => void;
-
-const SortContext = createContext<SortContextValue | undefined>(undefined);
 
 export default (
   dataOperator: DataOperator,
   isRemoteSort: () => boolean,
   handleSortChange: HandleSortChange
 ) => {
-  class SortProvider extends Component<
-    SortProviderProps,
-    { sortOrder: any; sortColumn: any }
-  > {
-    static propTypes = {
-      data: PropTypes.array.isRequired,
-      columns: PropTypes.array.isRequired,
-      children: PropTypes.node.isRequired,
-      defaultSorted: PropTypes.arrayOf(
-        PropTypes.shape({
-          dataField: PropTypes.string.isRequired,
-          order: PropTypes.oneOf([Const.SORT_DESC, Const.SORT_ASC]).isRequired
-        })
-      ),
-      sort: PropTypes.shape({
-        dataField: PropTypes.string,
-        order: PropTypes.oneOf([Const.SORT_DESC, Const.SORT_ASC]),
-        sortFunc: PropTypes.func
-      }),
-      defaultSortDirection: PropTypes.oneOf([Const.SORT_DESC, Const.SORT_ASC])
+  const defaultSortContext = {
+    data: [],
+    sortOrder: undefined,
+    onSort: () => {},
+    sortField: null,
+  };
+  const SortContext = React.createContext<SortContextValue>(defaultSortContext);
+
+  class SortProvider extends Component<SortProviderProps> {
+    state: {
+      sortOrder: string | undefined;
+      sortColumn:
+        | {
+            dataField: string;
+            text: string;
+            onSort: Function;
+            sortFunc: Function;
+          }
+        | undefined;
+    } = {
+      sortOrder: SORT_ASC,
+      sortColumn: {
+        dataField: "id",
+        text: "ID",
+        onSort: () => {},
+        sortFunc: () => {},
+      },
     };
 
     constructor(props: SortProviderProps) {
       super(props);
+      const { defaultSorted, defaultSortDirection, sort } = props;
+
       let sortOrder;
       let sortColumn;
-      const { defaultSorted, defaultSortDirection, sort } = props;
 
       if (defaultSorted && defaultSorted.length > 0) {
         sortOrder = defaultSorted[0].order || defaultSortDirection;
@@ -75,41 +91,51 @@ export default (
         sortOrder = sort.order;
         sortColumn = this.initSort(sort.dataField, sortOrder);
       }
+
       this.state = { sortOrder, sortColumn };
     }
 
     componentDidMount() {
       const { sortOrder, sortColumn } = this.state;
+
       if (isRemoteSort() && sortOrder && sortColumn) {
         handleSortChange(sortColumn.dataField, sortOrder);
       }
     }
 
-    componentDidUpdate(prevProps: SortProviderProps) {
-      const { sort, columns } = this.props;
+    static getDerivedStateFromProps(
+      nextProps: SortProviderProps,
+      prevState: any
+    ) {
+      const { sort, columns } = nextProps;
+
       if (sort && sort.dataField && sort.order) {
-        this.setState({
+        return {
           sortOrder: sort.order,
-          sortColumn: columns.find((col) => col.dataField === sort.dataField)
-        });
+          sortColumn: columns.find((col) => col.dataField === sort.dataField),
+        };
+      } else {
+        return null;
       }
     }
 
     initSort(sortField: string, sortOrder: string) {
-      let sortColumn;
       const { columns } = this.props;
       const sortColumns = columns.filter((col) => col.dataField === sortField);
+
+      let sortColumn;
+
       if (sortColumns.length > 0) {
         sortColumn = sortColumns[0];
-
         if (sortColumn.onSort) {
           sortColumn.onSort(sortField, sortOrder);
         }
       }
+
       return sortColumn;
     }
 
-    handleSort = (column: any) => {
+    handleSort = (column: { dataField: string; onSort: Function }) => {
       const sortOrder = dataOperator.nextOrder(
         column,
         this.state,
@@ -125,14 +151,16 @@ export default (
       }
       this.setState(() => ({
         sortOrder,
-        sortColumn: column
+        sortColumn: column,
       }));
     };
 
     render() {
-      let { data } = this.props;
       const { sort } = this.props;
       const { sortOrder, sortColumn } = this.state;
+
+      let { data } = this.props;
+
       if (!isRemoteSort() && sortColumn) {
         const sortFunc = sortColumn.sortFunc
           ? sortColumn.sortFunc
@@ -142,12 +170,12 @@ export default (
 
       return (
         <SortContext.Provider
-          value={ {
+          value={{
             data,
             sortOrder,
             onSort: this.handleSort,
-            sortField: sortColumn ? sortColumn.dataField : null
-          } }
+            sortField: sortColumn ? sortColumn.dataField : null,
+          }}
         >
           {this.props.children}
         </SortContext.Provider>
@@ -157,6 +185,6 @@ export default (
 
   return {
     Provider: SortProvider,
-    Consumer: SortContext.Consumer
+    Consumer: SortContext.Consumer,
   };
 };

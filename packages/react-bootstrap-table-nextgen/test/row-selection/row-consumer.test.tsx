@@ -2,7 +2,7 @@ import { mount } from "enzyme";
 import "jsdom-global/register";
 import React from "react";
 
-import SelectionContext from "../../src/contexts/selection-context";
+import createSelectionContext from "../../src/contexts/selection-context";
 import withSelectionConsumer from "../../src/row-selection/row-consumer";
 
 describe("withSelectionConsumer", () => {
@@ -31,6 +31,8 @@ describe("withSelectionConsumer", () => {
   const row = data[rowIndex];
   const keyField = "id";
   const value = row[keyField];
+
+  const SelectionContext = createSelectionContext();
 
   describe("if current row is selected", () => {
     beforeEach(() => {

@@ -11,5 +11,5 @@ export default {
   ...expand,
   ...mutate,
   ...sort,
-  ...type
+  ...type,
 };

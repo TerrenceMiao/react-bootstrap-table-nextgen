@@ -1,7 +1,7 @@
 /* eslint no-nested-ternary: 0 */
 /* eslint no-lonely-if: 0 */
 /* eslint no-underscore-dangle: 0 */
-import Const from "../const";
+import { SORT_ASC, SORT_DESC } from "../..";
 import _ from "../utils";
 
 function comparator(a: any, b: any) {
@@ -35,7 +35,7 @@ export const sort = (
     if (sortFunc) {
       result = sortFunc(valueA, valueB, sortOrder, dataField, a, b);
     } else {
-      if (sortOrder === Const.SORT_DESC) {
+      if (sortOrder === SORT_DESC) {
         result = comparator(valueA, valueB);
       } else {
         result = comparator(valueB, valueA);
@@ -49,8 +49,10 @@ export const sort = (
 export const nextOrder = (
   currentSortColumn: any,
   { sortOrder, sortColumn }: any,
-  defaultOrder = Const.SORT_DESC
+  defaultOrder = SORT_DESC
 ) => {
-  if (!sortColumn || currentSortColumn.dataField !== sortColumn.dataField) return defaultOrder;
-  return sortOrder === Const.SORT_DESC ? Const.SORT_ASC : Const.SORT_DESC;
+  if (!sortColumn || currentSortColumn.dataField !== sortColumn.dataField) {
+    return defaultOrder;
+  }
+  return sortOrder === SORT_DESC ? SORT_ASC : SORT_DESC;
 };

@@ -1,16 +1,18 @@
 import React from "react";
-import SelectionContext, {
-  SelectionContextProps
+import createSelectionContext, {
+  SelectionContextValue,
 } from "../contexts/selection-context";
 
-interface Props extends SelectionContextProps {
-  selectRow?: SelectionContextProps;
+interface Props extends SelectionContextValue {
+  selectRow?: SelectionContextValue;
 }
+
+const SelectionContext = createSelectionContext();
 
 const withSelectionContext = (Component: React.ComponentType<Props>) => () =>
   (
     <SelectionContext.Consumer>
-      {(selectRow) => <Component selectRow={ selectRow } />}
+      {(selectRow) => <Component selectRow={selectRow} />}
     </SelectionContext.Consumer>
   );
 

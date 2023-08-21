@@ -1,25 +1,14 @@
 import cs from "classnames";
-import React, { Component, ReactNode } from "react";
+import React, { Component } from "react";
 
-import { Property } from "csstype";
+import { ColumnDescription } from "..";
 import eventDelegater from "./cell-event-delegater";
 import _ from "./utils";
 
 interface FooterCellProps {
   columnData?: any[];
   index?: number;
-  column?: {
-    footer?:
-      | string
-      | ((columnData: any[], column: any, index: number) => string);
-    footerTitle?: boolean | ((column: any, index: number) => string);
-    footerAlign?: Property.TextAlign | ((column: any, index: number) => Property.TextAlign);
-    footerFormatter?: (column: any, index: number, options: any) => ReactNode;
-    footerEvents?: object;
-    footerClasses?: string | ((column: any, index: number) => string);
-    footerStyle?: object | ((column: any, index: number) => object);
-    footerAttrs?: object | ((column: any, index: number) => object);
-  };
+  column: ColumnDescription;
 }
 
 class FooterCell extends eventDelegater(Component)<FooterCellProps> {
@@ -34,13 +23,15 @@ class FooterCell extends eventDelegater(Component)<FooterCellProps> {
       footerEvents,
       footerClasses,
       footerStyle,
-      footerAttrs
-    } = column!;
+      footerAttrs,
+    } = column;
 
     const delegateEvents = this.delegate(footerEvents);
     const cellAttrs = {
-      ...(_.isFunction(footerAttrs) ? footerAttrs(column, index!) : footerAttrs),
-      ...delegateEvents
+      ...(_.isFunction(footerAttrs)
+        ? footerAttrs(column, index!)
+        : footerAttrs),
+      ...delegateEvents,
     };
 
     let text = "";
@@ -50,7 +41,7 @@ class FooterCell extends eventDelegater(Component)<FooterCellProps> {
       text = footer(columnData || [], column, index || 0);
     }
 
-    let cellStyle: React.CSSProperties = {};
+    let cellStyle: any = {};
     const cellClasses = _.isFunction(footerClasses)
       ? footerClasses(column, index || 0)
       : footerClasses;
@@ -81,14 +72,9 @@ class FooterCell extends eventDelegater(Component)<FooterCellProps> {
       ? footerFormatter(column, index || 0, { text })
       : text;
 
-    return React.createElement("th", cellAttrs, children);
+    // TODO
+    return React.createElement("th", cellAttrs, `${children}`);
   }
 }
-
-// FooterCell.propTypes = {
-//   columnData: PropTypes.array,
-//   index: PropTypes.number,
-//   column: PropTypes.object
-// };
 
 export default FooterCell;

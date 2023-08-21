@@ -1,30 +1,34 @@
 import React, { Component, ReactNode } from "react";
 
-import Const from "./const";
+import { ExpandRowProps, ROW_SELECT_DISABLED, SelectRowProps } from "..";
 import withRowExpansion from "./row-expand/row-consumer";
 import withRowSelection from "./row-selection/row-consumer";
 import RowAggregator from "./row/aggregate-row";
 import RowSection from "./row/row-section";
+import { RowProps } from "./row/should-updater";
 import SimpleRow from "./row/simple-row";
 import _ from "./utils";
-import { RowProps } from "./row/should-updater";
 
 interface BodyProps {
   keyField: string;
   data: any[];
   columns: any[];
-  selectRow?: any;
+  selectRow?: SelectRowProps<any> | undefined;
   cellEdit: any;
   tabIndexCell?: boolean;
   isEmpty?: boolean;
-  noDataIndication?: string | (() => ReactNode);
+  noDataIndication?:
+    | (() => JSX.Element | string)
+    | JSX.Element
+    | string
+    | undefined;
   visibleColumnSize?: number;
   rowStyle?:
     | React.CSSProperties
     | ((row: any, index: number) => React.CSSProperties);
   rowClasses?: string | ((row: any, index: number) => string);
   rowEvents?: Record<string, any> | null;
-  expandRow: any;
+  expandRow?: ExpandRowProps<any, any> | undefined;
   className?: string;
 }
 
@@ -47,8 +51,8 @@ class Body extends Component<BodyProps> {
     // Construct Row Component
     let RowComponent: any;
 
-    const selectRowEnabled = selectRow?.mode !== Const.ROW_SELECT_DISABLED;
-    const expandRowEnabled = !!expandRow?.renderer;
+    const selectRowEnabled = selectRow?.mode !== ROW_SELECT_DISABLED;
+    const expandRowEnabled = !!expandRow!.renderer;
 
     if (expandRowEnabled) {
       RowComponent = withRowExpansion(RowAggregator);
@@ -85,7 +89,7 @@ class Body extends Component<BodyProps> {
       rowClasses,
       rowEvents,
       expandRow,
-      className
+      className,
     } = this.props;
 
     let content: ReactNode;
@@ -97,10 +101,10 @@ class Body extends Component<BodyProps> {
       if (!indication) {
         return null;
       }
-      content = <RowSection content={ indication } colSpan={ visibleColumnSize } />;
+      content = <RowSection content={indication} colSpan={visibleColumnSize} />;
     } else {
-      const selectRowEnabled = selectRow?.mode !== Const.ROW_SELECT_DISABLED;
-      const expandRowEnabled = !!expandRow?.renderer;
+      const selectRowEnabled = selectRow?.mode !== ROW_SELECT_DISABLED;
+      const expandRowEnabled = !!(expandRow!.renderer);
 
       const additionalRowProps: RowProps = {};
 
@@ -126,7 +130,7 @@ class Body extends Component<BodyProps> {
           rowIndex: index,
           visibleColumnSize,
           attrs: rowEvents || {},
-          ...additionalRowProps
+          ...additionalRowProps,
         };
 
         baseRowProps.style = _.isFunction(rowStyle)
@@ -136,31 +140,12 @@ class Body extends Component<BodyProps> {
           ? rowClasses(row, index)
           : rowClasses;
 
-        return <this.RowComponent { ...baseRowProps } />;
+        return <this.RowComponent {...baseRowProps} />;
       });
     }
 
-    return <tbody className={ className }>{content}</tbody>;
+    return <tbody className={className}>{content}</tbody>;
   }
 }
-
-// Body.propTypes = {
-//   keyField: PropTypes.string.isRequired,
-//   data: PropTypes.array.isRequired,
-//   columns: PropTypes.array.isRequired,
-//   selectRow: PropTypes.object,
-//   cellEdit: PropTypes.any.isRequired,
-//   tabIndexCell: PropTypes.bool.isRequired,
-//   isEmpty: PropTypes.bool.isRequired,
-//   noDataIndication: PropTypes.oneOfType([PropTypes.string, PropTypes.func])
-//     .isRequired,
-//   visibleColumnSize: PropTypes.number.isRequired,
-//   rowStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.func]).isRequired,
-//   rowClasses: PropTypes.oneOfType([PropTypes.string, PropTypes.func])
-//     .isRequired,
-//   rowEvents: PropTypes.object,
-//   expandRow: PropTypes.any.isRequired,
-//   className: PropTypes.string,
-// };
 
 export default Body;

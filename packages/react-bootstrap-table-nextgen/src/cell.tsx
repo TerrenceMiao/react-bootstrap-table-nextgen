@@ -8,7 +8,7 @@ interface CellProps {
   rowindex: number;
   column: any;
   columnindex: number;
-  onStart?: (rowIndex: number, columnIndex: number) => void;
+  atstart?: (rowIndex: number, columnIndex: number) => void;
   editable?: string;
   clicktoedit?: string;
   dbclicktoedit?: string;
@@ -66,17 +66,17 @@ class Cell extends eventDelegater(Component)<CellProps> {
   createHandleEditingCell(originFunc: (e: MouseEvent) => void) {
     return (e: MouseEvent) => {
       const {
-        onStart,
-        rowindex: rowIndex,
-        columnindex: columnIndex,
-        clicktoedit: clickToEdit,
-        dbclicktoedit: dbclickToEdit,
+        atstart,
+        rowindex,
+        columnindex,
+        clicktoedit,
+        dbclicktoedit,
       } = this.props;
-      if ((clickToEdit || dbclickToEdit) && _.isFunction(originFunc)) {
+      if ((clicktoedit || dbclicktoedit) && _.isFunction(originFunc)) {
         originFunc(e);
       }
-      if (onStart) {
-        onStart(rowIndex, columnIndex);
+      if (atstart) {
+        atstart(rowindex, columnindex);
       }
     };
   }

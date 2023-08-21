@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Const from "../const";
+import { INDICATOR_POSITION_LEFT } from "../..";
 import ExpandCell from "../row-expand/expand-cell";
 import SelectionCell from "../row-selection/selection-cell";
 import _ from "../utils";
@@ -7,8 +7,7 @@ import eventDelegater from "./event-delegater";
 import RowPureContent from "./row-pure-content";
 import shouldUpdater, { RowProps } from "./should-updater";
 
-class RowAggregator extends shouldUpdater(
-  eventDelegater(Component<RowProps>)) {
+class RowAggregator extends shouldUpdater(eventDelegater(Component<RowProps>)) {
   clickNum: number = 0;
   shouldUpdateRowContent: boolean = false;
 
@@ -35,10 +34,8 @@ class RowAggregator extends shouldUpdater(
     return this.shouldUpdateRowContent;
   }
 
-  isRenderFunctionColumnInLeft(
-    position = Const.INDICATOR_POSITION_LEFT
-  ): boolean {
-    return position === Const.INDICATOR_POSITION_LEFT;
+  isRenderFunctionColumnInLeft(position = INDICATOR_POSITION_LEFT): boolean {
+    return position === INDICATOR_POSITION_LEFT;
   }
 
   render() {
@@ -62,7 +59,8 @@ class RowAggregator extends shouldUpdater(
     } = this.props;
     const key = _.get(row, keyField);
     const { hideSelectColumn, selectColumnPosition, clickToSelect } = selectRow;
-    const { showExpandColumn = undefined, expandColumnPosition = undefined } = expandRow ?? {};
+    const { showExpandColumn = undefined, expandColumnPosition = undefined } =
+      expandRow ?? {};
 
     const newAttrs = this.delegate({ ...attrs });
     if (clickToSelect || (expandRow && !!expandRow.renderer)) {
@@ -74,26 +72,26 @@ class RowAggregator extends shouldUpdater(
     const childrens = [
       <RowPureContent
         key="row"
-        row={ row }
-        columns={ columns }
-        keyField={ keyField }
-        rowIndex={ rowIndex }
-        shouldUpdate={ this.shouldUpdateRowContent }
-        tabIndexStart={ tabIndexCell ? tabIndexStart : -1 }
-        { ...rest }
-      />
+        row={row}
+        columns={columns}
+        keyField={keyField}
+        rowIndex={rowIndex}
+        shouldUpdate={this.shouldUpdateRowContent}
+        tabIndexStart={tabIndexCell ? tabIndexStart : -1}
+        {...rest}
+      />,
     ];
 
     if (!hideSelectColumn) {
       const selectCell = (
         <SelectionCell
-          { ...selectRow }
+          {...selectRow}
           key="selection-cell"
-          rowKey={ key }
-          rowIndex={ rowIndex }
-          selected={ selected }
-          disabled={ !selectable }
-          tabIndex={ tabIndexCell ? tabIndexStart += 1 : -1 }
+          rowKey={key}
+          rowIndex={rowIndex}
+          selected={selected}
+          disabled={!selectable}
+          tabIndex={tabIndexCell ? (tabIndexStart += 1) : -1}
         />
       );
       if (this.isRenderFunctionColumnInLeft(selectColumnPosition)) {
@@ -106,13 +104,13 @@ class RowAggregator extends shouldUpdater(
     if (showExpandColumn) {
       const expandCell = (
         <ExpandCell
-          { ...expandRow }
+          {...expandRow}
           key="expand-cell"
-          rowKey={ key }
-          rowIndex={ rowIndex }
-          expanded={ expanded }
-          expandable={ expandable }
-          tabIndex={ tabIndexCell ? tabIndexStart += 1 : -1 }
+          rowKey={key}
+          rowIndex={rowIndex}
+          expanded={expanded}
+          expandable={expandable}
+          tabIndex={tabIndexCell ? (tabIndexStart += 1) : -1}
         />
       );
       if (this.isRenderFunctionColumnInLeft(expandColumnPosition)) {
@@ -123,7 +121,7 @@ class RowAggregator extends shouldUpdater(
     }
 
     return (
-      <tr style={ style } className={ className } { ...newAttrs }>
+      <tr style={style} className={className} {...newAttrs}>
         {childrens}
       </tr>
     );

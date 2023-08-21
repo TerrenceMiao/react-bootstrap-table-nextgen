@@ -119,7 +119,7 @@ describe("Context", () => {
 
     it("should create contexts correctly", () => {
       expect(wrapper.instance().DataContext).toBeDefined();
-      expect(wrapper.instance().ColumnManagementContext).toBeDefined();
+      expect(wrapper.instance().ColumnContext).toBeDefined();
       expect(wrapper.instance().SelectionContext).not.toBeDefined();
       expect(wrapper.instance().CellEditContext).not.toBeDefined();
       expect(wrapper.instance().FilterContext).not.toBeDefined();
@@ -143,7 +143,7 @@ describe("Context", () => {
 
     it("should create contexts correctly", () => {
       expect(wrapper.instance().DataContext).toBeDefined();
-      expect(wrapper.instance().ColumnManagementContext).toBeDefined();
+      expect(wrapper.instance().ColumnContext).toBeDefined();
       expect(wrapper.instance().SelectionContext).not.toBeDefined();
       expect(wrapper.instance().CellEditContext).not.toBeDefined();
       expect(wrapper.instance().FilterContext).not.toBeDefined();

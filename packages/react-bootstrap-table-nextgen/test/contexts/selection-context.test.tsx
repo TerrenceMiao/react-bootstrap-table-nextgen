@@ -3,7 +3,7 @@ import "jsdom-global/register";
 import React from "react";
 
 import BootstrapTable from "../../src/bootstrap-table";
-import SelectionContext from "../../src/contexts/selection-context";
+import createSelectionContext from "../../src/contexts/selection-context";
 import dataOperator from "../../src/store/operators";
 
 describe("DataContext", () => {
@@ -54,6 +54,8 @@ describe("DataContext", () => {
   } = {
     mode: "checkbox",
   };
+
+  const SelectionContext = createSelectionContext();
 
   function shallowContext(selectRow = defaultSelectRow) {
     return (

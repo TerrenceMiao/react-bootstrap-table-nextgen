@@ -1,6 +1,6 @@
 import sinon from "sinon";
 
-import Const from "../../src/const";
+import { SORT_ASC, SORT_DESC } from "../..";
 import { nextOrder, sort } from "../../src/store/sort";
 
 describe("Sort Function", () => {
@@ -20,7 +20,7 @@ describe("Sort Function", () => {
     let result: any;
 
     it("should sort array with ASC order correctly", () => {
-      sortOrder = Const.SORT_ASC;
+      sortOrder = SORT_ASC;
       result = sort(data, sortOrder, sortColumn);
       expect(result.length).toEqual(data.length);
 
@@ -31,7 +31,7 @@ describe("Sort Function", () => {
     });
 
     it("should sort array with DESC order correctly", () => {
-      sortOrder = Const.SORT_DESC;
+      sortOrder = SORT_DESC;
       result = sort(data, sortOrder, sortColumn);
       expect(result.length).toEqual(data.length);
 
@@ -43,7 +43,7 @@ describe("Sort Function", () => {
 
     it("should call custom sort function when sortFunc given", () => {
       const sortFunc = sinon.stub().returns(1);
-      sortOrder = Const.SORT_DESC;
+      sortOrder = SORT_DESC;
       sort(data, sortOrder, { ...sortColumn, sortFunc });
       expect(sortFunc.callCount).toBe(3);
     });
@@ -60,13 +60,13 @@ describe("Sort Function", () => {
           dataField: "id",
           text: "ID",
         },
-        sortOrder: Const.SORT_DESC,
+        sortOrder: SORT_DESC,
       };
-      expect(nextOrder(currentSortColumn, nextSort)).toBe(Const.SORT_DESC);
+      expect(nextOrder(currentSortColumn, nextSort)).toBe(SORT_DESC);
     });
 
     it("should return correcly order if even next sort column is undefined", () => {
-      expect(nextOrder(currentSortColumn, {})).toBe(Const.SORT_DESC);
+      expect(nextOrder(currentSortColumn, {})).toBe(SORT_DESC);
     });
 
     it("should return correcly order when current sortField is not eq next sort field and default sort direction is given", () => {
@@ -75,19 +75,17 @@ describe("Sort Function", () => {
           dataField: "id",
           text: "ID",
         },
-        sortOrder: Const.SORT_DESC,
+        sortOrder: SORT_DESC,
       };
-      expect(nextOrder(currentSortColumn, nextSort, Const.SORT_ASC)).toBe(
-        Const.SORT_ASC
-      );
+      expect(nextOrder(currentSortColumn, nextSort, SORT_ASC)).toBe(SORT_ASC);
     });
 
     it("should return correcly order when current sortField is eq next sort field", () => {
       const nextSort = {
         sortColumn: currentSortColumn,
-        sortOrder: Const.SORT_ASC,
+        sortOrder: SORT_ASC,
       };
-      expect(nextOrder(currentSortColumn, nextSort)).toBe(Const.SORT_DESC);
+      expect(nextOrder(currentSortColumn, nextSort)).toBe(SORT_DESC);
     });
   });
 });

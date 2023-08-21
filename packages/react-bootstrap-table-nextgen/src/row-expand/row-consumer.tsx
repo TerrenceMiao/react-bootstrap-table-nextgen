@@ -1,9 +1,11 @@
 import cs from "classnames";
 import React from "react";
-import ExpansionContext from "../contexts/row-expand-context";
+import createExpansionContext from "../contexts/row-expand-context";
+import { RowProps } from "../row/should-updater";
 import _ from "../utils";
 import ExpandRow from "./expand-row";
-import { RowProps } from "../row/should-updater";
+
+const ExpansionContext = createExpansionContext();
 
 export default (
   Component: React.ComponentType<RowProps>
@@ -12,6 +14,10 @@ export default (
     props: RowProps,
     expandRow: any
   ): React.ReactNode[] => {
+    if (!expandRow) {
+      return [];
+    }
+
     let parentClassName = "";
     let className = "";
     const key = props.value;
@@ -32,24 +38,24 @@ export default (
 
     return [
       <Component
-        { ...props }
-        key={ key }
-        expanded={ expanded }
-        expandable={ expandable }
-        expandRow={ { ...expandRow } }
-        className={ cs(props.className, parentClassName) }
+        {...props}
+        key={key}
+        expanded={expanded}
+        expandable={expandable}
+        expandRow={{ ...expandRow }}
+        className={cs(props.className, parentClassName)}
       />,
       expanded || isClosing ? (
         <ExpandRow
-          key={ `${key}-expanding` }
-          colSpan={ props.visibleColumnSize! }
-          expanded={ expanded }
-          onClosed={ () => expandRow.onClosed(key) }
-          className={ className }
+          key={`${key}-expanding`}
+          colSpan={props.visibleColumnSize!}
+          expanded={expanded}
+          onClosed={() => expandRow.onClosed(key)}
+          className={className}
         >
           {expandRow.renderer(props.row, props.rowIndex)}
         </ExpandRow>
-      ) : null
+      ) : null,
     ];
   };
 

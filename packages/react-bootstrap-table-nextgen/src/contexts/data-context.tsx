@@ -1,4 +1,4 @@
-import React, { Component, createContext, ReactNode } from "react";
+import React, { Component, ReactNode } from "react";
 
 interface FilterProps {
   data: any;
@@ -16,6 +16,7 @@ interface PaginationProps {
   data: any;
 }
 
+//
 interface DataProviderProps {
   data: any[];
   children: ReactNode;
@@ -31,7 +32,8 @@ interface DataContextValue {
   ) => any[];
 }
 
-const DataContext = createContext<DataContextValue | undefined>(undefined);
+const defaultDataContext = { data: [], getData: () => [] };
+const DataContext = React.createContext<DataContextValue>(defaultDataContext);
 
 class DataProvider extends Component<DataProviderProps> {
   state = { data: this.props.data };

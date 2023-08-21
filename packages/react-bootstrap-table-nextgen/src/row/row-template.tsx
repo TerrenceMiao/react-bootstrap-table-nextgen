@@ -1,13 +1,6 @@
 import React from "react";
 
-import Const from "../const";
-
-export interface SelectRow {
-  hideSelectColumn: boolean;
-  selectColumnPosition?: string;
-  selected?: any[];
-  mode?: string;
-}
+import { INDICATOR_POSITION_LEFT, SelectRowProps } from "../..";
 
 export interface ExpandRow {
   showExpandColumn?: boolean;
@@ -18,7 +11,7 @@ export interface ExpandRow {
 interface RowTemplateProps {
   renderContent: () => any;
   cellEl: string;
-  selectRow?: SelectRow;
+  selectRow?: SelectRowProps<any> | undefined;
   expandRow?: ExpandRow;
   [key: string]: any; // For any other props you might have
 }
@@ -27,8 +20,8 @@ const RowTemplate: React.FC<RowTemplateProps> = (props) => {
   const { renderContent, selectRow, expandRow, cellEl, ...rest } = props;
 
   const isRenderFunctionColumnInLeft = (
-    position: string = Const.INDICATOR_POSITION_LEFT
-  ): boolean => position === Const.INDICATOR_POSITION_LEFT;
+    position: string = INDICATOR_POSITION_LEFT
+  ): boolean => position === INDICATOR_POSITION_LEFT;
 
   const childrens = renderContent() || [];
 
@@ -48,14 +41,7 @@ const RowTemplate: React.FC<RowTemplateProps> = (props) => {
     }
   }
 
-  return <tr { ...rest }>{childrens}</tr>;
+  return <tr {...rest}>{childrens}</tr>;
 };
-
-// RowTemplate.propTypes = {
-//   renderContent: PropTypes.func.isRequired,
-//   cellEl: PropTypes.string.isRequired,
-//   selectRow: PropTypes.object,
-//   expandRow: PropTypes.object
-// };
 
 export default RowTemplate;

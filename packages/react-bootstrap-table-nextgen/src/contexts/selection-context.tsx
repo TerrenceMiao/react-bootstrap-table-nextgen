@@ -1,12 +1,16 @@
-import PropTypes from "prop-types";
-import React, { Component, createContext, ReactNode } from "react";
-import Const from "../const";
+import React, { Component, ReactNode } from "react";
 import _ from "../utils";
 
+import {
+  CHECKBOX_STATUS_CHECKED,
+  CHECKBOX_STATUS_INDETERMINATE,
+  CHECKBOX_STATUS_UNCHECKED,
+  ROW_SELECT_SINGLE,
+} from "../..";
 import dataOperator from "../store/operators";
 import { getSelectionSummary } from "../store/selection";
 
-export interface SelectionContextProps {
+export interface SelectionContextValue {
   selected?: any[];
   onRowSelect?: (
     rowKey: any,
@@ -58,27 +62,12 @@ interface SelectionProviderProps {
   };
 }
 
-const SelectionContext = createContext<SelectionContextProps | undefined>(
-  undefined
+const defaultSelectionContext = {};
+const SelectionContext = React.createContext<SelectionContextValue>(
+  defaultSelectionContext
 );
 
 class SelectionProvider extends Component<SelectionProviderProps> {
-  static propTypes = {
-    children: PropTypes.node.isRequired,
-    data: PropTypes.array.isRequired,
-    keyField: PropTypes.string.isRequired,
-    selectRow: PropTypes.shape({
-      selected: PropTypes.array,
-      mode: PropTypes.string,
-      hideSelectColumn: PropTypes.bool,
-      clickToSelect: PropTypes.bool,
-      clickToSelectAndEditCell: PropTypes.bool,
-      onSelect: PropTypes.func,
-      onSelectAll: PropTypes.func,
-      nonSelectable: PropTypes.array,
-    }),
-  };
-
   selected: any[];
 
   constructor(props: SelectionProviderProps) {
@@ -108,7 +97,6 @@ class SelectionProvider extends Component<SelectionProviderProps> {
       keyField,
       selectRow: { mode, onSelect },
     } = this.props;
-    const { ROW_SELECT_SINGLE } = Const;
 
     let currSelected = [...this.selected];
 
@@ -180,11 +168,11 @@ class SelectionProvider extends Component<SelectionProviderProps> {
     let checkedStatus: string;
 
     if (allRowsSelected) {
-      checkedStatus = Const.CHECKBOX_STATUS_CHECKED;
+      checkedStatus = CHECKBOX_STATUS_CHECKED;
     } else if (allRowsNotSelected) {
-      checkedStatus = Const.CHECKBOX_STATUS_UNCHECKED;
+      checkedStatus = CHECKBOX_STATUS_UNCHECKED;
     } else {
-      checkedStatus = Const.CHECKBOX_STATUS_INDETERMINATE;
+      checkedStatus = CHECKBOX_STATUS_INDETERMINATE;
     }
 
     return (
@@ -205,7 +193,7 @@ class SelectionProvider extends Component<SelectionProviderProps> {
   }
 }
 
-export default {
+export default () => ({
   Provider: SelectionProvider,
   Consumer: SelectionContext.Consumer,
-};
+});

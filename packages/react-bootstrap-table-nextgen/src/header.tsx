@@ -1,6 +1,6 @@
 import React from "react";
 
-import Const from "./const";
+import { INDICATOR_POSITION_LEFT } from "..";
 import HeaderCell from "./header-cell";
 import ExpandHeaderCell from "./row-expand/expand-header-cell";
 import withHeaderExpansion from "./row-expand/expand-header-cell-consumer";
@@ -51,9 +51,8 @@ const Header: React.FC<HeaderProps> = (props) => {
     SelectionHeaderCellComp = withHeaderSelection(SelectionHeaderCell);
   }
 
-  const isRenderFunctionColumnInLeft = (
-    position = Const.INDICATOR_POSITION_LEFT
-  ) => position === Const.INDICATOR_POSITION_LEFT;
+  const isRenderFunctionColumnInLeft = (position = INDICATOR_POSITION_LEFT) =>
+    position === INDICATOR_POSITION_LEFT;
 
   const childrens = columns.map((column, i) => {
     const currSort = column.dataField === sortField;

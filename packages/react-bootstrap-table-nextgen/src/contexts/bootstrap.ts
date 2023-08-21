@@ -4,6 +4,8 @@ interface BootstrapContextValue {
   bootstrap4: boolean;
 }
 
-export const BootstrapContext = React.createContext<BootstrapContextValue>({
-  bootstrap4: false
-});
+const defaultBootstrapContext = { bootstrap4: false };
+
+export const BootstrapContext = React.createContext<BootstrapContextValue>(
+  defaultBootstrapContext
+);

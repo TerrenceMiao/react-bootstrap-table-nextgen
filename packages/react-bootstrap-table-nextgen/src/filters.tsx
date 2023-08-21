@@ -1,15 +1,15 @@
 import React from "react";
 
-import Const from "./const";
+import { FILTERS_POSITION_TOP } from "..";
 import FiltersCell from "./filters-cell";
 import RowTemplate from "./row/row-template";
 
 interface FiltersProps {
   columns: any[];
-  onFilter?: (filterData: Record<string, any>) => void;
+  onFilter?: (filterData: Record<string, any>) => React.ReactNode;
   filterPosition?: string;
   currFilters?: Record<string, any>;
-  onExternalFilter?: (column: any, filterType: string) => (value: any) => void;
+  onExternalFilter?: (column: any, filterType: string) => (value: any) => Function;
   className?: string;
   selectRow?: any;
   expandRow?: any;
@@ -21,11 +21,11 @@ const Filters: React.FC<FiltersProps> = (props) => {
     columns,
     onFilter,
     currFilters,
-    filterPosition,
+    filterPosition = FILTERS_POSITION_TOP,
     onExternalFilter,
     className,
     selectRow,
-    expandRow
+    expandRow,
   } = props;
 
   function renderContent() {
@@ -35,12 +35,12 @@ const Filters: React.FC<FiltersProps> = (props) => {
     columns.forEach((column, i) => {
       filterColumns.push(
         <FiltersCell
-          index={ i }
-          key={ column.dataField }
-          column={ column }
-          currFilters={ currFilters }
-          onExternalFilter={ onExternalFilter }
-          onFilter={ onFilter }
+          index={i}
+          key={column.dataField}
+          column={column}
+          currFilters={currFilters}
+          onExternalFilter={onExternalFilter}
+          onFilter={onFilter}
         />
       );
 
@@ -55,41 +55,22 @@ const Filters: React.FC<FiltersProps> = (props) => {
 
   return (
     <tbody
-      className={ className }
-      style={ {
+      className={className}
+      style={{
         display:
-          filterPosition === Const.FILTERS_POSITION_TOP
+          filterPosition === FILTERS_POSITION_TOP
             ? "table-header-group"
-            : "table-footer-group"
-      } }
+            : "table-footer-group",
+      }}
     >
       <RowTemplate
-        renderContent={ renderContent }
-        selectRow={ selectRow }
-        expandRow={ expandRow }
+        renderContent={renderContent}
+        selectRow={selectRow}
+        expandRow={expandRow}
         cellEl="td"
       />
     </tbody>
   );
 };
-
-// Filters.propTypes = {
-//   columns: PropTypes.array.isRequired,
-//   onFilter: PropTypes.func,
-//   filterPosition: PropTypes.oneOf([
-//     Const.FILTERS_POSITION_TOP,
-//     Const.FILTERS_POSITION_INLINE,
-//     Const.FILTERS_POSITION_BOTTOM,
-//   ]),
-//   currFilters: PropTypes.object,
-//   onExternalFilter: PropTypes.func,
-//   className: PropTypes.string,
-//   selectRow: PropTypes.object,
-//   expandRow: PropTypes.object,
-// };
-
-// Filters.defaultProps = {
-//   filterPosition: Const.FILTERS_POSITION_TOP,
-// };
 
 export default Filters;

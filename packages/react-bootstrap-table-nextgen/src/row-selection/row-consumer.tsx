@@ -1,7 +1,9 @@
 import cs from "classnames";
 import React from "react";
-import SelectionContext from "../contexts/selection-context";
+import createSelectionContext from "../contexts/selection-context";
 import _ from "../utils";
+
+const SelectionContext = createSelectionContext();
 
 export default function withRowSelection<T extends React.ComponentType<any>>(
   Component: T

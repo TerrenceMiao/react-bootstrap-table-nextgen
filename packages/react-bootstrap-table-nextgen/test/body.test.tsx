@@ -3,10 +3,10 @@ import "jsdom-global/register";
 import React from "react";
 import sinon from "sinon";
 
+import { ROW_SELECT_DISABLED } from "..";
 import Body from "../src/body";
-import Const from "../src/const";
-import ExpansionContext from "../src/contexts/row-expand-context";
-import SelectionContext from "../src/contexts/selection-context";
+import createExpansionContext from "../src/contexts/row-expand-context";
+import createSelectionContext from "../src/contexts/selection-context";
 import RowAggregator from "../src/row/aggregate-row";
 import RowSection from "../src/row/row-section";
 import Row from "../src/row/simple-row";
@@ -37,6 +37,9 @@ describe("Body", () => {
   ];
 
   const keyField = "id";
+
+  const ExpansionContext = createExpansionContext();
+  const SelectionContext = createSelectionContext();
 
   describe("simplest body", () => {
     beforeEach(() => {
@@ -356,7 +359,7 @@ describe("Body", () => {
       const rowAggregator = wrapper.find(RowAggregator);
 
       expect(rowAggregator.get(0).props.selectRow.mode).not.toEqual(
-        Const.ROW_SELECT_DISABLED
+        ROW_SELECT_DISABLED
       );
       expect(rowAggregator.get(0).props.selected).toBeDefined();
       expect(rowAggregator.get(0).props.selectable).toBeDefined();

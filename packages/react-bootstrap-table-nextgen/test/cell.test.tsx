@@ -128,7 +128,7 @@ describe("Cell", () => {
             columnindex={columnindex}
             editable={"false"}
             clicktoedit={"false"}
-            onStart={onStartCallBack}
+            atstart={onStartCallBack}
           />
         );
       });
@@ -168,7 +168,7 @@ describe("Cell", () => {
             columnindex={1}
             editable={"false"}
             dbclicktoedit={"false"}
-            onStart={onStartCallBack}
+            atstart={onStartCallBack}
           />
         );
       });

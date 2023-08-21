@@ -5,7 +5,7 @@ import _ from "../utils";
 import { RowProps } from "./should-updater";
 
 interface RowPureContentProps extends RowProps {
-  onStart?: (rowIndex: number, columnIndex: number) => void;
+  atstart?: (rowIndex: number, columnIndex: number) => void;
   shouldUpdate?: boolean;
 }
 
@@ -26,7 +26,7 @@ export default class RowPureContent extends Component<RowPureContentProps> {
       editable,
       editingRowIdx,
       editingColIdx,
-      onStart,
+      atstart,
       clickToEdit,
       dbclickToEdit,
       EditingCellComponent,
@@ -117,7 +117,7 @@ export default class RowPureContent extends Component<RowPureContentProps> {
           rowindex={rowIndex ?? 0}
           columnindex={index}
           column={column}
-          onStart={onStart}
+          atstart={atstart}
           clicktoedit={clickToEdit ?? "false"}
           dbclicktoedit={dbclickToEdit ?? "false"}
           {...cellAttrs}

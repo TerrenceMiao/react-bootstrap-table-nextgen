@@ -1,7 +1,7 @@
 import React, { Component, MouseEvent } from "react";
-import Const from "../const";
-import { BootstrapContext } from "../contexts/bootstrap";
+import { ROW_SELECT_SINGLE } from "../..";
 import _ from "../utils";
+import { BootstrapContext } from "../contexts/bootstrap";
 
 interface SelectionCellProps {
   mode?: string;
@@ -64,7 +64,7 @@ export default class SelectionCell extends Component<SelectionCellProps> {
     e.stopPropagation();
     if (disabled) return;
 
-    const checked = inputType === Const.ROW_SELECT_SINGLE ? true : !selected;
+    const checked = inputType === ROW_SELECT_SINGLE ? true : !selected;
 
     onRowSelect!(rowKey, checked, rowIndex, e);
   }

@@ -1,13 +1,17 @@
 import React, { ReactNode } from "react";
 
-interface ColumnManagementProviderProps {
+interface ColumnContextValue {
+  columns: any[];
+}
+
+interface ColumnProviderProps {
   data?: any;
   columns: any[];
   toggles?: { [dataField: string]: boolean };
   children: ReactNode;
 }
 
-const ColumnManagementProvider: React.FC<ColumnManagementProviderProps> = ({
+const ColumnProvider: React.FC<ColumnProviderProps> = ({
   columns,
   toggles,
   children,
@@ -19,26 +23,21 @@ const ColumnManagementProvider: React.FC<ColumnManagementProviderProps> = ({
     toggleColumn = columns.filter((column) => !column.hidden);
   }
 
-  const columnManagementValue = { columns: toggleColumn };
+  const columnValue = { columns: toggleColumn };
 
   return (
-    <ColumnManagementContext.Provider value={columnManagementValue}>
+    <ColumnContext.Provider value={columnValue}>
       {children}
-    </ColumnManagementContext.Provider>
+    </ColumnContext.Provider>
   );
 };
 
-// ColumnManagementProvider.propTypes = {
-//   columns: PropTypes.array.isRequired,
-//   toggles: PropTypes.object,
-//   children: PropTypes.node.isRequired,
-// };
-
-const ColumnManagementContext = React.createContext<
-  { columns: any[] } | undefined
->(undefined);
+const defaultColumnContext = { columns: [] };
+const ColumnContext = React.createContext<ColumnContextValue>(
+  defaultColumnContext
+);
 
 export default () => ({
-  Provider: ColumnManagementProvider,
-  Consumer: ColumnManagementContext.Consumer,
+  Provider: ColumnProvider,
+  Consumer: ColumnContext.Consumer,
 });

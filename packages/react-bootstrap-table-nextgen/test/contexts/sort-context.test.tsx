@@ -2,8 +2,8 @@ import { shallow } from "enzyme";
 import "jsdom-global/register";
 import React from "react";
 
+import { SORT_ASC, SORT_DESC } from "../..";
 import BootstrapTable from "../../src/bootstrap-table";
-import Const from "../../src/const";
 import createSortContext from "../../src/contexts/sort-context";
 import dataOperator from "../../src/store/operators";
 
@@ -119,7 +119,7 @@ describe("SortContext", () => {
 
       it("should set state correctly", () => {
         expect(wrapper.state().sortColumn).toEqual(sortColumn);
-        expect(wrapper.state().sortOrder).toEqual(Const.SORT_DESC);
+        expect(wrapper.state().sortOrder).toEqual(SORT_DESC);
       });
 
       it("should call dataOperator.nextOrder correctly", () => {
@@ -153,7 +153,7 @@ describe("SortContext", () => {
 
       it("should set state correctly", () => {
         expect(wrapper.state().sortColumn).toEqual(sortColumn);
-        expect(wrapper.state().sortOrder).toEqual(Const.SORT_DESC);
+        expect(wrapper.state().sortOrder).toEqual(SORT_DESC);
       });
 
       it("should call dataOperator.nextOrder correctly", () => {
@@ -169,7 +169,7 @@ describe("SortContext", () => {
         expect(handleRemoteSortChange).toHaveBeenCalledTimes(1);
         expect(handleRemoteSortChange).toHaveBeenCalledWith(
           sortColumn.dataField,
-          Const.SORT_DESC
+          SORT_DESC
         );
       });
     });
@@ -185,17 +185,11 @@ describe("SortContext", () => {
 
       it("should calling column.onSort function correctly", () => {
         expect(onSortCB).toHaveBeenCalledTimes(1);
-        expect(onSortCB).toHaveBeenCalledWith(
-          columns[0].dataField,
-          Const.SORT_DESC
-        );
+        expect(onSortCB).toHaveBeenCalledWith(columns[0].dataField, SORT_DESC);
 
         wrapper.instance().handleSort(sortColumn);
         expect(onSortCB).toHaveBeenCalledTimes(2);
-        expect(onSortCB).toHaveBeenCalledWith(
-          columns[0].dataField,
-          Const.SORT_ASC
-        );
+        expect(onSortCB).toHaveBeenCalledWith(columns[0].dataField, SORT_ASC);
       });
     });
   });
@@ -204,7 +198,7 @@ describe("SortContext", () => {
     const defaultSorted = [
       {
         dataField: "name",
-        order: Const.SORT_DESC,
+        order: SORT_DESC,
       },
     ];
 

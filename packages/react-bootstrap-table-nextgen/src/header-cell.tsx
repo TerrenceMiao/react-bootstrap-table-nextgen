@@ -2,8 +2,8 @@ import cs from "classnames";
 import React, { Component } from "react";
 
 import { Property } from "csstype";
+import { FILTERS_POSITION_INLINE, SORT_DESC } from "..";
 import eventDelegater from "./cell-event-delegater";
-import Const from "./const";
 import SortCaret from "./sort/caret";
 import SortSymbol from "./sort/symbol";
 import _ from "./utils";
@@ -221,7 +221,7 @@ class HeaderCell extends eventDelegater(Component)<HeaderCellProps> {
 
       if (sorting) {
         sortSymbol = sortCaretfunc ? (
-          sortCaretfunc(sortOrder || Const.SORT_DESC, column)
+          sortCaretfunc(sortOrder || SORT_DESC, column)
         ) : (
           <SortCaret order={sortOrder!} />
         );
@@ -251,7 +251,7 @@ class HeaderCell extends eventDelegater(Component)<HeaderCellProps> {
     if (cellClasses) cellAttrs.className = cs(cellAttrs.className, cellClasses);
     if (!_.isEmptyObject(cellStyle)) cellAttrs.style = cellStyle;
 
-    if (filterPosition === Const.FILTERS_POSITION_INLINE) {
+    if (filterPosition === FILTERS_POSITION_INLINE) {
       if (filterRenderer) {
         const onCustomFilter = onExternalFilter?.(
           column,

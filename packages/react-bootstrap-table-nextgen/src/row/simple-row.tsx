@@ -19,9 +19,10 @@ class SimpleRow extends shouldUpdater(
 
   render() {
     const {
-      className,
-      style,
-      attrs,
+      editable = true,
+      className = undefined,
+      style = {},
+      attrs = {},
       visibleColumnSize,
       tabIndexCell,
       ...rest
@@ -40,24 +41,5 @@ class SimpleRow extends shouldUpdater(
     );
   }
 }
-
-// SimpleRow.propTypes = {
-//   row: PropTypes.object.isRequired,
-//   rowIndex: PropTypes.number.isRequired,
-//   columns: PropTypes.array.isRequired,
-//   style: PropTypes.object,
-//   className: PropTypes.string,
-//   attrs: PropTypes.object,
-//   visibleColumnSize: PropTypes.number.isRequired,
-//   tabIndexCell: PropTypes.bool.isRequired,
-//   editable: PropTypes.bool,
-// };
-
-// SimpleRow.defaultProps = {
-//   editable: true,
-//   style: {},
-//   className: null,
-//   attrs: {},
-// };
 
 export default SimpleRow;

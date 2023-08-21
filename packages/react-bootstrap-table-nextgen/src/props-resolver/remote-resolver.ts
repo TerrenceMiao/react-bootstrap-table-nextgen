@@ -4,17 +4,12 @@ import _ from "../utils";
 
 export default (ExtendBase: any) =>
   class RemoteResolver extends Component<typeof ExtendBase> {
-    public remoteEmitter: EventEmitter;
-    public DataContext: any;
-    public SortContext: any;
-    public ColumnManagementContext: any;
-    public SelectionContext: any;
-    public rowExpandContext: any;
-    public CellEditContext: any;
-    public FilterContext: any;
-    public PaginationContext: any;
-    public SearchContext: any;
-    public table: any;
+    remoteEmitter: EventEmitter;
+
+    SortContext: any;
+    FilterContext: any;
+    PaginationContext: any;
+    SearchContext: any;
 
     constructor(props: any) {
       super(props);
@@ -119,7 +114,7 @@ export default (ExtendBase: any) =>
       this.props.onTableChange("filter", this.getNewestState(newState));
     };
 
-    handleRemoteSortChange = (sortField: string, sortOrder: string) => {
+    handleRemoteSortChange = (sortField: string, sortOrder: string | undefined) => {
       this.props.onTableChange(
         "sort",
         this.getNewestState({ sortField, sortOrder })

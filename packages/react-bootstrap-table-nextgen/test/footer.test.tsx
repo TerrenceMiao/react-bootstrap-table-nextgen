@@ -3,7 +3,7 @@ import { render, shallow } from "enzyme";
 import "jsdom-global/register";
 import React from "react";
 
-import Const from "../src/const";
+import { ROW_SELECT_DISABLED, SelectRowProps } from "..";
 import Footer from "../src/footer";
 
 describe("Footer", () => {
@@ -32,8 +32,8 @@ describe("Footer", () => {
     },
   ];
 
-  const selectRow = {
-    mode: Const.ROW_SELECT_DISABLED,
+  const selectRow: SelectRowProps<any> = {
+    mode: ROW_SELECT_DISABLED,
     selected: [],
     hideSelectColumn: true,
   };

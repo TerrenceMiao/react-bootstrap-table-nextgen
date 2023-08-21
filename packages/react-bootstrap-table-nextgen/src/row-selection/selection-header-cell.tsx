@@ -1,7 +1,12 @@
 import React, { Component, ReactNode } from "react";
-import Const from "../const";
-import { BootstrapContext } from "../contexts/bootstrap";
+import {
+  CHECKBOX_STATUS_CHECKED,
+  CHECKBOX_STATUS_INDETERMINATE,
+  ROW_SELECT_MULTIPLE,
+  ROW_SELECT_SINGLE,
+} from "../..";
 import _ from "../utils";
+import { BootstrapContext } from "../contexts/bootstrap";
 
 interface CheckBoxProps {
   className?: string;
@@ -12,26 +17,20 @@ interface CheckBoxProps {
 export const CheckBox: React.FC<CheckBoxProps> = ({
   className,
   checked,
-  indeterminate
+  indeterminate,
 }) => (
   <input
     type="checkbox"
-    checked={ checked }
-    className={ className }
-    ref={ (input) => {
+    checked={checked}
+    className={className}
+    ref={(input) => {
       if (input) {
         input.indeterminate = indeterminate;
       }
-    } }
-    onChange={ () => {} }
+    }}
+    onChange={() => {}}
   />
 );
-
-// CheckBox.propTypes = {
-//   checked: PropTypes.bool.isRequired,
-//   indeterminate: PropTypes.bool.isRequired,
-//   className: PropTypes.string,
-// };
 
 interface SelectionHeaderCellProps {
   mode?: string;
@@ -52,22 +51,12 @@ interface SelectionHeaderCellProps {
 }
 
 export default class SelectionHeaderCell extends Component<SelectionHeaderCellProps> {
-  // static propTypes = {
-  //   mode: PropTypes.string.isRequired,
-  //   checkedStatus: PropTypes.string,
-  //   onAllRowsSelect: PropTypes.func,
-  //   hideSelectAll: PropTypes.bool,
-  //   selectionHeaderRenderer: PropTypes.func,
-  //   headerColumnStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-  // };
-
   constructor(props: SelectionHeaderCellProps) {
     super(props);
     this.handleCheckBoxClick = this.handleCheckBoxClick.bind(this);
   }
 
   shouldComponentUpdate(nextProps: SelectionHeaderCellProps) {
-    const { ROW_SELECT_SINGLE } = Const;
     const { mode, checkedStatus } = this.props;
 
     if (mode === ROW_SELECT_SINGLE) return false;
@@ -78,25 +67,19 @@ export default class SelectionHeaderCell extends Component<SelectionHeaderCellPr
   handleCheckBoxClick(e: React.MouseEvent<HTMLTableHeaderCellElement>) {
     const { onAllRowsSelect, checkedStatus } = this.props;
     const isUnSelect =
-      checkedStatus === Const.CHECKBOX_STATUS_CHECKED ||
-      checkedStatus === Const.CHECKBOX_STATUS_INDETERMINATE;
+      checkedStatus === CHECKBOX_STATUS_CHECKED ||
+      checkedStatus === CHECKBOX_STATUS_INDETERMINATE;
 
     onAllRowsSelect!(e, isUnSelect);
   }
 
   render() {
     const {
-      CHECKBOX_STATUS_CHECKED,
-      CHECKBOX_STATUS_INDETERMINATE,
-      ROW_SELECT_MULTIPLE
-    } = Const;
-
-    const {
       mode,
       checkedStatus,
       selectionHeaderRenderer,
       hideSelectAll,
-      headerColumnStyle
+      headerColumnStyle,
     } = this.props;
     if (hideSelectAll) {
       return <th data-row-selection />;
@@ -123,20 +106,20 @@ export default class SelectionHeaderCell extends Component<SelectionHeaderCellPr
             content = selectionHeaderRenderer({
               mode,
               checked,
-              indeterminate
+              indeterminate,
             });
           } else if (mode === ROW_SELECT_MULTIPLE) {
             content = (
               <CheckBox
-                { ...this.props }
-                checked={ checked }
-                className={ bootstrap4 ? "selection-input-4" : "" }
-                indeterminate={ indeterminate }
+                {...this.props}
+                checked={checked}
+                className={bootstrap4 ? "selection-input-4" : ""}
+                indeterminate={indeterminate}
               />
             );
           }
           return (
-            <th className="selection-cell-header" data-row-selection { ...attrs }>
+            <th className="selection-cell-header" data-row-selection {...attrs}>
               {content}
             </th>
           );

@@ -2,7 +2,7 @@ import { shallow } from "enzyme";
 import React from "react";
 import sinon from "sinon";
 
-import Const from "../src/const";
+import { SORT_ASC, SORT_DESC } from "..";
 import HeaderCell from "../src/header-cell";
 import SortCaret from "../src/sort/caret";
 import SortSymbol from "../src/sort/symbol";
@@ -491,7 +491,7 @@ describe("HeaderCell", () => {
     });
 
     describe("and sorting prop is true", () => {
-      [Const.SORT_ASC, Const.SORT_DESC].forEach((order) => {
+      [SORT_ASC, SORT_DESC].forEach((order) => {
         describe(`and sortOrder is ${order}`, () => {
           beforeEach(() => {
             wrapper = shallow(
@@ -527,7 +527,7 @@ describe("HeaderCell", () => {
               sortCaret={sortCaret}
               index={index}
               onSort={onSortCallBack}
-              sortOrder={Const.SORT_ASC}
+              sortOrder={SORT_ASC}
               sorting
             />
           );
@@ -539,13 +539,13 @@ describe("HeaderCell", () => {
 
         it("should call column.sortCaret correctly", () => {
           expect(sortCaret).toHaveBeenCalledTimes(1);
-          expect(sortCaret).toHaveBeenCalledWith(Const.SORT_ASC, column);
+          expect(sortCaret).toHaveBeenCalledWith(SORT_ASC, column);
         });
       });
 
       describe("when headerSortingClasses is defined ", () => {
         const classes = "foo";
-        const order = Const.SORT_DESC;
+        const order = SORT_DESC;
 
         describe("if headerSortingClasses is a string", () => {
           beforeEach(() => {
@@ -657,7 +657,7 @@ describe("HeaderCell", () => {
 
       describe("when headerSortingStyle is defined", () => {
         const style = { backgroundColor: "red" };
-        const order = Const.SORT_DESC;
+        const order = SORT_DESC;
 
         describe("if headerSortingStyle is an object", () => {
           beforeEach(() => {

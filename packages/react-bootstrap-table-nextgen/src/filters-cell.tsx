@@ -15,57 +15,41 @@ interface FiltersCellProps {
     dataField: string;
   };
   currFilters?: Record<string, any>;
-  onFilter?: (filterData: Record<string, any>) => void;
-  onExternalFilter?: (column: any, filterType: string) => (value: any) => void;
+  onFilter?: (filterData: Record<string, any>) => React.ReactNode;
+  onExternalFilter?: (column: any, filterType: string) => (value: any) => Function;
 }
 
 const FiltersCell: React.FC<FiltersCellProps> = (props) => {
-  const { index, column, onExternalFilter, currFilters, onFilter } = props;
-  const { filterRenderer, filter } = column;
+  const { index, column, currFilters, onExternalFilter = () => {}, onFilter = () => {} } = props;
+  const { filter } = column;
+
   let filterElm: React.ReactNode;
   const cellAttrs: React.HTMLAttributes<HTMLTableHeaderCellElement> = {};
   const cellStyle: React.CSSProperties = {};
+
   cellAttrs.style = cellStyle;
+
   if (column.headerAlign) {
     cellStyle.textAlign = _.isFunction(column.headerAlign)
       ? column.headerAlign(column, index)
       : column.headerAlign;
   }
+
   if (column.filterRenderer) {
-    const onCustomFilter = onExternalFilter!(column, filter?.props.type || "");
-    filterElm = filterRenderer!(onCustomFilter, column);
+    const onCustomFilter = onExternalFilter(column, filter?.props.type || "");
+    filterElm = column.filterRenderer(onCustomFilter!, column);
   } else if (filter) {
     filterElm = (
       <filter.Filter
-        { ...filter.props }
-        filterState={ currFilters![column.dataField] }
-        onFilter={ onFilter }
-        column={ column }
+        {...filter.props}
+        filterState={currFilters![column.dataField]}
+        onFilter={onFilter}
+        column={column}
       />
     );
   }
+
   return React.createElement("th", cellAttrs, filterElm);
 };
-
-// FiltersCell.propTypes = {
-//   index: PropTypes.number.isRequired,
-//   column: PropTypes.shape({
-//     filterRenderer: PropTypes.func,
-//     filter: PropTypes.shape({
-//       Filter: PropTypes.any,
-//       props: PropTypes.object,
-//     }),
-//     headerAlign: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
-//     dataField: PropTypes.string.isRequired,
-//   }).isRequired,
-//   currFilters: PropTypes.object.isRequired,
-//   onFilter: PropTypes.func,
-//   onExternalFilter: PropTypes.func,
-// };
-
-// FiltersCell.defaultProps = {
-//   onFilter: () => {},
-//   onExternalFilter: () => {},
-// };
 
 export default FiltersCell;

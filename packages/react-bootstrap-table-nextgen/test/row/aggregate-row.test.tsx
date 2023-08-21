@@ -1,9 +1,9 @@
 import { mount } from "enzyme";
 import "jsdom-global/register";
 import React from "react";
-import Const from "../../src/const";
-import ExpansionContext from "../../src/contexts/row-expand-context";
-import SelectionContext from "../../src/contexts/selection-context";
+import { INDICATOR_POSITION_RIGHT } from "../..";
+import createExpansionContext from "../../src/contexts/row-expand-context";
+import createSelectionContext from "../../src/contexts/selection-context";
 import ExpandCell from "../../src/row-expand/expand-cell";
 import bindExpansion from "../../src/row-expand/row-consumer";
 import bindSelection from "../../src/row-selection/row-consumer";
@@ -53,6 +53,9 @@ describe("Row Aggregator", () => {
     rowIndex,
     ...mockBodyResolvedProps,
   });
+
+  const ExpansionContext = createExpansionContext();
+  const SelectionContext = createSelectionContext();
 
   describe("when selectRow is enable", () => {
     describe("if props.selectRow.hideSelectColumn is false", () => {
@@ -197,7 +200,7 @@ describe("Row Aggregator", () => {
         const expandRow = {
           renderer: jest.fn(),
           showExpandColumn: true,
-          expandColumnPosition: Const.INDICATOR_POSITION_RIGHT,
+          expandColumnPosition: INDICATOR_POSITION_RIGHT,
         };
         wrapper = mount(
           <ExpansionContext.Provider

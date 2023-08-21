@@ -2,9 +2,9 @@ import { mount, shallow } from "enzyme";
 import "jsdom-global/register";
 import React from "react";
 
-import Const from "../src/const";
-import ExpansionContext from "../src/contexts/row-expand-context";
-import SelectionContext from "../src/contexts/selection-context";
+import { INDICATOR_POSITION_RIGHT, SORT_ASC } from "..";
+import createExpansionContext from "../src/contexts/row-expand-context";
+import createSelectionContext from "../src/contexts/selection-context";
 import Header from "../src/header";
 import HeaderCell from "../src/header-cell";
 import ExpandHeaderCell from "../src/row-expand/expand-header-cell";
@@ -36,6 +36,9 @@ describe("Header", () => {
   ];
 
   const keyField = "id";
+
+  const ExpansionContext = createExpansionContext();
+  const SelectionContext = createSelectionContext();
 
   describe("simplest header", () => {
     beforeEach(() => {
@@ -79,7 +82,7 @@ describe("Header", () => {
           {...mockHeaderResolvedProps}
           columns={columns}
           sortField={sortField}
-          sortOrder={Const.SORT_ASC}
+          sortOrder={SORT_ASC}
         />
       );
     });
@@ -89,7 +92,7 @@ describe("Header", () => {
       expect(headerCells.length).toBe(columns.length);
       expect(headerCells.at(0).prop("sorting")).toBe(false);
       expect(headerCells.at(1).prop("sorting")).toBe(true);
-      expect(headerCells.at(1).prop("sortOrder")).toBe(Const.SORT_ASC);
+      expect(headerCells.at(1).prop("sortOrder")).toBe(SORT_ASC);
     });
   });
 
@@ -244,7 +247,7 @@ describe("Header", () => {
         const expandRow = {
           renderer: jest.fn(),
           showExpandColumn: true,
-          expandColumnPosition: Const.INDICATOR_POSITION_RIGHT,
+          expandColumnPosition: INDICATOR_POSITION_RIGHT,
         };
         wrapper = mount(
           <ExpansionContext.Provider
