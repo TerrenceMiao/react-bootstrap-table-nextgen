@@ -5,7 +5,7 @@ type RowSectionProps = {
   colSpan?: number;
 };
 
-const RowSection: FC<RowSectionProps> = ({ content, colSpan = 1 }) => (
+const RowSection: FC<RowSectionProps> = ({ content = null, colSpan = 1 }) => (
   <tr>
     <td
       data-toggle="collapse"

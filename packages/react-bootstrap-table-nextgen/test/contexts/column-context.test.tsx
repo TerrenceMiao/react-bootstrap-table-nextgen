@@ -3,7 +3,7 @@ import "jsdom-global/register";
 import React from "react";
 
 import BootstrapTable from "../../src/bootstrap-table";
-import createColumnManagementContext from "../../src/contexts/column-context";
+import createColumnContext from "../../src/contexts/column-context";
 
 describe("ColumnManagementContext", () => {
   let wrapper: any;
@@ -34,19 +34,19 @@ describe("ColumnManagementContext", () => {
     <BootstrapTable data={data} columns={columns} keyField="id" {...props} />
   ));
 
-  const ColumnManagementContext = createColumnManagementContext();
+  const ColumnContext = createColumnContext();
 
   function shallowContext(options = {}) {
     return (
-      <ColumnManagementContext.Provider
+      <ColumnContext.Provider
         data={data}
         columns={columns}
         {...options}
       >
-        <ColumnManagementContext.Consumer>
+        <ColumnContext.Consumer>
           {(columnToggleProps) => mockBase(columnToggleProps)}
-        </ColumnManagementContext.Consumer>
-      </ColumnManagementContext.Provider>
+        </ColumnContext.Consumer>
+      </ColumnContext.Provider>
     );
   }
 
@@ -57,11 +57,11 @@ describe("ColumnManagementContext", () => {
     });
 
     it("should have correct Provider property after calling createColumnManagementContext", () => {
-      expect(ColumnManagementContext.Provider).toBeDefined();
+      expect(ColumnContext.Provider).toBeDefined();
     });
 
     it("should have correct Consumer property after calling createColumnManagementContext", () => {
-      expect(ColumnManagementContext.Consumer).toBeDefined();
+      expect(ColumnContext.Consumer).toBeDefined();
     });
   });
 

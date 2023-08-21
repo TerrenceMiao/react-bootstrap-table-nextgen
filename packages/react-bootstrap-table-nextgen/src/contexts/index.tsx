@@ -18,7 +18,7 @@ const withContext = (Base: any) =>
     RowExpandContext: any;
     CellEditContext: any;
 
-    table: any;
+    Table: any;
 
     constructor(props: any) {
       super(props);
@@ -28,7 +28,7 @@ const withContext = (Base: any) =>
         const exposedAPIEmitter = new EventEmitter();
         exposedAPIEmitter.on(
           "get.table.data",
-          (payload) => (payload.result = this.table.getData())
+          (payload) => (payload.result = this.Table.getData())
         );
         exposedAPIEmitter.on(
           "get.selected.rows",
@@ -40,7 +40,7 @@ const withContext = (Base: any) =>
           } else if (this.FilterContext) {
             payload.result = this.FilterContext.getFiltered();
           } else {
-            payload.result = this.table.getData();
+            payload.result = this.Table.getData();
           }
         });
         props.registerExposedAPI(exposedAPIEmitter);
@@ -156,7 +156,7 @@ const withContext = (Base: any) =>
         columnToggleProps: any
       ) => (
         <Base
-          // ref={(n: any) => (this.table = n)}
+          ref={(n: any) => (this.Table = n)}
           {...this.props}
           {...sortProps}
           {...filterProps}
