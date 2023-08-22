@@ -91,7 +91,7 @@ class RowExpandProvider extends Component<RowExpandProviderProps> {
 
   handleRowExpand = (
     rowKey: any,
-    expanded: boolean,
+    isExpanded: boolean,
     rowIndex: number,
     e: any
   ) => {
@@ -106,24 +106,24 @@ class RowExpandProvider extends Component<RowExpandProviderProps> {
     }
 
     let currExpanded = [...this.state.expanded];
-    let isClosing = [...this.state.isClosing];
+    let currIsClosing = [...this.state.isClosing];
 
-    if (expanded) {
+    if (isExpanded) {
       if (onlyOneExpanding) {
-        isClosing = isClosing.concat(currExpanded);
+        currIsClosing = currIsClosing.concat(currExpanded);
         currExpanded = [rowKey];
       } else currExpanded.push(rowKey);
     } else {
-      isClosing.push(rowKey);
+      currIsClosing.push(rowKey);
       currExpanded = currExpanded.filter((value) => value !== rowKey);
     }
 
     if (onExpand) {
       const row = dataOperator.getRowByRowId(data, keyField, rowKey);
-      onExpand(row, expanded, rowIndex, e);
+      onExpand(row, isExpanded, rowIndex, e);
     }
 
-    this.setState(() => ({ expanded: currExpanded, isClosing }));
+    this.setState(() => ({ expanded: currExpanded, isClosing: currIsClosing }));
   };
 
   handleAllRowExpand = (e: any, expandAll: boolean) => {
