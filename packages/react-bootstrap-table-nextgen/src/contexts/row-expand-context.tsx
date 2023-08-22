@@ -2,6 +2,21 @@ import React, { Component, ReactNode } from "react";
 import dataOperator from "../store/operators";
 import _ from "../utils";
 
+interface RowExpandProviderProps {
+  children: ReactNode;
+  data: any[];
+  keyField: string;
+  expandRow: {
+    expanded?: any[];
+    isClosing?: any[];
+    onExpand?: (row: any, expanded: boolean, rowIndex: number, e: any) => void;
+    onExpandAll?: (expandAll: boolean, expandedRows: any[], e: any) => void;
+    onlyOneExpanding?: boolean;
+    nonExpandable?: any[];
+    renderer?: () => void;
+  };
+}
+
 export interface RowExpandContextValue {
   expanded: any[];
   isClosing: any[];
@@ -18,21 +33,6 @@ export interface RowExpandContextValue {
   onExpand?: (row: any, expanded: boolean, rowIndex: number, e: any) => void;
   onExpandAll?: (expandAll: boolean, expandedRows: any[], e: any) => void;
   onlyOneExpanding?: boolean;
-}
-
-interface RowExpandProviderProps {
-  children: ReactNode;
-  data: any[];
-  keyField: string;
-  expandRow: {
-    expanded?: any[];
-    isClosing?: any[];
-    onExpand?: (row: any, expanded: boolean, rowIndex: number, e: any) => void;
-    onExpandAll?: (expandAll: boolean, expandedRows: any[], e: any) => void;
-    onlyOneExpanding?: boolean;
-    nonExpandable?: any[];
-    renderer?: () => void;
-  };
 }
 
 const defaultRowExpandContext = {

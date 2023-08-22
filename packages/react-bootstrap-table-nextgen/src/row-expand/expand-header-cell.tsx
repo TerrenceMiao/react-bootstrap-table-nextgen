@@ -1,4 +1,3 @@
-import PropTypes from "prop-types";
 import React, { Component, ReactNode } from "react";
 
 export interface ExpansionHeaderCellProps {
@@ -11,12 +10,6 @@ export interface ExpansionHeaderCellProps {
 }
 
 export default class ExpansionHeaderCell extends Component<ExpansionHeaderCellProps> {
-  // static propTypes = {
-  //   isAnyExpands: PropTypes.bool.isRequired,
-  //   onAllRowExpand: PropTypes.func.isRequired,
-  //   expandHeaderColumnRenderer: PropTypes.func,
-  // };
-
   constructor(props: ExpansionHeaderCellProps) {
     super(props);
     this.handleCheckBoxClick = this.handleCheckBoxClick.bind(this);
@@ -30,16 +23,16 @@ export default class ExpansionHeaderCell extends Component<ExpansionHeaderCellPr
   render() {
     const { isAnyExpands, expandHeaderColumnRenderer } = this.props;
     const attrs = {
-      onClick: this.handleCheckBoxClick
+      onClick: this.handleCheckBoxClick,
     };
 
     return (
-      <th className="expand-cell-header" data-row-selection { ...attrs }>
+      <th className="expand-cell-header" data-row-selection {...attrs}>
         {expandHeaderColumnRenderer
           ? expandHeaderColumnRenderer({ isAnyExpands: isAnyExpands ?? false })
           : isAnyExpands
-            ? "(-)"
-            : "(+)"}
+          ? "(-)"
+          : "(+)"}
       </th>
     );
   }

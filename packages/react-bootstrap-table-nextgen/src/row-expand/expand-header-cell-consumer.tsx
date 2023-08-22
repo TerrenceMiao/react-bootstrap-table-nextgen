@@ -13,7 +13,7 @@ const ExpansionContext = createExpansionContext();
 const withExpandContext = (Component: React.ComponentType<Props>) => () =>
   (
     <ExpansionContext.Consumer>
-      {(expandRow) => <Component expandRow={expandRow} />}
+      {(expandRow) => <Component { ... expandRow } />}
     </ExpansionContext.Consumer>
   );
 
