@@ -1,4 +1,4 @@
-import React, { Component, ReactNode } from "react";
+import React, { ReactNode, useEffect, useState } from "react";
 
 interface FilterProps {
   data: any;
@@ -35,10 +35,13 @@ interface DataContextValue {
 const defaultDataContext = { data: [], getData: () => [] };
 const DataContext = React.createContext<DataContextValue>(defaultDataContext);
 
-class DataProvider extends Component<DataProviderProps> {
-  state = { data: this.props.data };
+const DataProvider: React.FC<DataProviderProps> = ({
+  data,
+  children,
+}) => {
+  const [stateData, setStateData] = useState(data);
 
-  getData = (
+  const getData = (
     filterProps?: FilterProps,
     searchProps?: SearchProps,
     sortProps?: SortProps,
@@ -48,28 +51,24 @@ class DataProvider extends Component<DataProviderProps> {
     else if (sortProps) return sortProps.data;
     else if (searchProps) return searchProps.data;
     else if (filterProps) return filterProps.data;
-    return this.props.data;
+    return data;
   };
 
-  componentDidUpdate(nextProps: DataProviderProps) {
-    if (this.props.data !== nextProps.data) {
-      this.setState(() => ({ data: nextProps.data }));
-    }
-  }
+  useEffect(() => {
+    setStateData(data);
+  }, [data]);
 
-  render() {
-    return (
-      <DataContext.Provider
-        value={{
-          data: this.state.data,
-          getData: this.getData,
-        }}
-      >
-        {this.props.children}
-      </DataContext.Provider>
-    );
-  }
-}
+  return (
+    <DataContext.Provider
+      value={{
+        data: stateData,
+        getData,
+      }}
+    >
+      {children}
+    </DataContext.Provider>
+  );
+};
 
 export default () => ({
   Provider: DataProvider,
