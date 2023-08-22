@@ -60,7 +60,7 @@ describe("DataContext", () => {
       expect(DataContext.Consumer).toBeDefined();
     });
 
-    xit("should have correct state.data", () => {
+    it("should have correct state.data", () => {
       expect(wrapper.state().data).toEqual(data);
     });
 
@@ -68,13 +68,12 @@ describe("DataContext", () => {
       expect(wrapper.length).toBe(1);
       expect(mockBase).toHaveBeenCalledWith({
         data,
-        // getData: wrapper.instance().getData,
-        getData: expect.any(Function),
+        getData: wrapper.instance().getData,
       });
     });
   });
 
-  xdescribe("componentWillReceiveProps", () => {
+  describe("componentWillReceiveProps", () => {
     const newData = [...data, { id: 3, name: "test" }];
 
     beforeEach(() => {
@@ -84,12 +83,12 @@ describe("DataContext", () => {
       });
     });
 
-    xit("should have correct state.data", () => {
+    it("should have correct state.data", () => {
       expect(wrapper.state().data).toEqual(newData);
     });
   });
 
-  xdescribe("getData", () => {
+  describe("getData", () => {
     let result;
     const fakeData = [...data, { id: 3, name: "test" }];
 
