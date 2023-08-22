@@ -1,6 +1,6 @@
 {
   "name": "react-bootstrap-table-nextgen-overlay",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "It's a loading overlay addons for react-bootstrap-table-nextgen",
   "main": "./lib/index.js",
   "repository": {
@@ -42,7 +42,7 @@
     }
   ],
   "dependencies": {
-    "react-loading-overlay": "1.0.1"
+    "@ronchalant/react-loading-overlay": "^1.1.0"
   },
   "peerDependencies": {
     "prop-types": "^15.0.0",
