@@ -8,8 +8,8 @@ export default withContext(BootstrapTable);
 // Type definitions for react-bootstrap-table-next 4.0
 // Project: https://github.com/react-bootstrap-table/react-bootstrap-table2#readme
 // Definitions by: Wlad Meixner <https://github.com/gosticks>
-//                 Valentin Slobozanin <https://github.com/ignefolio>
-//                 Jakub Różbicki <https://github.com/jrozbicki>
+//                Valentin Slobozanin <https://github.com/ignefolio>
+//                Jakub Różbicki <https://github.com/jrozbicki>
 // Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
 // TypeScript Version: 3.0
 
