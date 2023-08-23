@@ -50,5 +50,8 @@
     "prop-types": "^15.8.1",
     "react": "^16.4.0",
     "react-dom": "^16.4.0"
+  },
+  "devDependencies": {
+    "@types/react-transition-group": "^4.4.6"
   }
 }
