@@ -12,6 +12,7 @@ export default (options) => (loading) =>
     componentDidMount() {
       if (loading) {
         const { wrapper } = this.overlay;
+
         const masker = wrapper.current.firstChild;
         const headerDOM = wrapper.current.parentElement.querySelector("thead");
         const bodyDOM = wrapper.current.parentElement.querySelector("tbody");
@@ -19,11 +20,13 @@ export default (options) => (loading) =>
           wrapper.current.parentElement.querySelector("caption");
 
         let marginTop = window.getComputedStyle(headerDOM).height;
+
         if (captionDOM) {
-          marginTop = parseFloat(marginTop.replace("px", ""));
+          marginTop = parseFloat(marginTop.replace("px", "")).toString();
           marginTop += parseFloat(
             window.getComputedStyle(captionDOM).height.replace("px", "")
-          );
+          ).toString();
+
           marginTop = `${marginTop}px`;
         }
 

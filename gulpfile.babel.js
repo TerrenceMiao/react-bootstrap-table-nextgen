@@ -92,7 +92,9 @@ function ts() {
   return gulp
     .src([
       `./packages/+(${JS_PKGS})/**/*.ts`,
+      `./packages/+(${JS_PKGS})/**/*.tsx`,
       `!packages/+(${JS_PKGS})/${JS_SKIPS}/**/*.ts`,
+      `!packages/+(${JS_PKGS})/${JS_SKIPS}/**/*.tsx`,
     ])
     .pipe(rename((path) => {
       if (path.dirname.indexOf('src') > -1) {
