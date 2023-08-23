@@ -1,0 +1,33 @@
+#!/bin/sh
+
+rm -rf node_modules
+rm -rf packages/react-bootstrap-table-nextgen/dist
+rm -rf packages/react-bootstrap-table-nextgen/lib
+rm -rf packages/react-bootstrap-table-nextgen/node_modules
+
+rm -rf packages/react-bootstrap-table-nextgen-editor/dist
+rm -rf packages/react-bootstrap-table-nextgen-editor/lib
+rm -rf packages/react-bootstrap-table-nextgen-editor/node_modules
+
+rm -rf packages/react-bootstrap-table-nextgen-example/dist
+rm -rf packages/react-bootstrap-table-nextgen-example/lib
+rm -rf packages/react-bootstrap-table-nextgen-example/node_modules
+
+rm -rf packages/react-bootstrap-table-nextgen-filter/dist
+rm -rf packages/react-bootstrap-table-nextgen-filter/lib
+rm -rf packages/react-bootstrap-table-nextgen-filter/node_modules
+
+rm -rf packages/react-bootstrap-table-nextgen-overlay/dist
+rm -rf packages/react-bootstrap-table-nextgen-overlay/lib
+rm -rf packages/react-bootstrap-table-nextgen-overlay/node_modules
+
+rm -rf packages/react-bootstrap-table-nextgen-paginator/dist
+rm -rf packages/react-bootstrap-table-nextgen-paginator/lib
+rm -rf packages/react-bootstrap-table-nextgen-paginator/node_modules
+
+rm -rf packages/react-bootstrap-table-nextgen-toolkit/dist
+rm -rf packages/react-bootstrap-table-nextgen-toolkit/lib
+rm -rf packages/react-bootstrap-table-nextgen-toolkit/node_modules
+
+find . -type f -name "*.js.map" -exec rm {} \;
+find . -type f -name "*.d.ts" -exec rm {} \;
