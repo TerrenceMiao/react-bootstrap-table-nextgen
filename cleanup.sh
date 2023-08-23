@@ -1,9 +1,11 @@
 #!/bin/sh
 
 rm -rf node_modules
+
 rm -rf packages/react-bootstrap-table-nextgen/dist
 rm -rf packages/react-bootstrap-table-nextgen/lib
 rm -rf packages/react-bootstrap-table-nextgen/node_modules
+find packages/react-bootstrap-table-nextgen -type f -name "*.js" -exec rm {} \;
 
 rm -rf packages/react-bootstrap-table-nextgen-editor/dist
 rm -rf packages/react-bootstrap-table-nextgen-editor/lib

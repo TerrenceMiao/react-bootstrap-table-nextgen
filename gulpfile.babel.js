@@ -136,7 +136,7 @@ function umd(done) {
   done();
 }
 
-const buildJS = gulp.parallel(umd, scripts, declaration, map, ts);
+const buildJS = gulp.parallel(umd, scripts, declaration, map);
 const buildCSS = styles;
 const build = gulp.series(clean, gulp.parallel(buildJS, buildCSS));
 
