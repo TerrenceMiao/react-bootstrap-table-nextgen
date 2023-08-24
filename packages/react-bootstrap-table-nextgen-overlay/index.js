@@ -1,7 +1,7 @@
 /* eslint no-return-assign: 0 */
 import React from "react";
 import PropTypes from "prop-types";
-import LoadingOverlay from "@ronchalant/react-loading-overlay";
+import LoadingOverlay from "react-loading-overlay-nextgen";
 
 export default (options) => (loading) =>
   class TableLoadingOverlayWrapper extends React.Component {

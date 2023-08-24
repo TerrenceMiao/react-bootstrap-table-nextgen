@@ -107,15 +107,6 @@
   resolved "https://registry.npmjs.org/@emotion/weak-memoize/-/weak-memoize-0.2.5.tgz"
   integrity sha512-6U71C2Wp7r5XtFtQzYrW5iKFT67OixrSxjI4MptCHzdSVlgabczzqLe0ZSgnub/5Kp4hSbpDB1tMytZY9pwxxA==
 
-"@ronchalant/react-loading-overlay@^1.1.0":
-  version "1.1.0"
-  resolved "https://registry.npmjs.org/@ronchalant/react-loading-overlay/-/react-loading-overlay-1.1.0.tgz"
-  integrity sha512-opFwS8YYWKrU2p1llwmnYFErD0ZJ8bfhQVSvIA5W2Pt7ckr6+QkFPIrCVbkiR5BZPNv1la2BZW8sv+vbDUAtog==
-  dependencies:
-    emotion "^10.0.1"
-    prop-types "^15.6.2"
-    react-transition-group "^4.4.2"
-
 "@types/parse-json@^4.0.0":
   version "4.0.0"
   resolved "https://registry.npmjs.org/@types/parse-json/-/parse-json-4.0.0.tgz"
@@ -357,6 +348,15 @@ react-is@^16.13.1:
   version "16.13.1"
   resolved "https://registry.npmjs.org/react-is/-/react-is-16.13.1.tgz"
   integrity sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==
+
+react-loading-overlay-nextgen@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/react-loading-overlay-nextgen/-/react-loading-overlay-nextgen-1.2.0.tgz#427728a7317770ed4c95290ead2845acb65e5235"
+  integrity sha512-YqyK7W7WNUo1ETLkHJFQh+iBnBe43lKgcNje8fYBgS+eYU7nrUdC10d2RdyutaSC4A4zxVzIfftw0r+8bGARbQ==
+  dependencies:
+    emotion "^10.0.1"
+    prop-types "^15.6.2"
+    react-transition-group "^4.4.2"
 
 react-transition-group@^4.4.2:
   version "4.4.5"
