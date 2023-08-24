@@ -349,10 +349,10 @@ react-is@^16.13.1:
   resolved "https://registry.npmjs.org/react-is/-/react-is-16.13.1.tgz"
   integrity sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==
 
-react-loading-overlay-nextgen@^1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/react-loading-overlay-nextgen/-/react-loading-overlay-nextgen-1.2.0.tgz#427728a7317770ed4c95290ead2845acb65e5235"
-  integrity sha512-YqyK7W7WNUo1ETLkHJFQh+iBnBe43lKgcNje8fYBgS+eYU7nrUdC10d2RdyutaSC4A4zxVzIfftw0r+8bGARbQ==
+react-loading-overlay-nextgen@^1.2.2:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/react-loading-overlay-nextgen/-/react-loading-overlay-nextgen-1.2.2.tgz#395202515cbd4e0ce045393183d37c0dedb89391"
+  integrity sha512-v7oIQGlB+U7eKBD2oF6wuTkoY6YSiipIgVn1ULfZV45S1jk0X/Szt/N6QFym5+kUtdf6AX8TM6Lsc8HN8L4pYA==
   dependencies:
     emotion "^10.0.1"
     prop-types "^15.6.2"
