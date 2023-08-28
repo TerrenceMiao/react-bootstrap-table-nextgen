@@ -91,7 +91,7 @@ export default (
         }
       }
 
-      UNSAFE_componentWillReceiveProps(nextProps: any) {
+      componentDidUpdate(nextProps: SearchProviderProps) {
         if (nextProps.searchText !== this.props.searchText) {
           if (isRemoteSearch()) {
             handleRemoteSearchChange(nextProps.searchText);

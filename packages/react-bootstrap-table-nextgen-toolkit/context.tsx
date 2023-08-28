@@ -134,8 +134,11 @@ class ToolkitProvider extends statelessDecorator(React.Component) {
     this.state = initialState;
   }
 
-  UNSAFE_componentWillReceiveProps(nextProps: TableToolkitProps) {
-    let columnToggle = this.state.columnToggle;
+  static getDerivedStateFromProps(
+    nextProps: TableToolkitProps,
+    prevState: any
+  ) {
+    let columnToggle = prevState.columnToggle;
     if (nextProps.columnToggle) {
       columnToggle = nextProps.columns.reduce((obj: any, column: any) => {
         obj[column.dataField] = !column.hidden;
@@ -144,10 +147,10 @@ class ToolkitProvider extends statelessDecorator(React.Component) {
     } else {
       columnToggle = {};
     }
-    this.setState({
-      ...this.state,
+    return {
+      ...prevState,
       columnToggle,
-    });
+    };
   }
 
   onSearch(searchText: any) {
