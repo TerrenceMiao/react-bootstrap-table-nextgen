@@ -5,9 +5,9 @@ module.exports = {
   ...umdConfig,
   entry: {
     "react-bootstrap-table-nextgen-overlay/dist/react-bootstrap-table-nextgen-overlay":
-      "./packages/react-bootstrap-table-nextgen-overlay/index.js",
+      "./packages/react-bootstrap-table-nextgen-overlay/index.tsx",
     "react-bootstrap-table-nextgen-overlay/dist/react-bootstrap-table-nextgen-overlay.min":
-      "./packages/react-bootstrap-table-nextgen-overlay/index.js",
+      "./packages/react-bootstrap-table-nextgen-overlay/index.tsx",
   },
   output: {
     path: path.join(__dirname, "../packages"),

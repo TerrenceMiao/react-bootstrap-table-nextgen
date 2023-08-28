@@ -1,9 +1,10 @@
 /* eslint no-unneeded-ternary: 0 */
-import FileSaver from 'file-saver';
+// @ts-expect-error TS(7016): Could not find a declaration file for module 'file... Remove this comment to see the full error message
+import FileSaver from "file-saver";
 
-export const getMetaInfo = columns =>
+export const getMetaInfo = (columns: any) =>
   columns
-    .map(column => ({
+    .map((column: any) => ({
       field: column.dataField,
       type: column.csvType || String,
       formatter: column.csvFormatter,
@@ -14,66 +15,66 @@ export const getMetaInfo = columns =>
       rowSpan: Number(column.rowSpan) || 1,
       colSpan: Number(column.colSpan) || 1,
       footer: column.footer,
-      footerFormatter: column.footerFormatter
+      footerFormatter: column.footerFormatter,
     }))
-    .filter(_ => _.export);
+    .filter((_: any) => _.export);
 
 export const transform = (
-  data,
-  meta,
-  columns,
-  _,
-  {
-    separator,
-    ignoreHeader,
-    ignoreFooter
-  }
+  data: any,
+  meta: any,
+  columns: any,
+  _: any,
+  { separator, ignoreHeader, ignoreFooter }: any
 ) => {
-  const visibleColumns = meta.filter(m => m.export);
-  let content = '';
+  const visibleColumns = meta.filter((m: any) => m.export);
+  let content = "";
   // extract csv header
   if (!ignoreHeader) {
-    content += visibleColumns.map(m => `"${m.header}"`).join(separator);
-    content += '\n';
+    content += visibleColumns.map((m: any) => `"${m.header}"`).join(separator);
+    content += "\n";
   }
   // extract csv body
   if (data.length === 0) return content;
   content += data
-    .map((row, rowIndex) =>
-      visibleColumns.map((m) => {
-        let cellContent = _.get(row, m.field);
-        if (m.formatter) {
-          cellContent = m.formatter(cellContent, row, rowIndex, m.formatExtraData);
-        }
-        if (m.type === String) {
-          return `"${`${cellContent}`.replace(/"/g, '""')}"`;
-        }
-        return cellContent;
-      }).join(separator)).join('\n');
+    .map((row: any, rowIndex: any) =>
+      visibleColumns
+        .map((m: any) => {
+          let cellContent = _.get(row, m.field);
+          if (m.formatter) {
+            cellContent = m.formatter(
+              cellContent,
+              row,
+              rowIndex,
+              m.formatExtraData
+            );
+          }
+          if (m.type === String) {
+            return `"${`${cellContent}`.replace(/"/g, '""')}"`;
+          }
+          return cellContent;
+        })
+        .join(separator)
+    )
+    .join("\n");
 
   if (!ignoreFooter) {
-    content += '\n';
-    content += visibleColumns.map((m, i) => {
-      if (typeof m.footer === 'function') {
-        const columnData = _.pluck(data, columns[i].dataField);
-        return `"${m.footer(columnData, columns[i], i)}"`;
-      } else if (m.footerFormatter) {
-        return `"${m.footerFormatter(columns[i], i)}"`;
-      }
-      return `"${m.footer}"`;
-    }).join(separator);
+    content += "\n";
+    content += visibleColumns
+      .map((m: any, i: any) => {
+        if (typeof m.footer === "function") {
+          const columnData = _.pluck(data, columns[i].dataField);
+          return `"${m.footer(columnData, columns[i], i)}"`;
+        } else if (m.footerFormatter) {
+          return `"${m.footerFormatter(columns[i], i)}"`;
+        }
+        return `"${m.footer}"`;
+      })
+      .join(separator);
   }
   return content;
 };
 
-export const save = (
-  content,
-  {
-    noAutoBOM,
-    fileName,
-    blobType
-  }
-) => {
+export const save = (content: any, { noAutoBOM, fileName, blobType }: any) => {
   FileSaver.saveAs(
     new Blob([content], { type: blobType }),
     fileName,

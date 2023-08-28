@@ -22,6 +22,7 @@ rm -rf packages/react-bootstrap-table-nextgen-filter/node_modules
 rm -rf packages/react-bootstrap-table-nextgen-overlay/dist
 rm -rf packages/react-bootstrap-table-nextgen-overlay/lib
 rm -rf packages/react-bootstrap-table-nextgen-overlay/node_modules
+find packages/react-bootstrap-table-nextgen-overlay -type f -name "*.js" -exec rm {} \;
 
 rm -rf packages/react-bootstrap-table-nextgen-paginator/dist
 rm -rf packages/react-bootstrap-table-nextgen-paginator/lib
@@ -30,6 +31,7 @@ rm -rf packages/react-bootstrap-table-nextgen-paginator/node_modules
 rm -rf packages/react-bootstrap-table-nextgen-toolkit/dist
 rm -rf packages/react-bootstrap-table-nextgen-toolkit/lib
 rm -rf packages/react-bootstrap-table-nextgen-toolkit/node_modules
+find packages/react-bootstrap-table-nextgen-toolkit -type f -name "*.js" -exec rm {} \;
 
 find . -type f -name "*.js.map" -exec rm {} \;
 find . -type f -name "*.d.ts" -exec rm {} \;

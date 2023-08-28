@@ -1,22 +1,17 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
+import React from "react";
 
-const ExportCSVButton = (props) => {
-  const {
-    onExport,
-    children,
-    className,
-    ...rest
-  } = props;
+const ExportCSVButton = (props: any) => {
+  const { onExport, children, className, ...rest } = props;
 
   return (
     <button
       type="button"
-      className={ `react-bs-table-csv-btn btn btn-default ${className}` }
-      onClick={ () => onExport() }
-      { ...rest }
+      className={`react-bs-table-csv-btn btn btn-default ${className}`}
+      onClick={() => onExport()}
+      {...rest}
     >
-      { children }
+      {children}
     </button>
   );
 };
@@ -25,11 +20,11 @@ ExportCSVButton.propTypes = {
   children: PropTypes.node.isRequired,
   onExport: PropTypes.func.isRequired,
   className: PropTypes.string,
-  style: PropTypes.object
+  style: PropTypes.object,
 };
 ExportCSVButton.defaultProps = {
-  className: '',
-  style: {}
+  className: "",
+  style: {},
 };
 
 export default ExportCSVButton;

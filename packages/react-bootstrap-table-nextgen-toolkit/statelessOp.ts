@@ -1,8 +1,10 @@
-import Operation from './src/op';
+import React from "react";
 
-export default Base =>
+import Operation from "./src/op";
+
+export default (Base: any) =>
   class StatelessOperation extends Operation.csvOperation(Base) {
-    registerExposedAPI = (tableExposedAPIEmitter) => {
+    registerExposedAPI = (tableExposedAPIEmitter: any) => {
       this.tableExposedAPIEmitter = tableExposedAPIEmitter;
-    }
+    };
   };

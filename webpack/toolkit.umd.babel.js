@@ -5,9 +5,9 @@ module.exports = {
   ...umdConfig,
   entry: {
     "react-bootstrap-table-nextgen-toolkit/dist/react-bootstrap-table-nextgen-toolkit":
-      "./packages/react-bootstrap-table-nextgen-toolkit/index.js",
+      "./packages/react-bootstrap-table-nextgen-toolkit/index.ts",
     "react-bootstrap-table-nextgen-toolkit/dist/react-bootstrap-table-nextgen-toolkit.min":
-      "./packages/react-bootstrap-table-nextgen-toolkit/index.js",
+      "./packages/react-bootstrap-table-nextgen-toolkit/index.ts",
   },
   output: {
     path: path.join(__dirname, "../packages"),
