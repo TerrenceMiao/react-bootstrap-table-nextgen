@@ -277,6 +277,10 @@ export interface ColumnDescription<T extends object = any, E = any> {
    * Toggle column display in CSV export
    */
   csvExport?: boolean | undefined;
+  /**
+   * Column toggle list used by Toolkit provider
+   */
+  toggle?: boolean | undefined;
 }
 
 /**
