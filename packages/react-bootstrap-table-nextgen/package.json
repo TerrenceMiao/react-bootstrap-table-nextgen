@@ -1,6 +1,6 @@
 {
   "name": "react-bootstrap-table-nextgen",
-  "version": "4.3.3",
+  "version": "4.3.4",
   "description": "Next generation of react-bootstrap-table",
   "main": "./lib/index.js",
   "repository": {
@@ -42,7 +42,7 @@
   ],
   "dependencies": {
     "classnames": "^2.3.1",
-    "react-transition-group": "^4.2.0",
+    "react-transition-group": "^4.4.5",
     "underscore": "^1.13.1"
   },
   "peerDependencies": {
