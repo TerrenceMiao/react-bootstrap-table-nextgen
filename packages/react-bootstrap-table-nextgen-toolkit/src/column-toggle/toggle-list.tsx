@@ -10,7 +10,7 @@ const ToggleList = ({
   contextual,
   className,
   btnClassName,
-}: ToggleListProps) => (
+}: ToggleListProps): React.ReactElement | null => (
   <div
     className={`btn-group btn-group-toggle ${className}`}
     data-toggle="buttons"

@@ -1,5 +1,5 @@
 import React from "react";
-import { ColumnDescription } from "react-bootstrap-table-nextgen";
+import { ColumnDescription, SearchProps } from "react-bootstrap-table-nextgen";
 
 import Context from "./context";
 import ToolkitProvider from "./provider";
@@ -102,10 +102,6 @@ export interface ToggleListProps {
   contextual?: string | undefined;
 }
 
-// export namespace ColumnToggle {
-//   function ToggleList(props: ToggleListProps): React.ReactElement | null;
-// }
-
 export interface ExportCSVButtonProps {
   children: React.ReactNode;
   onExport: () => void;
@@ -113,37 +109,17 @@ export interface ExportCSVButtonProps {
   className?: string | undefined;
 }
 
-// export namespace CSVExport {
-//   function ExportCSVButton(
-//     props: ExportCSVButtonProps
-//   ): React.ReactElement | null;
-// }
-
-// export interface SearchBarProps<T = any> extends SearchProps<T> {
-//   className?: string | undefined;
-//   style?: CSSProperties | undefined;
-//   delay?: number | undefined;
-//   searchText?: string | undefined;
-//   tableId?: string | undefined;
-//   ref?: React.RefObject<React.Component<SearchProps<T>>>;
-// }
+export interface SearchBarProps <T = any> extends SearchProps<T> {
+  className?: string | undefined;
+  style?: React.CSSProperties | undefined;
+  delay?: number | undefined;
+  searchText?: string | undefined;
+  tableId?: string | undefined;
+  ref?: React.RefObject<React.Component<SearchProps<T>>>;
+}
 
 export interface ClearSearchButtonProps {
   onClear?: (() => void) | undefined;
   className?: string | undefined;
   text?: string | undefined;
 }
-
-// export namespace Search {
-//   function SearchBar(props: SearchBarProps): React.ReactElement | null;
-//   function ClearSearchButton(
-//     props: ClearSearchButtonProps
-//   ): React.ReactElement | null;
-// }
-
-// export const ToolkitContext: React.Context<ToolkitContextType>;
-
-// declare function ToolkitProvider(
-//   props: TableToolkitProps
-// ): React.ReactElement | null;
-// export default ToolkitProvider;

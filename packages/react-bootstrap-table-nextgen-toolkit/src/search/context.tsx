@@ -7,38 +7,11 @@
 import React from "react";
 import { SearchMatchProps, TableSearchProps } from "../..";
 
-// interface Column {
-//   searchable?: boolean;
-//   dataField: string;
-//   formatter?: (
-//     value: any,
-//     row: any,
-//     rowIndex: number,
-//     formatExtraData: any
-//   ) => any;
-//   filterValue?: (value: any, row: any) => any;
-// }
-
-// interface Options {
-//   searchFormatted?: boolean;
-//   afterSearch?: ((result: any) => void) | null;
-//   onColumnMatch?:
-//     | ((params: {
-//         searchText: string;
-//         value: any;
-//         column: Column;
-//         row: any;
-//       }) => boolean)
-//     | null;
-// }
-
 interface DataChangeListener {
   emit: (event: string, value: any) => void;
 }
 
 interface SearchProviderProps extends SearchMatchProps {
-  // columns: ColumnDescription[];
-  // searchText?: string;
   data: any[];
   dataChangeListener?: DataChangeListener;
   children: React.ReactNode;

@@ -1,48 +1,9 @@
 /* eslint no-param-reassign: 0 */
-
-// import PropTypes from "prop-types";
 import React from "react";
 
 import { TableToolkitProps, ToolkitContextType } from ".";
 import createSearchContext from "./src/search/context";
 import statelessDecorator from "./statelessOp";
-
-// interface ToolkitProviderProps {
-//   keyField: string;
-//   data: any[];
-//   columns: any[];
-//   children?: React.ReactNode;
-//   bootstrap4: boolean;
-//   search?:
-//     | boolean
-//     | {
-//         defaultSearch?: string;
-//         searchFormatted?: boolean;
-//         searchContext: any;
-//         searchText: string;
-//       };
-//   exportCSV?:
-//     | boolean
-//     | {
-//         fileName?: string;
-//         separator?: string;
-//         ignoreHeader?: boolean;
-//         ignoreFooter?: boolean;
-//         noAutoBOM?: boolean;
-//         blobType?: string;
-//         exportAll?: boolean;
-//         onlyExportFiltered?: boolean;
-//         onlyExportSelection?: boolean;
-//       };
-//   columnToggle?: { [dataField: string]: boolean };
-//   setDependencyModules?: Function;
-//   registerExposedAPI?: Function;
-// }
-
-// interface ToolkitProviderState {
-//   columnToggle: { [dataField: string]: boolean };
-//   searchText: string;
-// }
 
 const ToolkitContext = React.createContext<ToolkitContextType>({
   searchProps: {
@@ -135,7 +96,7 @@ class ToolkitProvider extends statelessDecorator(React.Component) {
   }
 
   static getDerivedStateFromProps(props: TableToolkitProps, state: any) {
-    let currColumnToggle = state.columnToggle;
+    const currColumnToggle = state.columnToggle;
     let propsColumnToggle;
     if (props.columnToggle) {
       propsColumnToggle = props.columns.reduce((obj: any, column: any) => {

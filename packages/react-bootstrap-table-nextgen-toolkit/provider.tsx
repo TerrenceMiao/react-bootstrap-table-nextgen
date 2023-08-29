@@ -1,11 +1,13 @@
 import PropTypes from "prop-types";
 import React from "react";
 
-import ToolkitContext from "./context";
 import { TableToolkitProps } from ".";
+import ToolkitContext from "./context";
 
-const Toolkitprovider = (props: TableToolkitProps) => (
-  <ToolkitContext.Provider { ...props }>
+const Toolkitprovider = (
+  props: TableToolkitProps
+): React.ReactElement | null => (
+  <ToolkitContext.Provider {...props}>
     <ToolkitContext.Consumer>
       {(tookKitProps) => props.children(tookKitProps)}
     </ToolkitContext.Consumer>

@@ -1,31 +1,7 @@
 /* eslint camelcase: 0 */
 /* eslint no-return-assign: 0 */
-import React, { CSSProperties } from "react";
-import { SearchProps } from "react-bootstrap-table-nextgen";
-
-// const handleDebounce = (func: any, wait: any, immediate: any) => {
-//   let timeout: any;
-
-//   return () => {
-//     const later = () => {
-//       timeout = null;
-
-//       if (!immediate) {
-//         func.apply(this, arguments);
-//       }
-//     };
-
-//     const callNow = immediate && !timeout;
-
-//     clearTimeout(timeout);
-
-//     timeout = setTimeout(later, wait || 0);
-
-//     if (callNow) {
-//       func.appy(this, arguments);
-//     }
-//   };
-// };
+import React from "react";
+import { SearchBarProps } from "../..";
 
 const handleDebounce = <T extends (...args: any[]) => void>(
   func: T,
@@ -54,26 +30,6 @@ const handleDebounce = <T extends (...args: any[]) => void>(
     }
   };
 };
-
-// interface SearchBarProps {
-//   onSearch: (searchText: string) => void;
-//   className?: string;
-//   placeholder?: string;
-//   style?: React.CSSProperties;
-//   delay?: number;
-//   searchText?: string;
-//   tableId?: string;
-//   srText?: string;
-// }
-
-export interface SearchBarProps<T = any> extends SearchProps<T> {
-  className?: string | undefined;
-  style?: CSSProperties | undefined;
-  delay?: number | undefined;
-  searchText?: string | undefined;
-  tableId?: string | undefined;
-  ref?: React.RefObject<React.Component<SearchProps<T>>>;
-}
 
 interface SearchBarState {
   value: string;

@@ -1,7 +1,11 @@
 import PropTypes from "prop-types";
 import React from "react";
 
-const ExportCSVButton = (props: any) => {
+import { ExportCSVButtonProps } from "../..";
+
+const ExportCSVButton = (
+  props: ExportCSVButtonProps
+): React.ReactElement | null => {
   const { onExport, children, className, ...rest } = props;
 
   return (

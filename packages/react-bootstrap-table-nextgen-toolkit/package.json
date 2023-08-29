@@ -1,6 +1,6 @@
 {
   "name": "react-bootstrap-table-nextgen-toolkit",
-  "version": "2.3.2",
+  "version": "2.3.3",
   "description": "The toolkit for react-bootstrap-table-nextgen",
   "main": "./lib/index.js",
   "repository": {
@@ -54,6 +54,6 @@
     "react-bootstrap-table-nextgen": "^4.3.3"
   },
   "devDependencies": {
-    "ts-migrate": "^0.1.35"
+    "@types/file-saver": "^2.0.5"
   }
 }
