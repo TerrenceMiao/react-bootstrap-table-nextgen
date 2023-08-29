@@ -134,23 +134,28 @@ class ToolkitProvider extends statelessDecorator(React.Component) {
     this.state = initialState;
   }
 
-  static getDerivedStateFromProps(
-    nextProps: TableToolkitProps,
-    prevState: any
-  ) {
-    let columnToggle = prevState.columnToggle;
-    if (nextProps.columnToggle) {
-      columnToggle = nextProps.columns.reduce((obj: any, column: any) => {
+  static getDerivedStateFromProps(props: TableToolkitProps, state: any) {
+    let currColumnToggle = state.columnToggle;
+    let propsColumnToggle;
+    if (props.columnToggle) {
+      propsColumnToggle = props.columns.reduce((obj: any, column: any) => {
         obj[column.dataField] = !column.hidden;
         return obj;
       }, {});
     } else {
-      columnToggle = {};
+      propsColumnToggle = {};
     }
-    return {
-      ...prevState,
-      columnToggle,
-    };
+    if (currColumnToggle) {
+      return {
+        ...state,
+        currColumnToggle,
+      };
+    } else {
+      return {
+        ...state,
+        propsColumnToggle,
+      };
+    }
   }
 
   onSearch(searchText: any) {
