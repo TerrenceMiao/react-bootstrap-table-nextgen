@@ -1,6 +1,6 @@
 {
   "name": "react-bootstrap-table-nextgen-filter",
-  "version": "1.4.0",
+  "version": "1.5.0-alpha",
   "description": "It's a column filter addon for react-bootstrap-table-nextgen",
   "main": "./lib/index.js",
   "repository": {
@@ -45,5 +45,11 @@
     "prop-types": "^15.8.1",
     "react": "^16.4.0",
     "react-dom": "^16.4.0"
+  },
+  "dependencies": {
+    "react-bootstrap-table-nextgen": "^4.3.3"
+  },
+  "devDependencies": {
+    "ts-migrate": "^0.1.35"
   }
 }

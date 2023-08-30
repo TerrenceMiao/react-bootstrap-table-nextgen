@@ -2,13 +2,14 @@
 /* eslint no-return-assign: 0 */
 /* eslint no-param-reassign: 0 */
 /* eslint react/no-unused-prop-types: 0 */
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { LIKE, EQ } from '../comparison';
-import { FILTER_TYPE } from '../const';
+import React, { Component } from "react";
+import {
+  FILTER_TYPES,
+  MultiSelectFilterOptions,
+  MultiSelectFilterProps,
+} from "../..";
 
-
-function optionsEquals(currOpts, prevOpts) {
+function optionsEquals(currOpts: any, prevOpts: any) {
   const keys = Object.keys(currOpts);
   for (let i = 0; i < keys.length; i += 1) {
     if (currOpts[keys[i]] !== prevOpts[keys[i]]) {
@@ -18,9 +19,9 @@ function optionsEquals(currOpts, prevOpts) {
   return Object.keys(currOpts).length === Object.keys(prevOpts).length;
 }
 
-const getSelections = (container) => {
+const getSelections = (container: any) => {
   if (container.selectedOptions) {
-    return Array.from(container.selectedOptions).map(item => item.value);
+    return Array.from(container.selectedOptions).map((item: any) => item.value);
   }
   const selections = [];
   const totalLen = container.options.length;
@@ -31,12 +32,22 @@ const getSelections = (container) => {
   return selections;
 };
 
-class MultiSelectFilter extends Component {
-  constructor(props) {
+interface MultiSelectFilterState {
+  isSelected: boolean;
+}
+class MultiSelectFilter extends Component<
+  MultiSelectFilterProps,
+  MultiSelectFilterState
+> {
+  selectInput: any;
+  constructor(props: MultiSelectFilterProps) {
     super(props);
     this.filter = this.filter.bind(this);
     this.applyFilter = this.applyFilter.bind(this);
-    const isSelected = props.defaultValue.map(item => props.options[item]).length > 0;
+    const isSelected =
+      props.defaultValue.map(
+        (item: string) => (props.options as MultiSelectFilterOptions)[item]
+      ).length > 0;
     this.state = { isSelected };
   }
 
@@ -50,14 +61,14 @@ class MultiSelectFilter extends Component {
 
     // export onFilter function to allow users to access
     if (getFilter) {
-      getFilter((filterVal) => {
+      getFilter((filterVal: any) => {
         this.selectInput.value = filterVal;
         this.applyFilter(filterVal);
       });
     }
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps: any) {
     let needFilter = false;
     if (this.props.defaultValue !== prevProps.defaultValue) {
       needFilter = true;
@@ -71,7 +82,7 @@ class MultiSelectFilter extends Component {
 
   getDefaultValue() {
     const { filterState, defaultValue } = this.props;
-    if (filterState && typeof filterState.filterVal !== 'undefined') {
+    if (filterState && typeof filterState.filterVal !== "undefined") {
       return filterState.filterVal;
     }
     return defaultValue;
@@ -81,31 +92,40 @@ class MultiSelectFilter extends Component {
     const optionTags = [];
     const { options, placeholder, column, withoutEmptyOption } = this.props;
     if (!withoutEmptyOption) {
-      optionTags.push((
-        <option key="-1" value="">{ placeholder || `Select ${column.text}...` }</option>
-      ));
+      optionTags.push(
+        <option key="-1" value="">
+          {placeholder || `Select ${column.text}...`}
+        </option>
+      );
     }
-    Object.keys(options).forEach(key =>
-      optionTags.push(<option key={ key } value={ key }>{ options[key] }</option>)
+    Object.keys(options).forEach((key) =>
+      optionTags.push(
+        <option key={key} value={key}>
+          {(options as MultiSelectFilterOptions)[key]}
+        </option>
+      )
     );
     return optionTags;
   }
 
   cleanFiltered() {
-    const value = (this.props.defaultValue !== undefined) ? this.props.defaultValue : [];
+    const value =
+      this.props.defaultValue !== undefined ? this.props.defaultValue : [];
     this.selectInput.value = value;
     this.applyFilter(value);
   }
 
-  applyFilter(value) {
-    if (value.length === 1 && value[0] === '') {
+  applyFilter(value: any) {
+    if (value.length === 1 && value[0] === "") {
       value = [];
     }
     this.setState(() => ({ isSelected: value.length > 0 }));
-    this.props.onFilter(this.props.column, FILTER_TYPE.MULTISELECT)(value);
+    // TODO
+    // this.props.onFilter(this.props.column, FILTER_TYPES.MULTISELECT)(value);
+    console.log(FILTER_TYPES.MULTISELECT);
   }
 
-  filter(e) {
+  filter(e: any) {
     const value = getSelections(e.target);
     this.applyFilter(value);
   }
@@ -127,58 +147,58 @@ class MultiSelectFilter extends Component {
       ...rest
     } = this.props;
 
-    const selectClass =
-      `filter select-filter form-control ${className} ${this.state.isSelected ? '' : 'placeholder-selected'}`;
-    const elmId = `multiselect-filter-column-${column.dataField}${id ? `-${id}` : ''}`;
+    const selectClass = `filter select-filter form-control ${className} ${
+      this.state.isSelected ? "" : "placeholder-selected"
+    }`;
+    const elmId = `multiselect-filter-column-${column.dataField}${
+      id ? `-${id}` : ""
+    }`;
 
     return (
-      <label
-        className="filter-label"
-        htmlFor={ elmId }
-      >
+      <label className="filter-label" htmlFor={elmId}>
         <span className="sr-only">Filter by {column.text}</span>
         <select
-          { ...rest }
-          ref={ n => this.selectInput = n }
-          id={ elmId }
-          style={ style }
+          {...rest}
+          ref={(n) => (this.selectInput = n)}
+          id={elmId}
+          style={style}
           multiple
-          className={ selectClass }
-          onChange={ this.filter }
-          onClick={ e => e.stopPropagation() }
-          defaultValue={ this.getDefaultValue() }
+          className={selectClass}
+          onChange={this.filter}
+          onClick={(e) => e.stopPropagation()}
+          defaultValue={this.getDefaultValue()}
         >
-          { this.getOptions() }
+          {this.getOptions()}
         </select>
       </label>
     );
   }
 }
 
-MultiSelectFilter.propTypes = {
-  onFilter: PropTypes.func.isRequired,
-  column: PropTypes.object.isRequired,
-  options: PropTypes.object.isRequired,
-  id: PropTypes.string,
-  filterState: PropTypes.object,
-  comparator: PropTypes.oneOf([LIKE, EQ]),
-  placeholder: PropTypes.string,
-  style: PropTypes.object,
-  className: PropTypes.string,
-  withoutEmptyOption: PropTypes.bool,
-  defaultValue: PropTypes.array,
-  caseSensitive: PropTypes.bool,
-  getFilter: PropTypes.func
-};
+// MultiSelectFilter.propTypes = {
+//   onFilter: PropTypes.func.isRequired,
+//   column: PropTypes.object.isRequired,
+//   options: PropTypes.object.isRequired,
+//   id: PropTypes.string,
+//   filterState: PropTypes.object,
+//   comparator: PropTypes.oneOf([LIKE, EQ]),
+//   placeholder: PropTypes.string,
+//   style: PropTypes.object,
+//   className: PropTypes.string,
+//   withoutEmptyOption: PropTypes.bool,
+//   defaultValue: PropTypes.array,
+//   caseSensitive: PropTypes.bool,
+//   getFilter: PropTypes.func,
+// };
 
-MultiSelectFilter.defaultProps = {
-  defaultValue: [],
-  filterState: {},
-  className: '',
-  withoutEmptyOption: false,
-  comparator: EQ,
-  caseSensitive: true,
-  id: null
-};
+// MultiSelectFilter.defaultProps = {
+//   defaultValue: [],
+//   filterState: {},
+//   className: "",
+//   withoutEmptyOption: false,
+//   comparator: EQ,
+//   caseSensitive: true,
+//   id: null,
+// };
 
 export default MultiSelectFilter;

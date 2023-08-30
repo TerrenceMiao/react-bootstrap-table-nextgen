@@ -1,28 +1,28 @@
 /* eslint react/prop-types: 0 */
 /* eslint react/require-default-props: 0 */
 /* eslint camelcase: 0 */
-import React from 'react';
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
+import React from "react";
 
-import { filters } from './filter';
-import { LIKE, EQ } from './comparison';
-import { FILTER_TYPE } from './const';
+import { EQ, FILTER_TYPES, LIKE } from "..";
+import { filters } from "./filter";
 
-export default (
-  _,
-  isRemoteFiltering,
-  handleFilterChange
-) => {
-  const FilterContext = React.createContext();
+export default (_: any, isRemoteFiltering: any, handleFilterChange: any) => {
+  const FilterContext = React.createContext<any>(null);
 
-  class FilterProvider extends React.Component {
+  class FilterProvider extends React.Component<any> {
     static propTypes = {
       data: PropTypes.array.isRequired,
       columns: PropTypes.array.isRequired,
-      dataChangeListener: PropTypes.object
-    }
+      dataChangeListener: PropTypes.object,
+    };
 
-    constructor(props) {
+    clearFilters: any;
+    currFilters: any;
+    data: any;
+    isEmitDataChange: any;
+
+    constructor(props: any) {
       super(props);
       this.currFilters = {};
       this.clearFilters = {};
@@ -39,17 +39,15 @@ export default (
       }
     }
 
-    onFilter(column, filterType, initialize = false) {
-      return (filterVal) => {
+    onFilter(column: any, filterType: any, initialize = false) {
+      return (filterVal: any) => {
         // watch out here if migration to context API, #334
         const currFilters = Object.assign({}, this.currFilters);
         this.clearFilters = {};
         const { dataField, filter } = column;
 
         const needClearFilters =
-          !_.isDefined(filterVal) ||
-          filterVal === '' ||
-          filterVal.length === 0;
+          !_.isDefined(filterVal) || filterVal === "" || filterVal.length === 0;
 
         if (needClearFilters) {
           delete currFilters[dataField];
@@ -57,10 +55,15 @@ export default (
         } else {
           // select default comparator is EQ, others are LIKE
           const {
-            comparator = (filterType === FILTER_TYPE.SELECT ? EQ : LIKE),
-            caseSensitive = false
+            comparator = filterType === FILTER_TYPES.SELECT ? EQ : LIKE,
+            caseSensitive = false,
           } = filter.props;
-          currFilters[dataField] = { filterVal, filterType, comparator, caseSensitive };
+          currFilters[dataField] = {
+            filterVal,
+            filterType,
+            comparator,
+            caseSensitive,
+          };
         }
 
         this.currFilters = currFilters;
@@ -75,8 +78,8 @@ export default (
       };
     }
 
-    onExternalFilter(column, filterType) {
-      return (value) => {
+    onExternalFilter(column: any, filterType: any) {
+      return (value: any) => {
         this.onFilter(column, filterType)(value);
       };
     }
@@ -85,7 +88,7 @@ export default (
       return this.data;
     }
 
-    UNSAFE_componentWillReceiveProps(nextProps) {
+    componentDidUpdate(nextProps: any) {
       // let nextData = nextProps.data;
       if (!isRemoteFiltering() && !_.isEqual(nextProps.data, this.data)) {
         this.doFilter(nextProps, this.isEmitDataChange);
@@ -94,16 +97,20 @@ export default (
       }
     }
 
-    doFilter(props, ignoreEmitDataChange = false) {
+    doFilter(props: any, ignoreEmitDataChange = false) {
       const { dataChangeListener, data, columns, filter } = props;
-      const result = filters(data, columns, _)(this.currFilters, this.clearFilters);
+      const result = filters(
+        data,
+        columns,
+        _
+      )(this.currFilters, this.clearFilters);
       if (filter.afterFilter) {
         filter.afterFilter(result, this.currFilters);
       }
       this.data = result;
       if (dataChangeListener && !ignoreEmitDataChange) {
         this.isEmitDataChange = true;
-        dataChangeListener.emit('filterChanged', result.length);
+        dataChangeListener.emit("filterChanged", result.length);
       } else {
         this.isEmitDataChange = false;
         this.forceUpdate();
@@ -112,14 +119,15 @@ export default (
 
     render() {
       return (
-        <FilterContext.Provider value={ {
-          data: this.data,
-          onFilter: this.onFilter,
-          onExternalFilter: this.onExternalFilter,
-          currFilters: this.currFilters
-        } }
+        <FilterContext.Provider
+          value={{
+            data: this.data,
+            onFilter: this.onFilter,
+            onExternalFilter: this.onExternalFilter,
+            currFilters: this.currFilters,
+          }}
         >
-          { this.props.children }
+          {this.props.children}
         </FilterContext.Provider>
       );
     }
@@ -127,6 +135,6 @@ export default (
 
   return {
     Provider: FilterProvider,
-    Consumer: FilterContext.Consumer
+    Consumer: FilterContext.Consumer,
   };
 };

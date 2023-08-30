@@ -2,26 +2,33 @@
 /* eslint react/prop-types: 0 */
 /* eslint no-return-assign: 0 */
 /* eslint camelcase: 0 */
-import React, { Component } from 'react';
-import { PropTypes } from 'prop-types';
+import React, { Component } from "react";
 
-import { LIKE, EQ } from '../comparison';
-import { FILTER_TYPE, FILTER_DELAY } from '../const';
+import { FILTER_TYPES, TextFilterProps } from "../..";
 
-class TextFilter extends Component {
-  constructor(props) {
+interface TextFilterState {
+  value: any;
+}
+
+class TextFilter extends Component<TextFilterProps, TextFilterState> {
+  input: any;
+  timeout: any;
+  constructor(props: any) {
     super(props);
     this.filter = this.filter.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.timeout = null;
     function getDefaultValue() {
-      if (props.filterState && typeof props.filterState.filterVal !== 'undefined') {
+      if (
+        props.filterState &&
+        typeof props.filterState.filterVal !== "undefined"
+      ) {
         return props.filterState.filterVal;
       }
       return props.defaultValue;
     }
     this.state = {
-      value: getDefaultValue()
+      value: getDefaultValue(),
     };
   }
 
@@ -30,14 +37,18 @@ class TextFilter extends Component {
     const defaultValue = this.input.value;
 
     if (defaultValue) {
-      onFilter(this.props.column, FILTER_TYPE.TEXT, true)(defaultValue);
+      // TODO
+      // onFilter(this.props.column, FILTER_TYPES.TEXT, true)(defaultValue);
+      console.log(FILTER_TYPES.TEXT);
     }
 
     // export onFilter function to allow users to access
     if (getFilter) {
-      getFilter((filterVal) => {
+      getFilter((filterVal: any) => {
         this.setState(() => ({ value: filterVal }));
-        onFilter(column, FILTER_TYPE.TEXT)(filterVal);
+        // TODO
+        // onFilter(column, FILTER_TYPES.TEXT)(filterVal);
+        console.log(FILTER_TYPES.TEXT);
       });
     }
   }
@@ -46,19 +57,21 @@ class TextFilter extends Component {
     this.cleanTimer();
   }
 
-  UNSAFE_componentWillReceiveProps(nextProps) {
+  componentDidUpdate(nextProps: any) {
     if (nextProps.defaultValue !== this.props.defaultValue) {
       this.applyFilter(nextProps.defaultValue);
     }
   }
 
-  filter(e) {
+  filter(e: any) {
     e.stopPropagation();
     this.cleanTimer();
     const filterValue = e.target.value;
     this.setState(() => ({ value: filterValue }));
     this.timeout = setTimeout(() => {
-      this.props.onFilter(this.props.column, FILTER_TYPE.TEXT)(filterValue);
+      // TODO
+      // this.props.onFilter(this.props.column, FILTER_TYPES.TEXT)(filterValue);
+      console.log(FILTER_TYPES.TEXT);
     }, this.props.delay);
   }
 
@@ -71,15 +84,19 @@ class TextFilter extends Component {
   cleanFiltered() {
     const value = this.props.defaultValue;
     this.setState(() => ({ value }));
-    this.props.onFilter(this.props.column, FILTER_TYPE.TEXT)(value);
+    // TODO
+    // this.props.onFilter(this.props.column, FILTER_TYPES.TEXT)(value);
+    console.log(FILTER_TYPES.TEXT);
   }
 
-  applyFilter(filterText) {
+  applyFilter(filterText: any) {
     this.setState(() => ({ value: filterText }));
-    this.props.onFilter(this.props.column, FILTER_TYPE.TEXT)(filterText);
+    // TODO
+    // this.props.onFilter(this.props.column, FILTER_TYPES.TEXT)(filterText);
+    console.log(FILTER_TYPES.TEXT);
   }
 
-  handleClick(e) {
+  handleClick(e: any) {
     e.stopPropagation();
     if (this.props.onClick) {
       this.props.onClick(e);
@@ -101,53 +118,49 @@ class TextFilter extends Component {
       ...rest
     } = this.props;
 
-    const elmId = `text-filter-column-${dataField}${id ? `-${id}` : ''}`;
+    const elmId = `text-filter-column-${dataField}${id ? `-${id}` : ""}`;
 
     return (
-      <label
-        className="filter-label"
-        htmlFor={ elmId }
-      >
+      <label className="filter-label" htmlFor={elmId}>
         <span className="sr-only">Filter by {text}</span>
         <input
-          { ...rest }
-          ref={ n => this.input = n }
+          {...rest}
+          ref={(n) => (this.input = n)}
           type="text"
-          id={ elmId }
-          className={ `filter text-filter form-control ${className}` }
-          style={ style }
-          onChange={ this.filter }
-          onClick={ this.handleClick }
-          placeholder={ placeholder || `Enter ${text}...` }
-          value={ this.state.value }
+          id={elmId}
+          className={`filter text-filter form-control ${className}`}
+          style={style}
+          onChange={this.filter}
+          onClick={this.handleClick}
+          placeholder={placeholder || `Enter ${text}...`}
+          value={this.state.value}
         />
       </label>
     );
   }
 }
 
-TextFilter.propTypes = {
-  onFilter: PropTypes.func.isRequired,
-  column: PropTypes.object.isRequired,
-  id: PropTypes.string,
-  filterState: PropTypes.object,
-  comparator: PropTypes.oneOf([LIKE, EQ]),
-  defaultValue: PropTypes.string,
-  delay: PropTypes.number,
-  placeholder: PropTypes.string,
-  style: PropTypes.object,
-  className: PropTypes.string,
-  caseSensitive: PropTypes.bool,
-  getFilter: PropTypes.func
-};
+// TextFilter.propTypes = {
+//   onFilter: PropTypes.func.isRequired,
+//   column: PropTypes.object.isRequired,
+//   id: PropTypes.string,
+//   filterState: PropTypes.object,
+//   comparator: PropTypes.oneOf([LIKE, EQ]),
+//   defaultValue: PropTypes.string,
+//   delay: PropTypes.number,
+//   placeholder: PropTypes.string,
+//   style: PropTypes.object,
+//   className: PropTypes.string,
+//   caseSensitive: PropTypes.bool,
+//   getFilter: PropTypes.func,
+// };
 
-TextFilter.defaultProps = {
-  delay: FILTER_DELAY,
-  filterState: {},
-  defaultValue: '',
-  caseSensitive: false,
-  id: null
-};
-
+// TextFilter.defaultProps = {
+//   delay: FILTER_DELAY,
+//   filterState: {},
+//   defaultValue: "",
+//   caseSensitive: false,
+//   id: null,
+// };
 
 export default TextFilter;

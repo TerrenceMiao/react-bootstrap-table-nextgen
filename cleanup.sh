@@ -18,6 +18,7 @@ rm -rf packages/react-bootstrap-table-nextgen-example/node_modules
 rm -rf packages/react-bootstrap-table-nextgen-filter/dist
 rm -rf packages/react-bootstrap-table-nextgen-filter/lib
 rm -rf packages/react-bootstrap-table-nextgen-filter/node_modules
+find packages/react-bootstrap-table-nextgen-filter -type f -name "*.js" -exec rm {} \;
 
 rm -rf packages/react-bootstrap-table-nextgen-overlay/dist
 rm -rf packages/react-bootstrap-table-nextgen-overlay/lib
