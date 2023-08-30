@@ -6,8 +6,6 @@ import pageResolver from "./page-resolver";
 
 export default (WrappedComponent: any) =>
   class PaginationHandler extends pageResolver(Component) {
-    state = { lastPage: 0, totalPages: 0 };
-
     constructor(props: any) {
       super(props);
       this.handleChangePage = this.handleChangePage.bind(this);
@@ -15,15 +13,18 @@ export default (WrappedComponent: any) =>
       this.state = this.initialState();
     }
 
-    componentDidUpdate(nextProps: any) {
-      const { dataSize, currSizePerPage } = nextProps;
+    componentDidUpdate(currProps: any) {
+      const { currSizePerPage, dataSize } = currProps;
       if (
         currSizePerPage !== this.props.currSizePerPage ||
         dataSize !== this.props.dataSize
       ) {
-        const totalPages = this.calculateTotalPage(currSizePerPage, dataSize);
+        const totalPages = this.calculateTotalPage(
+          this.props.currSizePerPage,
+          this.props.dataSize
+        );
         const lastPage = this.calculateLastPage(totalPages);
-        this.state = { totalPages, lastPage };
+        this.setState({ totalPages, lastPage });
       }
     }
 
@@ -53,6 +54,7 @@ export default (WrappedComponent: any) =>
         firstPageText,
         onPageChange,
       } = this.props;
+      // @ts-ignore
       const { lastPage } = this.state;
 
       if (newPage === prePageText) {
@@ -75,7 +77,9 @@ export default (WrappedComponent: any) =>
       return (
         <WrappedComponent
           {...this.props}
+          // @ts-ignore
           lastPage={this.state.lastPage}
+          // @ts-ignore
           totalPages={this.state.totalPages}
           onPageChange={this.handleChangePage}
           onSizePerPageChange={this.handleChangeSizePerPage}
