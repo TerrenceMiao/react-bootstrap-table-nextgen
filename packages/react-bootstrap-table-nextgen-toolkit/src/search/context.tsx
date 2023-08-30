@@ -64,12 +64,12 @@ export default (
         }
       }
 
-      componentDidUpdate(nextProps: SearchProviderProps) {
-        if (nextProps.searchText !== this.props.searchText) {
+      componentDidUpdate(prevProps: SearchProviderProps) {
+        if (prevProps.searchText !== this.props.searchText) {
           if (isRemoteSearch()) {
-            handleRemoteSearchChange(nextProps.searchText);
+            handleRemoteSearchChange(this.props.searchText);
           } else {
-            const result = this.search(nextProps);
+            const result = this.search(this.props);
             this.triggerListener(result);
             this.setState({
               data: result,
@@ -77,9 +77,9 @@ export default (
           }
         } else {
           if (isRemoteSearch()) {
-            this.setState({ data: nextProps.data });
-          } else if (!_.isEqual(nextProps.data, this.props.data)) {
-            const result = this.search(nextProps);
+            this.setState({ data: this.props.data });
+          } else if (!_.isEqual(prevProps.data, this.props.data)) {
+            const result = this.search(this.props);
             this.triggerListener(result);
             this.setState({
               data: result,
