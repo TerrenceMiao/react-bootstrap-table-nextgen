@@ -24,7 +24,6 @@ class PaginationDataProvider extends Provider {
   currPage: any;
   setRemoteEmitter: any;
 
-  // eslint-disable-next-line camelcase, react/sort-comp
   componentDidUpdate(nextProps: PaginationDataProviderProps) {
     super.componentDidUpdate(nextProps);
     const { currSizePerPage } = this;

@@ -97,13 +97,13 @@ class Pagination extends pageResolver(Component) {
               totalPages={totalPages}
               pageButtonRenderer={pageButtonRenderer}
               onPageChange={onPageChange}
-              paginationSize = {paginationSize}
-              withFirstAndLast = {withFirstAndLast}
-              firstPageText = {firstPageText}
-              prePageText = {prePageText}
-              nextPageText = {nextPageText}
-              lastPageText = {lastPageText}
-              alwaysShowAllBtns = {alwaysShowAllBtns}
+              paginationSize={paginationSize}
+              withFirstAndLast={withFirstAndLast}
+              firstPageText={firstPageText}
+              prePageText={prePageText}
+              nextPageText={nextPageText}
+              lastPageText={lastPageText}
+              alwaysShowAllBtns={alwaysShowAllBtns}
             />
           </div>
         )}

@@ -1,12 +1,12 @@
-import React from 'react';
-import sinon from 'sinon';
-import { shallow } from 'enzyme';
+import { shallow } from "enzyme";
+import React from "react";
+import sinon from "sinon";
 
-import SizePerPageOption from '../src/size-per-page-option';
+import SizePerPageOption from "../src/size-per-page-option";
 
-describe('SizePerPageOption', () => {
-  let wrapper;
-  const text = 'page1';
+describe("SizePerPageOption", () => {
+  let wrapper: any;
+  const text = "page1";
   const page = 1;
   const onSizePerPageChange = sinon.stub();
 
@@ -14,28 +14,26 @@ describe('SizePerPageOption', () => {
     onSizePerPageChange.reset();
   });
 
-  describe('when bootstrap4 prop is true', () => {
+  describe("when bootstrap4 prop is true", () => {
     beforeEach(() => {
       const props = { text, page, onSizePerPageChange };
-      wrapper = shallow(
-        <SizePerPageOption { ...props } />
-      );
+      wrapper = shallow(<SizePerPageOption {...props} />);
     });
 
-    it('should render SizePerPageOption correctly', () => {
+    it("should render SizePerPageOption correctly", () => {
       expect(wrapper.length).toBe(1);
-      expect(wrapper.find('li.dropdown-item').length).toBe(1);
+      expect(wrapper.find("li.dropdown-item").length).toBe(1);
       expect(wrapper.find(`[data-page=${page}]`).length).toBe(1);
       expect(wrapper.text()).toEqual(text);
     });
 
-    describe('when MouseDown event happen', () => {
+    describe("when MouseDown event happen", () => {
       const preventDefault = sinon.stub();
       beforeEach(() => {
-        wrapper.find('a').simulate('mousedown', { preventDefault });
+        wrapper.find("a").simulate("mousedown", { preventDefault });
       });
 
-      it('should calling props.onSizePerPageChange correctly', () => {
+      it("should calling props.onSizePerPageChange correctly", () => {
         expect(preventDefault.calledOnce).toBeTruthy();
         expect(onSizePerPageChange.calledOnce).toBeTruthy();
         expect(onSizePerPageChange.calledWith(page)).toBeTruthy();
@@ -43,28 +41,26 @@ describe('SizePerPageOption', () => {
     });
   });
 
-  describe('when bootstrap4 prop is true', () => {
+  describe("when bootstrap4 prop is true", () => {
     beforeEach(() => {
       const props = { text, page, onSizePerPageChange };
-      wrapper = shallow(
-        <SizePerPageOption { ...props } bootstrap4 />
-      );
+      wrapper = shallow(<SizePerPageOption {...props} bootstrap4 />);
     });
 
-    it('should render SizePerPageOption correctly', () => {
+    it("should render SizePerPageOption correctly", () => {
       expect(wrapper.length).toBe(1);
-      expect(wrapper.find('a.dropdown-item').length).toBe(1);
+      expect(wrapper.find("a.dropdown-item").length).toBe(1);
       expect(wrapper.find(`[data-page=${page}]`).length).toBe(1);
       expect(wrapper.text()).toEqual(text);
     });
 
-    describe('when MouseDown event happen', () => {
+    describe("when MouseDown event happen", () => {
       const preventDefault = sinon.stub();
       beforeEach(() => {
-        wrapper.find('a').simulate('mousedown', { preventDefault });
+        wrapper.find("a").simulate("mousedown", { preventDefault });
       });
 
-      it('should calling props.onSizePerPageChange correctly', () => {
+      it("should calling props.onSizePerPageChange correctly", () => {
         expect(preventDefault.calledOnce).toBeTruthy();
         expect(onSizePerPageChange.calledOnce).toBeTruthy();
         expect(onSizePerPageChange.calledWith(page)).toBeTruthy();
