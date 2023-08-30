@@ -45,5 +45,8 @@
     "prop-types": "^15.8.1",
     "react": "^16.4.0",
     "react-dom": "^16.4.0"
+  },
+  "dependencies": {
+    "react-bootstrap-table-nextgen": "^4.3.4"
   }
 }

@@ -1,30 +1,38 @@
 /* eslint react/prop-types: 0 */
 /* eslint camelcase: 0 */
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
-import pageResolver from './page-resolver';
+import pageResolver from "./page-resolver";
 
-export default WrappedComponent =>
+export default (WrappedComponent: any) =>
   class PaginationHandler extends pageResolver(Component) {
-    constructor(props) {
+    state = { lastPage: 0, totalPages: 0 };
+
+    constructor(props: any) {
       super(props);
       this.handleChangePage = this.handleChangePage.bind(this);
       this.handleChangeSizePerPage = this.handleChangeSizePerPage.bind(this);
       this.state = this.initialState();
     }
 
-    UNSAFE_componentWillReceiveProps(nextProps) {
+    componentDidUpdate(nextProps: any) {
       const { dataSize, currSizePerPage } = nextProps;
-      if (currSizePerPage !== this.props.currSizePerPage || dataSize !== this.props.dataSize) {
+      if (
+        currSizePerPage !== this.props.currSizePerPage ||
+        dataSize !== this.props.dataSize
+      ) {
         const totalPages = this.calculateTotalPage(currSizePerPage, dataSize);
         const lastPage = this.calculateLastPage(totalPages);
-        this.setState({ totalPages, lastPage });
+        this.state = { totalPages, lastPage };
       }
     }
 
-    handleChangeSizePerPage(sizePerPage) {
+    handleChangeSizePerPage(sizePerPage: any) {
       const { currSizePerPage, onSizePerPageChange } = this.props;
-      const selectedSize = typeof sizePerPage === 'string' ? parseInt(sizePerPage, 10) : sizePerPage;
+      const selectedSize =
+        typeof sizePerPage === "string"
+          ? parseInt(sizePerPage, 10)
+          : sizePerPage;
       let { currPage } = this.props;
       if (selectedSize !== currSizePerPage) {
         const newTotalPages = this.calculateTotalPage(selectedSize);
@@ -34,7 +42,7 @@ export default WrappedComponent =>
       }
     }
 
-    handleChangePage(newPage) {
+    handleChangePage(newPage: any) {
       let page;
       const {
         currPage,
@@ -43,14 +51,14 @@ export default WrappedComponent =>
         nextPageText,
         lastPageText,
         firstPageText,
-        onPageChange
+        onPageChange,
       } = this.props;
       const { lastPage } = this.state;
 
       if (newPage === prePageText) {
         page = this.backToPrevPage();
       } else if (newPage === nextPageText) {
-        page = (currPage + 1) > lastPage ? lastPage : currPage + 1;
+        page = currPage + 1 > lastPage ? lastPage : currPage + 1;
       } else if (newPage === lastPageText) {
         page = lastPage;
       } else if (newPage === firstPageText) {
@@ -66,13 +74,12 @@ export default WrappedComponent =>
     render() {
       return (
         <WrappedComponent
-          { ...this.props }
-          lastPage={ this.state.lastPage }
-          totalPages={ this.state.totalPages }
-          onPageChange={ this.handleChangePage }
-          onSizePerPageChange={ this.handleChangeSizePerPage }
+          {...this.props}
+          lastPage={this.state.lastPage}
+          totalPages={this.state.totalPages}
+          onPageChange={this.handleChangePage}
+          onSizePerPageChange={this.handleChangeSizePerPage}
         />
       );
     }
   };
-

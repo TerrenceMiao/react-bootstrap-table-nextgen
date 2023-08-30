@@ -5,7 +5,7 @@ import React from "react";
 import LoadingOverlay from "react-loading-overlay-nextgen";
 
 interface TableLoadingOverlayWrapperProps {
-  children: any;
+  children: React.ReactNode;
 }
 
 export default (options?: any) => (loading?: boolean) =>

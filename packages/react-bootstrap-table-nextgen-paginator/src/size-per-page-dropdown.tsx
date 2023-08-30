@@ -1,11 +1,11 @@
-import React from 'react';
-import cs from 'classnames';
-import PropTypes from 'prop-types';
-import SizePerPageOption from './size-per-page-option';
+import cs from "classnames";
+import PropTypes from "prop-types";
+import React from "react";
+import SizePerPageOption from "./size-per-page-option";
 
-const sizePerPageDefaultClass = 'react-bs-table-sizePerPage-dropdown';
+const sizePerPageDefaultClass = "react-bs-table-sizePerPage-dropdown";
 
-const SizePerPageDropDown = (props) => {
+const SizePerPageDropDown = (props: any) => {
   const {
     open,
     tableId,
@@ -19,11 +19,10 @@ const SizePerPageDropDown = (props) => {
     btnContextual,
     optionRenderer,
     currSizePerPage,
-    onSizePerPageChange
+    onSizePerPageChange,
   } = props;
 
-  const dropDownStyle = { visibility: hidden ? 'hidden' : 'visible' };
-  const openClass = open ? 'open show' : '';
+  const openClass = open ? "open show" : "";
   const dropdownClasses = cs(
     openClass,
     sizePerPageDefaultClass,
@@ -31,55 +30,50 @@ const SizePerPageDropDown = (props) => {
     className
   );
 
-  const id = tableId ? `${tableId}-pageDropDown` : 'pageDropDown';
+  const id = tableId ? `${tableId}-pageDropDown` : "pageDropDown";
 
   return (
     <span
-      style={ dropDownStyle }
-      className={ dropdownClasses }
+      style={{ visibility: hidden ? "hidden" : "visible" }}
+      className={dropdownClasses}
     >
       <button
-        id={ id }
+        id={id}
         type="button"
-        className={ `btn ${btnContextual} dropdown-toggle` }
+        className={`btn ${btnContextual} dropdown-toggle`}
         data-toggle="dropdown"
-        aria-expanded={ open }
-        onClick={ onClick }
-        onBlur={ onBlur }
+        aria-expanded={open}
+        onClick={onClick}
+        onBlur={onBlur}
       >
-        { currSizePerPage }
-        { ' ' }
-        {
-          bootstrap4 ? null : (
-            <span>
-              <span className="caret" />
-            </span>
-          )
-        }
+        {currSizePerPage}{" "}
+        {bootstrap4 ? null : (
+          <span>
+            <span className="caret" />
+          </span>
+        )}
       </button>
       <ul
-        className={ `dropdown-menu ${openClass}` }
+        className={`dropdown-menu ${openClass}`}
         role="menu"
-        aria-labelledby={ id }
+        aria-labelledby={id}
       >
-        {
-          options.map((option) => {
-            if (optionRenderer) {
-              return optionRenderer({
-                ...option,
-                onSizePerPageChange
-              });
-            }
-            return (
-              <SizePerPageOption
-                { ...option }
-                key={ option.text }
-                bootstrap4={ bootstrap4 }
-                onSizePerPageChange={ onSizePerPageChange }
-              />
-            );
-          })
-        }
+        {options.map((option: any) => {
+          if (optionRenderer) {
+            return optionRenderer({
+              ...option,
+              onSizePerPageChange,
+            });
+          }
+          return (
+            <SizePerPageOption
+              {...option}
+              key={option.text}
+              bootstrap4={bootstrap4}
+              onSizePerPageChange={onSizePerPageChange}
+            />
+          );
+        })}
       </ul>
     </span>
   );
@@ -96,20 +90,19 @@ SizePerPageDropDown.propTypes = {
   open: PropTypes.bool,
   hidden: PropTypes.bool,
   btnContextual: PropTypes.string,
-  variation: PropTypes.oneOf(['dropdown', 'dropup']),
+  variation: PropTypes.oneOf(["dropdown", "dropup"]),
   className: PropTypes.string,
-  optionRenderer: PropTypes.func
+  optionRenderer: PropTypes.func,
 };
 SizePerPageDropDown.defaultProps = {
   open: false,
   hidden: false,
-  btnContextual: 'btn-default btn-secondary',
-  variation: 'dropdown',
-  className: '',
+  btnContextual: "btn-default btn-secondary",
+  variation: "dropdown",
+  className: "",
   optionRenderer: null,
   bootstrap4: false,
-  tableId: null
+  tableId: null,
 };
-
 
 export default SizePerPageDropDown;

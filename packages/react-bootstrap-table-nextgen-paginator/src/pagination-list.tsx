@@ -1,47 +1,47 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
+import React from "react";
 
-import PageButton from './page-button';
+import PageButton from "./page-button";
 
-const PaginatonList = props => (
+const PaginatonList = (props: any) => (
   <ul className="pagination react-bootstrap-table-page-btns-ul">
-    {
-      props.pages.map((pageProps) => {
-        if (props.pageButtonRenderer) {
-          return props.pageButtonRenderer({
-            ...pageProps,
-            onPageChange: props.onPageChange
-          });
-        }
-        return (
-          <PageButton
-            key={ pageProps.page }
-            { ...pageProps }
-            onPageChange={ props.onPageChange }
-          />
-        );
-      })
-    }
+    {props.pages.map((pageProps: any) => {
+      if (props.pageButtonRenderer) {
+        return props.pageButtonRenderer({
+          ...pageProps,
+          onPageChange: props.onPageChange,
+        });
+      }
+      return (
+        <PageButton
+          key={pageProps.page}
+          {...pageProps}
+          onPageChange={props.onPageChange}
+        />
+      );
+    })}
   </ul>
 );
 
 PaginatonList.propTypes = {
-  pages: PropTypes.arrayOf(PropTypes.shape({
-    page: PropTypes.oneOfType([
-      PropTypes.node,
-      PropTypes.number,
-      PropTypes.string
-    ]),
-    active: PropTypes.bool,
-    disable: PropTypes.bool,
-    title: PropTypes.string
-  })).isRequired,
+  pages: PropTypes.arrayOf(
+    PropTypes.shape({
+      page: PropTypes.oneOfType([
+        PropTypes.node,
+        PropTypes.number,
+        PropTypes.string,
+      ]),
+      active: PropTypes.bool,
+      disable: PropTypes.bool,
+      title: PropTypes.string,
+    })
+  ).isRequired,
   onPageChange: PropTypes.func.isRequired,
-  pageButtonRenderer: PropTypes.func
+  pageButtonRenderer: PropTypes.func,
 };
 
 PaginatonList.defaultProps = {
-  pageButtonRenderer: null
+  pageButtonRenderer: null,
 };
 
 export default PaginatonList;

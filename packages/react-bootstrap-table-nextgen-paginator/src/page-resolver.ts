@@ -1,11 +1,12 @@
 /* eslint no-mixed-operators: 0 */
-import Const from './const';
+import React from "react";
+import Const from "./const";
 
-export default ExtendBase =>
-  class PageResolver extends ExtendBase {
+export default (ExtendBase: any) =>
+  class PageResolver extends React.Component<typeof ExtendBase> {
     backToPrevPage() {
       const { currPage, pageStartIndex } = this.props;
-      return (currPage - 1) < pageStartIndex ? pageStartIndex : currPage - 1;
+      return currPage - 1 < pageStartIndex ? pageStartIndex : currPage - 1;
     }
 
     initialState() {
@@ -14,25 +15,24 @@ export default ExtendBase =>
       return { totalPages, lastPage };
     }
 
-    calculateTotalPage(sizePerPage = this.props.currSizePerPage, dataSize = this.props.dataSize) {
+    calculateTotalPage(
+      sizePerPage = this.props.currSizePerPage,
+      dataSize = this.props.dataSize
+    ) {
       return Math.ceil(dataSize / sizePerPage);
     }
 
-    calculateLastPage(totalPages) {
+    calculateLastPage(totalPages: any) {
       const { pageStartIndex } = this.props;
       return pageStartIndex + totalPages - 1;
     }
 
     calculateFromTo() {
-      const {
-        dataSize,
-        currPage,
-        currSizePerPage,
-        pageStartIndex
-      } = this.props;
+      const { dataSize, currPage, currSizePerPage, pageStartIndex } =
+        this.props;
       const offset = Math.abs(Const.PAGE_START_INDEX - pageStartIndex);
 
-      let from = ((currPage - pageStartIndex) * currSizePerPage);
+      let from = (currPage - pageStartIndex) * currSizePerPage;
       from = dataSize === 0 ? 0 : from + 1;
       let to = Math.min(currSizePerPage * (currPage + offset), dataSize);
       if (to > dataSize) to = dataSize;
@@ -40,10 +40,7 @@ export default ExtendBase =>
       return [from, to];
     }
 
-    calculatePages(
-      totalPages,
-      lastPage
-    ) {
+    calculatePages(totalPages: any, lastPage: any) {
       const {
         currPage,
         paginationSize,
@@ -53,14 +50,17 @@ export default ExtendBase =>
         prePageText,
         nextPageText,
         lastPageText,
-        alwaysShowAllBtns
+        alwaysShowAllBtns,
       } = this.props;
 
-      let pages = [];
+      let pages: any = [];
       let endPage = totalPages;
       if (endPage <= 0) return [];
 
-      let startPage = Math.max(currPage - Math.floor(paginationSize / 2), pageStartIndex);
+      let startPage = Math.max(
+        currPage - Math.floor(paginationSize / 2),
+        pageStartIndex
+      );
       endPage = startPage + paginationSize - 1;
 
       if (endPage > lastPage) {
@@ -76,7 +76,8 @@ export default ExtendBase =>
         }
       }
 
-      if (startPage !== pageStartIndex &&
+      if (
+        startPage !== pageStartIndex &&
         totalPages > paginationSize &&
         withFirstAndLast &&
         pages.length === 0
@@ -93,7 +94,10 @@ export default ExtendBase =>
       if (alwaysShowAllBtns || (endPage <= lastPage && pages.length > 1)) {
         pages.push(nextPageText);
       }
-      if ((endPage !== lastPage && withFirstAndLast) || (withFirstAndLast && alwaysShowAllBtns)) {
+      if (
+        (endPage !== lastPage && withFirstAndLast) ||
+        (withFirstAndLast && alwaysShowAllBtns)
+      ) {
         pages.push(lastPageText);
       }
 
@@ -107,7 +111,7 @@ export default ExtendBase =>
       return pages;
     }
 
-    calculatePageStatus(pages = [], lastPage, disablePageTitle = false) {
+    calculatePageStatus(pages = [], lastPage: any, disablePageTitle = false) {
       const {
         currPage,
         pageStartIndex,
@@ -115,12 +119,14 @@ export default ExtendBase =>
         prePageText,
         nextPageText,
         lastPageText,
-        alwaysShowAllBtns
+        alwaysShowAllBtns,
       } = this.props;
-      const isStart = page =>
-        (currPage === pageStartIndex && (page === firstPageText || page === prePageText));
-      const isEnd = page =>
-        (currPage === lastPage && (page === nextPageText || page === lastPageText));
+      const isStart = (page: any) =>
+        currPage === pageStartIndex &&
+        (page === firstPageText || page === prePageText);
+      const isEnd = (page: any) =>
+        currPage === lastPage &&
+        (page === nextPageText || page === lastPageText);
 
       return pages
         .filter((page) => {
@@ -132,7 +138,7 @@ export default ExtendBase =>
         .map((page) => {
           let title;
           const active = page === currPage;
-          const disabled = (isStart(page) || isEnd(page));
+          const disabled = isStart(page) || isEnd(page);
 
           if (page === nextPageText) {
             title = this.props.nextPageTitle;
@@ -146,7 +152,7 @@ export default ExtendBase =>
             title = `${page}`;
           }
 
-          const pageResult = { page, active, disabled };
+          const pageResult = { page, active, disabled, title };
           if (!disablePageTitle) {
             pageResult.title = title;
           }
@@ -156,14 +162,19 @@ export default ExtendBase =>
 
     calculateSizePerPageStatus() {
       const { sizePerPageList } = this.props;
-      return sizePerPageList.map((_sizePerPage) => {
-        const pageText = typeof _sizePerPage.text !== 'undefined' ? _sizePerPage.text : _sizePerPage;
-        const pageNumber = typeof _sizePerPage.value !== 'undefined' ? _sizePerPage.value : _sizePerPage;
+      return sizePerPageList.map((_sizePerPage: any) => {
+        const pageText =
+          typeof _sizePerPage.text !== "undefined"
+            ? _sizePerPage.text
+            : _sizePerPage;
+        const pageNumber =
+          typeof _sizePerPage.value !== "undefined"
+            ? _sizePerPage.value
+            : _sizePerPage;
         return {
           text: `${pageText}`,
-          page: pageNumber
+          page: pageNumber,
         };
       });
     }
   };
-

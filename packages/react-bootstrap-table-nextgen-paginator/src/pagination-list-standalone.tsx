@@ -1,12 +1,11 @@
-import React from 'react';
-import PaginationList from './pagination-list';
-import standaloneAdapter from './standalone-adapter';
-import PaginationHandler from './pagination-handler';
-import paginationListAdapter from './pagination-list-adapter';
+import React from "react";
+import PaginationHandler from "./pagination-handler";
+import PaginationList from "./pagination-list";
+import paginationListAdapter from "./pagination-list-adapter";
+import standaloneAdapter from "./standalone-adapter";
 
-const PaginationListStandalone = props => (
-  <PaginationList { ...props } />
+const PaginationListStandalone = (props: any) => <PaginationList {...props} />;
+
+export default standaloneAdapter(
+  PaginationHandler(paginationListAdapter(PaginationListStandalone))
 );
-
-export default
-standaloneAdapter(PaginationHandler(paginationListAdapter(PaginationListStandalone)));

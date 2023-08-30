@@ -1,10 +1,10 @@
 /* eslint react/prop-types: 0 */
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
-import pageResolver from './page-resolver';
-import PaginationList from './pagination-list';
+import pageResolver from "./page-resolver";
+import PaginationList from "./pagination-list";
 
-const paginationListAdapter = WrappedComponent =>
+const paginationListAdapter = (WrappedComponent: any) =>
   class PaginationListAdapter extends pageResolver(Component) {
     render() {
       const {
@@ -13,7 +13,7 @@ const paginationListAdapter = WrappedComponent =>
         pageButtonRenderer,
         onPageChange,
         disablePageTitle,
-        hidePageListOnlyOnePage
+        hidePageListOnlyOnePage,
       } = this.props;
       const pages = this.calculatePageStatus(
         this.calculatePages(totalPages, lastPage),
@@ -25,14 +25,13 @@ const paginationListAdapter = WrappedComponent =>
       }
       return (
         <WrappedComponent
-          pageButtonRenderer={ pageButtonRenderer }
-          onPageChange={ onPageChange }
-          pages={ pages }
+          pageButtonRenderer={pageButtonRenderer}
+          onPageChange={onPageChange}
+          pages={pages}
         />
       );
     }
   };
-
 
 export const PaginationListWithAdapter = paginationListAdapter(PaginationList);
 export default paginationListAdapter;

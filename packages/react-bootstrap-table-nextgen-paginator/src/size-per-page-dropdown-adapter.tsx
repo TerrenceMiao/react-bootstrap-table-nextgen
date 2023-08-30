@@ -1,12 +1,15 @@
 /* eslint react/prop-types: 0 */
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
-import pageResolver from './page-resolver';
-import SizePerPageDropDown from './size-per-page-dropdown';
+import { PaginationChildProps } from "..";
+import pageResolver from "./page-resolver";
+import SizePerPageDropDown from "./size-per-page-dropdown";
 
-const sizePerPageDropdownAdapter = WrappedComponent =>
+const sizePerPageDropdownAdapter = (WrappedComponent: any) =>
   class SizePerPageDropdownAdapter extends pageResolver(Component) {
-    constructor(props) {
+    state = { dropdownOpen: false };
+
+    constructor(props: PaginationChildProps) {
       super(props);
       this.closeDropDown = this.closeDropDown.bind(this);
       this.toggleDropDown = this.toggleDropDown.bind(this);
@@ -23,7 +26,7 @@ const sizePerPageDropdownAdapter = WrappedComponent =>
       this.setState(() => ({ dropdownOpen: false }));
     }
 
-    handleChangeSizePerPage(sizePerPage) {
+    handleChangeSizePerPage(sizePerPage: any) {
       this.props.onSizePerPageChange(sizePerPage);
       this.closeDropDown();
     }
@@ -36,7 +39,7 @@ const sizePerPageDropdownAdapter = WrappedComponent =>
         currSizePerPage,
         hideSizePerPage,
         sizePerPageRenderer,
-        sizePerPageOptionRenderer
+        sizePerPageOptionRenderer,
       } = this.props;
       const { dropdownOpen: open } = this.state;
 
@@ -45,21 +48,21 @@ const sizePerPageDropdownAdapter = WrappedComponent =>
           return sizePerPageRenderer({
             options: this.calculateSizePerPageStatus(),
             currSizePerPage: `${currSizePerPage}`,
-            onSizePerPageChange: this.handleChangeSizePerPage
+            onSizePerPageChange: this.handleChangeSizePerPage,
           });
         }
         return (
           <WrappedComponent
-            { ...this.props }
-            currSizePerPage={ `${currSizePerPage}` }
-            options={ this.calculateSizePerPageStatus() }
-            optionRenderer={ sizePerPageOptionRenderer }
-            onSizePerPageChange={ this.handleChangeSizePerPage }
-            onClick={ this.toggleDropDown }
-            onBlur={ this.closeDropDown }
-            open={ open }
-            tableId={ tableId }
-            bootstrap4={ bootstrap4 }
+            {...this.props}
+            currSizePerPage={`${currSizePerPage}`}
+            options={this.calculateSizePerPageStatus()}
+            optionRenderer={sizePerPageOptionRenderer}
+            onSizePerPageChange={this.handleChangeSizePerPage}
+            onClick={this.toggleDropDown}
+            onBlur={this.closeDropDown}
+            open={open}
+            tableId={tableId}
+            bootstrap4={bootstrap4}
           />
         );
       }
@@ -67,6 +70,6 @@ const sizePerPageDropdownAdapter = WrappedComponent =>
     }
   };
 
-
-export const SizePerPageDropdownWithAdapter = sizePerPageDropdownAdapter(SizePerPageDropDown);
+export const SizePerPageDropdownWithAdapter =
+  sizePerPageDropdownAdapter(SizePerPageDropDown);
 export default sizePerPageDropdownAdapter;

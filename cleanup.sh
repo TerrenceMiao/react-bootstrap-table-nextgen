@@ -27,6 +27,7 @@ find packages/react-bootstrap-table-nextgen-overlay -type f -name "*.js" -exec r
 rm -rf packages/react-bootstrap-table-nextgen-paginator/dist
 rm -rf packages/react-bootstrap-table-nextgen-paginator/lib
 rm -rf packages/react-bootstrap-table-nextgen-paginator/node_modules
+find packages/react-bootstrap-table-nextgen-paginator -type f -name "*.js" -exec rm {} \;
 
 rm -rf packages/react-bootstrap-table-nextgen-toolkit/dist
 rm -rf packages/react-bootstrap-table-nextgen-toolkit/lib
