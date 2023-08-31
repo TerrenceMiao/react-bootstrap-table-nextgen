@@ -160,7 +160,6 @@ class NumberFilter extends Component<NumberFilterProps, NumberFilterState> {
     if (!withoutEmptyNumberOption) {
       optionTags.push(
         <option key="-1" value="">
-          type 'Rea... Remove this comment to see the full error message
           {this.props.placeholder || `Select ${column.text}...`}
         </option>
       );
