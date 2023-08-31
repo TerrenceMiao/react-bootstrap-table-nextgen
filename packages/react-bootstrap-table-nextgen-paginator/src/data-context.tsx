@@ -93,7 +93,7 @@ class PaginationDataProvider extends Provider {
     let { data } = this.props;
     let { currPage } = this;
 
-    if (data.length <= currSizePerPage) {
+    if (data.length <= (currPage - 1) * currSizePerPage) {
       currPage = 1;
       this.currPage = currPage;
     }
