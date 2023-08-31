@@ -46,8 +46,8 @@ class NumberFilter extends Component<NumberFilterProps, NumberFilterState> {
     const number = this.numberFilter.value;
     if (comparator && number) {
       // TODO
-      // onFilter(column, FILTER_TYPES.NUMBER, true)({ number, comparator });
-      console.log(FILTER_TYPES.NUMBER);
+     // @ts-ignore
+      onFilter(column, FILTER_TYPES.NUMBER, true)({ number, comparator });
     }
 
     // export onFilter function to allow users to access
@@ -58,14 +58,8 @@ class NumberFilter extends Component<NumberFilterProps, NumberFilterState> {
         this.numberFilter.value = filterVal.number;
 
         // TODO
-        // onFilter(
-        //   column,
-        //   FILTER_TYPES.NUMBER
-        // )({
-        //   number: filterVal.number,
-        //   comparator: filterVal.comparator,
-        // });
-        console.log(FILTER_TYPES.NUMBER);
+        // @ts-ignore
+        onFilter(column, FILTER_TYPES.NUMBER)({ number: filterVal.number, comparator: filterVal.comparator });
       });
     }
   }
@@ -86,8 +80,8 @@ class NumberFilter extends Component<NumberFilterProps, NumberFilterState> {
     const filterValue = e.target.value;
     this.timeout = setTimeout(() => {
       // TODO
-      // onFilter(column, FILTER_TYPES.NUMBER)({ number: filterValue, comparator });
-      console.log(FILTER_TYPES.NUMBER);
+      // @ts-ignore
+      onFilter(column, FILTER_TYPES.NUMBER)({ number: filterValue, comparator });
     }, delay);
   }
 
@@ -100,8 +94,8 @@ class NumberFilter extends Component<NumberFilterProps, NumberFilterState> {
     //   return;
     // }
     // TODO
-    // onFilter(column, FILTER_TYPES.NUMBER)({ number: value, comparator });
-    console.log(FILTER_TYPES.NUMBER);
+    // @ts-ignore
+    onFilter(column, FILTER_TYPES.NUMBER)({ number: value, comparator });
   }
 
   onChangeComparator(e: any) {
@@ -112,8 +106,8 @@ class NumberFilter extends Component<NumberFilterProps, NumberFilterState> {
     //   return;
     // }
     // TODO
-    // onFilter(column, FILTER_TYPES.NUMBER)({ number: value, comparator });
-    console.log(FILTER_TYPES.NUMBER);
+    // @ts-ignore
+    onFilter(column, FILTER_TYPES.NUMBER)({ number: value, comparator });
   }
 
   getDefaultComparator() {
@@ -181,8 +175,8 @@ class NumberFilter extends Component<NumberFilterProps, NumberFilterState> {
     this.numberFilterComparator.value = comparator;
     this.numberFilter.value = number;
     // TODO
-    // onFilter(column, FILTER_TYPES.NUMBER)({ number, comparator });
-    console.log(FILTER_TYPES.NUMBER);
+    // @ts-ignore
+    onFilter(column, FILTER_TYPES.NUMBER)({ number, comparator });
   }
 
   cleanFiltered() {
@@ -193,8 +187,8 @@ class NumberFilter extends Component<NumberFilterProps, NumberFilterState> {
     this.numberFilterComparator.value = comparator;
     this.numberFilter.value = value;
     // TODO
-    // onFilter(column, FILTER_TYPES.NUMBER)({ number: value, comparator });
-    console.log(FILTER_TYPES.NUMBER);
+    // @ts-ignore
+    onFilter(column, FILTER_TYPES.NUMBER)({ number: value, comparator });
   }
 
   render() {

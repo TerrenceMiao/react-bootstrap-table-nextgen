@@ -61,8 +61,8 @@ class SelectFilter extends Component<SelectFilterProps, SelectFilterState> {
     const value = this.selectInput.value;
     if (value && value !== "") {
       // TODO
-      // onFilter(column, FILTER_TYPES.SELECT, true)(value);
-      console.log(FILTER_TYPES.SELECT);
+      // @ts-ignore
+      onFilter(column, FILTER_TYPES.SELECT, true)(value);
     }
 
     // export onFilter function to allow users to access
@@ -72,8 +72,8 @@ class SelectFilter extends Component<SelectFilterProps, SelectFilterState> {
         this.selectInput.value = filterVal;
 
         // TODO
-        // onFilter(column, FILTER_TYPES.SELECT)(filterVal);
-        console.log(FILTER_TYPES.SELECT);
+      // @ts-ignore
+        onFilter(column, FILTER_TYPES.SELECT)(filterVal);
       });
     }
   }
@@ -92,8 +92,8 @@ class SelectFilter extends Component<SelectFilterProps, SelectFilterState> {
       const value = this.selectInput.value;
       if (value) {
         // TODO
-        // onFilter(column, FILTER_TYPES.SELECT)(value);
-        console.log(FILTER_TYPES.SELECT);
+      // @ts-ignore
+        onFilter(column, FILTER_TYPES.SELECT)(value);
       }
     }
   }
@@ -118,24 +118,24 @@ class SelectFilter extends Component<SelectFilterProps, SelectFilterState> {
     this.setState(() => ({ isSelected: value !== "" }));
     this.selectInput.value = value;
     // TODO
-    // this.props.onFilter(this.props.column, FILTER_TYPES.SELECT)(value);
-    console.log(FILTER_TYPES.SELECT);
+    // @ts-ignore
+    this.props.onFilter(this.props.column, FILTER_TYPES.SELECT)(value);
   }
 
   applyFilter(value: any) {
     this.selectInput.value = value;
     this.setState(() => ({ isSelected: value !== "" }));
     // TODO
-    // this.props.onFilter(this.props.column, FILTER_TYPES.SELECT)(value);
-    console.log(FILTER_TYPES.SELECT);
+    // @ts-ignore
+    this.props.onFilter(this.props.column, FILTER_TYPES.SELECT)(value);
   }
 
   filter(e: any) {
     const { value } = e.target;
     this.setState(() => ({ isSelected: value !== "" }));
     // TODO
-    // this.props.onFilter(this.props.column, FILTER_TYPES.SELECT)(value);
-    console.log(FILTER_TYPES.SELECT);
+    // @ts-ignore
+    this.props.onFilter(this.props.column, FILTER_TYPES.SELECT)(value);
   }
 
   renderOptions() {

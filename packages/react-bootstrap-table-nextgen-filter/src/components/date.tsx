@@ -124,8 +124,8 @@ class DateFilter extends Component<DateFilterProps> {
       // null as an empty date field
       const date = value === "" ? null : new Date(value);
       // TODO
-      // onFilter(column, FILTER_TYPES.DATE, isInitial)({ date, comparator });
-      console.log(FILTER_TYPES.DATE);
+      // @ts-ignore
+      onFilter(column, FILTER_TYPES.DATE, isInitial)({ date, comparator });
     };
     if (delay) {
       this.timeout = setTimeout(() => {

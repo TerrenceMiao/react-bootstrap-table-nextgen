@@ -121,8 +121,8 @@ class MultiSelectFilter extends Component<
     }
     this.setState(() => ({ isSelected: value.length > 0 }));
     // TODO
-    // this.props.onFilter(this.props.column, FILTER_TYPES.MULTISELECT)(value);
-    console.log(FILTER_TYPES.MULTISELECT);
+    // @ts-ignore
+    this.props.onFilter(this.props.column, FILTER_TYPES.MULTISELECT)(value);
   }
 
   filter(e: any) {

@@ -38,8 +38,8 @@ class TextFilter extends Component<TextFilterProps, TextFilterState> {
 
     if (defaultValue) {
       // TODO
-      // onFilter(this.props.column, FILTER_TYPES.TEXT, true)(defaultValue);
-      console.log(FILTER_TYPES.TEXT);
+      // @ts-ignore
+      onFilter(this.props.column, FILTER_TYPES.TEXT, true)(defaultValue);
     }
 
     // export onFilter function to allow users to access
@@ -47,8 +47,8 @@ class TextFilter extends Component<TextFilterProps, TextFilterState> {
       getFilter((filterVal: any) => {
         this.setState(() => ({ value: filterVal }));
         // TODO
-        // onFilter(column, FILTER_TYPES.TEXT)(filterVal);
-        console.log(FILTER_TYPES.TEXT);
+        // @ts-ignore
+        onFilter(column, FILTER_TYPES.TEXT)(filterVal);
       });
     }
   }
@@ -70,8 +70,8 @@ class TextFilter extends Component<TextFilterProps, TextFilterState> {
     this.setState(() => ({ value: filterValue }));
     this.timeout = setTimeout(() => {
       // TODO
-      // this.props.onFilter(this.props.column, FILTER_TYPES.TEXT)(filterValue);
-      console.log(FILTER_TYPES.TEXT);
+      // @ts-ignore
+      this.props.onFilter(this.props.column, FILTER_TYPES.TEXT)(filterValue);
     }, this.props.delay);
   }
 
@@ -85,15 +85,15 @@ class TextFilter extends Component<TextFilterProps, TextFilterState> {
     const value = this.props.defaultValue;
     this.setState(() => ({ value }));
     // TODO
-    // this.props.onFilter(this.props.column, FILTER_TYPES.TEXT)(value);
-    console.log(FILTER_TYPES.TEXT);
+    // @ts-ignore
+    this.props.onFilter(this.props.column, FILTER_TYPES.TEXT)(value);
   }
 
   applyFilter(filterText: any) {
     this.setState(() => ({ value: filterText }));
     // TODO
-    // this.props.onFilter(this.props.column, FILTER_TYPES.TEXT)(filterText);
-    console.log(FILTER_TYPES.TEXT);
+    // @ts-ignore
+    this.props.onFilter(this.props.column, FILTER_TYPES.TEXT)(filterText);
   }
 
   handleClick(e: any) {
