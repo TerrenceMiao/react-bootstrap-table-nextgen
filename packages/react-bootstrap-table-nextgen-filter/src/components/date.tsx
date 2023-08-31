@@ -4,16 +4,9 @@
 /* eslint prefer-template: 0 */
 import React, { Component } from "react";
 
-import { Comparator, DateFilterProps, FILTER_TYPES } from "../..";
+import { DateFilterProps, EQ, FILTER_TYPES, GE, GT, LE, LT, NE } from "../..";
 
-const legalComparators = [
-  Comparator.EQ,
-  Comparator.NE,
-  Comparator.GT,
-  Comparator.GE,
-  Comparator.LT,
-  Comparator.LE,
-];
+const legalComparators = [EQ, NE, GT, GE, LT, LE];
 
 function dateParser(d: any) {
   return `${d.getUTCFullYear()}-${("0" + (d.getUTCMonth() + 1)).slice(-2)}-${(

@@ -2,18 +2,10 @@
 /* eslint react/require-default-props: 0 */
 /* eslint no-return-assign: 0 */
 
-import PropTypes from "prop-types";
 import React, { Component } from "react";
-import { Comparator, FILTER_TYPES, NumberFilterProps } from "../..";
+import { EQ, FILTER_TYPES, GE, GT, LE, LT, NE, NumberFilterProps } from "../..";
 
-const legalComparators = [
-  Comparator.EQ,
-  Comparator.NE,
-  Comparator.GT,
-  Comparator.GE,
-  Comparator.LT,
-  Comparator.LE,
-];
+const legalComparators = [EQ, NE, GT, GE, LT, LE];
 
 interface NumberFilterState {
   isSelected: boolean;
@@ -46,7 +38,7 @@ class NumberFilter extends Component<NumberFilterProps, NumberFilterState> {
     const number = this.numberFilter.value;
     if (comparator && number) {
       // TODO
-     // @ts-ignore
+      // @ts-ignore
       onFilter(column, FILTER_TYPES.NUMBER, true)({ number, comparator });
     }
 
@@ -57,9 +49,11 @@ class NumberFilter extends Component<NumberFilterProps, NumberFilterState> {
         this.numberFilterComparator.value = filterVal.comparator;
         this.numberFilter.value = filterVal.number;
 
+        const fn = filterVal.number;
+        const fc = filterVal.comparator;
         // TODO
         // @ts-ignore
-        onFilter(column, FILTER_TYPES.NUMBER)({ number: filterVal.number, comparator: filterVal.comparator });
+        onFilter(column, FILTER_TYPES.NUMBER)({ number: fn, comparator: fc });
       });
     }
   }
@@ -77,11 +71,11 @@ class NumberFilter extends Component<NumberFilterProps, NumberFilterState> {
     if (this.timeout) {
       clearTimeout(this.timeout);
     }
-    const filterValue = e.target.value;
+    const v = e.target.value;
     this.timeout = setTimeout(() => {
       // TODO
       // @ts-ignore
-      onFilter(column, FILTER_TYPES.NUMBER)({ number: filterValue, comparator });
+      onFilter(column, FILTER_TYPES.NUMBER)({ number: v, comparator });
     }, delay);
   }
 
