@@ -68,13 +68,13 @@ export const LT = "<";
 export const LE = "<=";
 
 export enum Comparator {
-  LIKE,
-  EQ,
-  NE,
-  GT,
-  GE,
-  LT,
-  LE,
+  LIKE = "LIKE",
+  EQ = "=",
+  NE = "!=",
+  GT = ">",
+  GE = ">=",
+  LT = "<",
+  LE = "<=",
 }
 
 export type TextFilterProps<T extends object = any> = TableColumnFilterProps<

@@ -3,19 +3,31 @@
 /* eslint no-return-assign: 0 */
 
 import React, { Component } from "react";
-import { EQ, FILTER_TYPES, GE, GT, LE, LT, NE, NumberFilterProps } from "../..";
+import {
+  Comparator,
+  EQ,
+  FILTER_DELAY,
+  FILTER_TYPES,
+  GE,
+  GT,
+  LE,
+  LT,
+  NE,
+  NumberFilterProps,
+} from "../..";
 
-const legalComparators = [EQ, NE, GT, GE, LT, LE];
+const legalComparators: any[] = [EQ, NE, GT, GE, LT, LE];
 
 interface NumberFilterState {
   isSelected: boolean;
 }
 
 class NumberFilter extends Component<NumberFilterProps, NumberFilterState> {
-  comparators: any;
+  comparators: any[];
   numberFilter: any;
   numberFilterComparator: any;
   timeout: any;
+
   constructor(props: NumberFilterProps) {
     super(props);
     this.comparators = props.comparators || legalComparators;
@@ -34,7 +46,10 @@ class NumberFilter extends Component<NumberFilterProps, NumberFilterState> {
 
   componentDidMount() {
     const { column, onFilter, getFilter } = this.props;
-    const comparator = this.numberFilterComparator.value;
+    const comparator =
+      this.numberFilterComparator.value === ""
+        ? Comparator.EQ
+        : this.numberFilterComparator.value;
     const number = this.numberFilter.value;
     if (comparator && number) {
       // TODO
@@ -63,7 +78,7 @@ class NumberFilter extends Component<NumberFilterProps, NumberFilterState> {
   }
 
   onChangeNumber(e: any) {
-    const { delay, column, onFilter } = this.props;
+    const { delay = FILTER_DELAY, column, onFilter } = this.props;
     const comparator = this.numberFilterComparator.value;
     if (comparator === "") {
       return;
@@ -105,7 +120,10 @@ class NumberFilter extends Component<NumberFilterProps, NumberFilterState> {
   }
 
   getDefaultComparator() {
-    const { defaultValue, filterState } = this.props;
+    const {
+      defaultValue = { number: undefined, comparator: "" },
+      filterState = {},
+    } = this.props;
     if (filterState && filterState.filterVal) {
       return filterState.filterVal.comparator;
     }
@@ -116,7 +134,10 @@ class NumberFilter extends Component<NumberFilterProps, NumberFilterState> {
   }
 
   getDefaultValue() {
-    const { defaultValue, filterState } = this.props;
+    const {
+      defaultValue = { number: undefined, comparator: "" },
+      filterState = {},
+    } = this.props;
     if (filterState && filterState.filterVal) {
       return filterState.filterVal.number;
     }
@@ -128,7 +149,7 @@ class NumberFilter extends Component<NumberFilterProps, NumberFilterState> {
 
   getComparatorOptions() {
     const optionTags = [];
-    const { withoutEmptyComparatorOption } = this.props;
+    const { withoutEmptyComparatorOption = false } = this.props;
     if (!withoutEmptyComparatorOption) {
       optionTags.push(<option key="-1" />);
     }
@@ -144,7 +165,7 @@ class NumberFilter extends Component<NumberFilterProps, NumberFilterState> {
 
   getNumberOptions() {
     const optionTags = [];
-    const { options, column, withoutEmptyNumberOption } = this.props;
+    const { options, column, withoutEmptyNumberOption = false } = this.props;
     if (!withoutEmptyNumberOption) {
       optionTags.push(
         <option key="-1" value="">
@@ -174,7 +195,11 @@ class NumberFilter extends Component<NumberFilterProps, NumberFilterState> {
   }
 
   cleanFiltered() {
-    const { column, onFilter, defaultValue } = this.props;
+    const {
+      column,
+      onFilter,
+      defaultValue = { number: undefined, comparator: "" },
+    } = this.props;
     const value = defaultValue ? defaultValue.number : "";
     const comparator = defaultValue ? defaultValue.comparator : "";
     this.setState(() => ({ isSelected: value !== "" }));
@@ -188,15 +213,15 @@ class NumberFilter extends Component<NumberFilterProps, NumberFilterState> {
   render() {
     const { isSelected } = this.state;
     const {
-      id,
+      id = null,
       column,
       options,
       style,
-      className,
+      className = "",
       numberStyle,
-      numberClassName,
+      numberClassName = "",
       comparatorStyle,
-      comparatorClassName,
+      comparatorClassName = "",
       placeholder,
     } = this.props;
     const selectClass = `
