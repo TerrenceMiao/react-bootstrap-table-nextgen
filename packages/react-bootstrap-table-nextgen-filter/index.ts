@@ -91,7 +91,7 @@ export type TextFilterProps<T extends object = any> = TableColumnFilterProps<
      * on filter element click event
      */
     onClick?: ((e: SyntheticEvent) => void) | undefined;
-    filterState: any;
+    filterState?: any;
     column: any;
   }>;
 
@@ -122,9 +122,9 @@ export type SelectFilterProps<T extends object = any> = TableColumnFilterProps<
    * When the default unset selection is hidden from dropdown
    */
   withoutEmptyOption?: boolean | undefined;
-  filterState: any;
+  filterState?: any;
   column: any;
-  caseSensitive: boolean;
+  caseSensitive?: boolean;
 };
 
 /**
@@ -152,9 +152,9 @@ export type MultiSelectFilterProps<T extends object = any> =
      * When set the default selection is hidden from dropdown
      */
     withoutEmptyOption?: boolean | undefined;
-    filterState: any;
+    filterState?: any;
     column: any;
-    caseSensitive: boolean;
+    caseSensitive?: boolean;
   };
 
 /**
@@ -184,7 +184,7 @@ export type NumberFilterProps<T extends object = any> = TableColumnFilterProps<
   comparatorStyle?: CSSProperties | undefined;
   numberStyle?: CSSProperties | undefined;
   defaultValue?: { number: number; comparator: Comparator } | undefined;
-  filterState: any;
+  filterState?: any;
   column: any;
 };
 
@@ -200,8 +200,8 @@ export interface DateFilterProps<T extends object = any>
   withoutEmptyComparatorOption?: boolean | undefined;
   defaultValue?:
     | {
-        date: Date;
-        comparator: Comparator;
+        date?: Date;
+        comparator?: Comparator;
       }
     | undefined;
   comparators?: Comparator[] | undefined;
@@ -209,7 +209,7 @@ export interface DateFilterProps<T extends object = any>
   dateClassName?: string | undefined;
   comparatorStyle?: CSSProperties | undefined;
   dateStyle?: CSSProperties | undefined;
-  filterState: any;
+  filterState?: any;
   column: any;
 }
 

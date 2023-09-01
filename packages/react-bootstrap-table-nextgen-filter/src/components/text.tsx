@@ -4,7 +4,7 @@
 /* eslint camelcase: 0 */
 import React, { Component } from "react";
 
-import { FILTER_TYPES, TextFilterProps } from "../..";
+import { FILTER_DELAY, FILTER_TYPES, TextFilterProps } from "../..";
 
 interface TextFilterState {
   value: any;
@@ -72,7 +72,7 @@ class TextFilter extends Component<TextFilterProps, TextFilterState> {
       // TODO
       // @ts-ignore
       this.props.onFilter(this.props.column, FILTER_TYPES.TEXT)(filterValue);
-    }, this.props.delay);
+    }, this.props.delay ?? FILTER_DELAY);
   }
 
   cleanTimer() {
@@ -82,7 +82,7 @@ class TextFilter extends Component<TextFilterProps, TextFilterState> {
   }
 
   cleanFiltered() {
-    const value = this.props.defaultValue;
+    const value = this.props.defaultValue ?? "";
     this.setState(() => ({ value }));
     // TODO
     // @ts-ignore
@@ -105,16 +105,16 @@ class TextFilter extends Component<TextFilterProps, TextFilterState> {
 
   render() {
     const {
-      id,
+      id = null,
       placeholder,
       column: { dataField, text },
       style,
       className,
       onFilter,
-      caseSensitive,
-      defaultValue,
+      caseSensitive = false,
+      defaultValue = "",
       getFilter,
-      filterState,
+      filterState = {},
       ...rest
     } = this.props;
 

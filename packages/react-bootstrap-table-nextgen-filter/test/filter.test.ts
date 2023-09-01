@@ -1,46 +1,50 @@
-import _ from 'react-bootstrap-table-nextgen/src/utils';
+import _ from "react-bootstrap-table-nextgen/src/utils";
 
-import { filters } from '../src/filter';
-import { FILTER_TYPE } from '../src/const';
-import { LIKE, EQ, GT, GE, LT, LE, NE } from '../src/comparison';
+import { EQ, FILTER_TYPES, GE, GT, LE, LIKE, LT, NE } from "..";
+import { filters } from "../src/filter";
 
-const data = [];
+const data: any[] = [];
 for (let i = 0; i < 20; i += 1) {
   data.push({
     id: i,
     name: `itme name ${i}`,
     price: 200 + i,
-    date: new Date(2017, i, 1)
+    date: new Date(2017, i, 1),
   });
 }
 
-describe('filter', () => {
-  let currFilters;
-  let columns;
+describe("filter", () => {
+  let currFilters: any;
+  let columns: any[];
 
   beforeEach(() => {
     currFilters = {};
-    columns = [{
-      dataField: 'id',
-      text: 'ID'
-    }, {
-      dataField: 'name',
-      text: 'Name'
-    }, {
-      dataField: 'price',
-      text: 'Price'
-    }, {
-      dataField: 'date',
-      text: 'Date'
-    }];
+    columns = [
+      {
+        dataField: "id",
+        text: "ID",
+      },
+      {
+        dataField: "name",
+        text: "Name",
+      },
+      {
+        dataField: "price",
+        text: "Price",
+      },
+      {
+        dataField: "date",
+        text: "Date",
+      },
+    ];
   });
 
-  describe('filterByText', () => {
-    describe('when filter value is not a String', () => {
-      it('should transform to string and do the filter', () => {
+  describe("filterByText", () => {
+    describe("when filter value is not a String", () => {
+      it("should transform to string and do the filter", () => {
         currFilters.name = {
           filterVal: 3,
-          filterType: FILTER_TYPE.TEXT
+          filterType: FILTER_TYPES.TEXT,
         };
 
         const result = filters(data, columns, _)(currFilters);
@@ -50,10 +54,10 @@ describe('filter', () => {
     });
 
     describe(`when default comparator is ${LIKE}`, () => {
-      it('should returning correct result', () => {
+      it("should returning correct result", () => {
         currFilters.name = {
-          filterVal: '3',
-          filterType: FILTER_TYPE.TEXT
+          filterVal: "3",
+          filterType: FILTER_TYPES.TEXT,
         };
 
         const result = filters(data, columns, _)(currFilters);
@@ -62,12 +66,12 @@ describe('filter', () => {
       });
     });
 
-    describe('when caseSensitive is true', () => {
-      it('should returning correct result', () => {
+    describe("when caseSensitive is true", () => {
+      it("should returning correct result", () => {
         currFilters.name = {
-          filterVal: 'NAME',
+          filterVal: "NAME",
           caseSensitive: true,
-          filterType: FILTER_TYPE.TEXT
+          filterType: FILTER_TYPES.TEXT,
         };
 
         const result = filters(data, columns, _)(currFilters);
@@ -77,11 +81,11 @@ describe('filter', () => {
     });
 
     describe(`when default comparator is ${EQ}`, () => {
-      it('should returning correct result', () => {
+      it("should returning correct result", () => {
         currFilters.name = {
-          filterVal: 'itme name 3',
-          filterType: FILTER_TYPE.TEXT,
-          comparator: EQ
+          filterVal: "itme name 3",
+          filterType: FILTER_TYPES.TEXT,
+          comparator: EQ,
         };
 
         const result = filters(data, columns, _)(currFilters);
@@ -90,15 +94,15 @@ describe('filter', () => {
       });
     });
 
-    describe('column.filterValue is defined', () => {
+    describe("column.filterValue is defined", () => {
       beforeEach(() => {
         columns[1].filterValue = jest.fn();
       });
 
-      it('should calling custom filterValue callback correctly', () => {
+      it("should calling custom filterValue callback correctly", () => {
         currFilters.name = {
-          filterVal: '3',
-          filterType: FILTER_TYPE.TEXT
+          filterVal: "3",
+          filterType: FILTER_TYPES.TEXT,
         };
 
         const result = filters(data, columns, _)(currFilters);
@@ -113,12 +117,12 @@ describe('filter', () => {
     });
   });
 
-  describe('filterByArray', () => {
-    describe('when filter value is empty array', () => {
-      it('should return original data', () => {
+  describe("filterByArray", () => {
+    describe("when filter value is empty array", () => {
+      it("should return original data", () => {
         currFilters.name = {
           filterVal: [],
-          filterType: FILTER_TYPE.MULTISELECT
+          filterType: FILTER_TYPES.MULTISELECT,
         };
 
         const result = filters(data, columns, _)(currFilters);
@@ -127,13 +131,13 @@ describe('filter', () => {
       });
     });
 
-    describe('when filter value is not an empty array', () => {
+    describe("when filter value is not an empty array", () => {
       describe(`and comparator is ${EQ}`, () => {
-        it('should return data correctly', () => {
+        it("should return data correctly", () => {
           currFilters.price = {
             filterVal: [201, 203],
-            filterType: FILTER_TYPE.MULTISELECT,
-            comparator: EQ
+            filterType: FILTER_TYPES.MULTISELECT,
+            comparator: EQ,
           };
 
           const result = filters(data, columns, _)(currFilters);
@@ -143,11 +147,11 @@ describe('filter', () => {
       });
 
       describe(`and comparator is ${LIKE}`, () => {
-        it('should return data correctly', () => {
+        it("should return data correctly", () => {
           currFilters.name = {
-            filterVal: ['name 3', '5'],
-            filterType: FILTER_TYPE.MULTISELECT,
-            comparator: LIKE
+            filterVal: ["name 3", "5"],
+            filterType: FILTER_TYPES.MULTISELECT,
+            comparator: LIKE,
           };
 
           const result = filters(data, columns, _)(currFilters);
@@ -158,12 +162,12 @@ describe('filter', () => {
     });
   });
 
-  describe('filterByNumber', () => {
-    describe('when currFilters.filterVal.comparator is empty', () => {
-      it('should returning correct result', () => {
+  describe("filterByNumber", () => {
+    describe("when currFilters.filterVal.comparator is empty", () => {
+      it("should returning correct result", () => {
         currFilters.price = {
-          filterVal: { comparator: '', number: '203' },
-          filterType: FILTER_TYPE.NUMBER
+          filterVal: { comparator: "", number: "203" },
+          filterType: FILTER_TYPES.NUMBER,
         };
 
         let result = filters(data, columns, _)(currFilters);
@@ -175,11 +179,11 @@ describe('filter', () => {
       });
     });
 
-    describe('when currFilters.filterVal.number is empty', () => {
-      it('should returning correct result', () => {
+    describe("when currFilters.filterVal.number is empty", () => {
+      it("should returning correct result", () => {
         currFilters.price = {
-          filterVal: { comparator: EQ, number: '' },
-          filterType: FILTER_TYPE.NUMBER
+          filterVal: { comparator: EQ, number: "" },
+          filterType: FILTER_TYPES.NUMBER,
         };
 
         const result = filters(data, columns, _)(currFilters);
@@ -188,26 +192,26 @@ describe('filter', () => {
     });
 
     describe(`when currFilters.filterVal.comparator is ${EQ}`, () => {
-      it('should returning correct result', () => {
+      it("should returning correct result", () => {
         currFilters.price = {
-          filterVal: { comparator: EQ, number: '203' },
-          filterType: FILTER_TYPE.NUMBER
+          filterVal: { comparator: EQ, number: "203" },
+          filterType: FILTER_TYPES.NUMBER,
         };
 
         let result = filters(data, columns, _)(currFilters);
         expect(result).toHaveLength(1);
 
-        currFilters.price.filterVal.number = '0';
+        currFilters.price.filterVal.number = "0";
         result = filters(result, columns, _)(currFilters);
         expect(result).toHaveLength(0);
       });
     });
 
     describe(`when currFilters.filterVal.comparator is ${GT}`, () => {
-      it('should returning correct result', () => {
+      it("should returning correct result", () => {
         currFilters.price = {
-          filterVal: { comparator: GT, number: '203' },
-          filterType: FILTER_TYPE.NUMBER
+          filterVal: { comparator: GT, number: "203" },
+          filterType: FILTER_TYPES.NUMBER,
         };
 
         const result = filters(data, columns, _)(currFilters);
@@ -216,10 +220,10 @@ describe('filter', () => {
     });
 
     describe(`when currFilters.filterVal.comparator is ${GE}`, () => {
-      it('should returning correct result', () => {
+      it("should returning correct result", () => {
         currFilters.price = {
-          filterVal: { comparator: GE, number: '203' },
-          filterType: FILTER_TYPE.NUMBER
+          filterVal: { comparator: GE, number: "203" },
+          filterType: FILTER_TYPES.NUMBER,
         };
 
         const result = filters(data, columns, _)(currFilters);
@@ -228,10 +232,10 @@ describe('filter', () => {
     });
 
     describe(`when currFilters.filterVal.comparator is ${LT}`, () => {
-      it('should returning correct result', () => {
+      it("should returning correct result", () => {
         currFilters.price = {
-          filterVal: { comparator: LT, number: '203' },
-          filterType: FILTER_TYPE.NUMBER
+          filterVal: { comparator: LT, number: "203" },
+          filterType: FILTER_TYPES.NUMBER,
         };
 
         const result = filters(data, columns, _)(currFilters);
@@ -240,10 +244,10 @@ describe('filter', () => {
     });
 
     describe(`when currFilters.filterVal.comparator is ${LE}`, () => {
-      it('should returning correct result', () => {
+      it("should returning correct result", () => {
         currFilters.price = {
-          filterVal: { comparator: LE, number: '203' },
-          filterType: FILTER_TYPE.NUMBER
+          filterVal: { comparator: LE, number: "203" },
+          filterType: FILTER_TYPES.NUMBER,
         };
 
         const result = filters(data, columns, _)(currFilters);
@@ -252,10 +256,10 @@ describe('filter', () => {
     });
 
     describe(`when currFilters.filterVal.comparator is ${NE}`, () => {
-      it('should returning correct result', () => {
+      it("should returning correct result", () => {
         currFilters.price = {
-          filterVal: { comparator: NE, number: '203' },
-          filterType: FILTER_TYPE.NUMBER
+          filterVal: { comparator: NE, number: "203" },
+          filterType: FILTER_TYPES.NUMBER,
         };
 
         const result = filters(data, columns, _)(currFilters);
@@ -264,17 +268,17 @@ describe('filter', () => {
     });
   });
 
-  describe('filterByDate', () => {
-    let filterFn;
+  describe("filterByDate", () => {
+    let filterFn: any;
     beforeEach(() => {
       filterFn = filters(data, columns, _);
     });
 
-    describe('when currFilters.filterVal.comparator is empty', () => {
-      it('should returning correct result', () => {
+    describe("when currFilters.filterVal.comparator is empty", () => {
+      it("should returning correct result", () => {
         currFilters.price = {
-          filterVal: { comparator: '', date: new Date() },
-          filterType: FILTER_TYPE.DATE
+          filterVal: { comparator: "", date: new Date() },
+          filterType: FILTER_TYPES.DATE,
         };
 
         let result = filterFn(currFilters);
@@ -286,11 +290,11 @@ describe('filter', () => {
       });
     });
 
-    describe('when currFilters.filterVal.date is empty', () => {
-      it('should returning correct result', () => {
+    describe("when currFilters.filterVal.date is empty", () => {
+      it("should returning correct result", () => {
         currFilters.price = {
-          filterVal: { comparator: EQ, date: '' },
-          filterType: FILTER_TYPE.DATE
+          filterVal: { comparator: EQ, date: "" },
+          filterType: FILTER_TYPES.DATE,
         };
 
         const result = filterFn(currFilters);

@@ -221,6 +221,7 @@ export const filters =
       let currentResult;
       let filterValue;
       let customFilter;
+      columns = columns ?? [];
       for (let i = 0; i < columns.length; i += 1) {
         if (columns[i].dataField === dataField) {
           filterValue = columns[i].filterValue;
