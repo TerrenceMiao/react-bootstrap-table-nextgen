@@ -4,20 +4,21 @@
 /* eslint camelcase: 0 */
 import React, { Component } from "react";
 
-import { FILTER_DELAY, FILTER_TYPES, TextFilterProps } from "../..";
+import { FILTER_TYPES, TextFilterProps } from "../..";
 
 interface TextFilterState {
   value: any;
 }
 
 class TextFilter extends Component<TextFilterProps, TextFilterState> {
-  input: any;
+  input: { value: any } | any;
   timeout: any;
   constructor(props: any) {
     super(props);
     this.filter = this.filter.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.timeout = null;
+    this.input = {};
     function getDefaultValue() {
       if (
         props.filterState &&
@@ -45,7 +46,7 @@ class TextFilter extends Component<TextFilterProps, TextFilterState> {
     // export onFilter function to allow users to access
     if (getFilter) {
       getFilter((filterVal: any) => {
-        this.setState(() => ({ value: filterVal }));
+        this.state = { value: filterVal };
         // TODO
         // @ts-ignore
         onFilter(column, FILTER_TYPES.TEXT)(filterVal);
@@ -67,12 +68,12 @@ class TextFilter extends Component<TextFilterProps, TextFilterState> {
     e.stopPropagation();
     this.cleanTimer();
     const filterValue = e.target.value;
-    this.setState(() => ({ value: filterValue }));
+    this.state = { value: filterValue };
     this.timeout = setTimeout(() => {
       // TODO
       // @ts-ignore
       this.props.onFilter(this.props.column, FILTER_TYPES.TEXT)(filterValue);
-    }, this.props.delay ?? FILTER_DELAY);
+    }, this.props.delay);
   }
 
   cleanTimer() {
@@ -83,14 +84,14 @@ class TextFilter extends Component<TextFilterProps, TextFilterState> {
 
   cleanFiltered() {
     const value = this.props.defaultValue ?? "";
-    this.setState(() => ({ value }));
+    this.state = { value };
     // TODO
     // @ts-ignore
     this.props.onFilter(this.props.column, FILTER_TYPES.TEXT)(value);
   }
 
   applyFilter(filterText: any) {
-    this.setState(() => ({ value: filterText }));
+    this.state = { value: filterText };
     // TODO
     // @ts-ignore
     this.props.onFilter(this.props.column, FILTER_TYPES.TEXT)(filterText);

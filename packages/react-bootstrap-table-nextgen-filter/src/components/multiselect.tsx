@@ -4,6 +4,7 @@
 /* eslint react/no-unused-prop-types: 0 */
 import React, { Component } from "react";
 import {
+  EQ,
   FILTER_TYPES,
   MultiSelectFilterOptions,
   MultiSelectFilterProps,
@@ -20,11 +21,11 @@ function optionsEquals(currOpts: any, prevOpts: any) {
 }
 
 const getSelections = (container: any) => {
-  if (container.selectedOptions) {
+  if (container && container.selectedOptions) {
     return Array.from(container.selectedOptions).map((item: any) => item.value);
   }
   const selections = [];
-  const totalLen = container.options.length;
+  const totalLen = container ? container.options.length : 0;
   for (let i = 0; i < totalLen; i += 1) {
     const option = container.options.item(i);
     if (option.selected) selections.push(option.value);
@@ -45,7 +46,7 @@ class MultiSelectFilter extends Component<
     this.filter = this.filter.bind(this);
     this.applyFilter = this.applyFilter.bind(this);
     const isSelected =
-      props.defaultValue.map(
+      (props.defaultValue ?? []).map(
         (item: string) => (props.options as MultiSelectFilterOptions)[item]
       ).length > 0;
     this.state = { isSelected };
@@ -70,7 +71,7 @@ class MultiSelectFilter extends Component<
 
   componentDidUpdate(prevProps: any) {
     let needFilter = false;
-    if (this.props.defaultValue !== prevProps.defaultValue) {
+    if ((this.props.defaultValue ?? []) !== prevProps.defaultValue) {
       needFilter = true;
     } else if (!optionsEquals(this.props.options, prevProps.options)) {
       needFilter = true;
@@ -81,7 +82,7 @@ class MultiSelectFilter extends Component<
   }
 
   getDefaultValue() {
-    const { filterState, defaultValue } = this.props;
+    const { filterState = {}, defaultValue = [] } = this.props;
     if (filterState && typeof filterState.filterVal !== "undefined") {
       return filterState.filterVal;
     }
@@ -90,7 +91,12 @@ class MultiSelectFilter extends Component<
 
   getOptions() {
     const optionTags = [];
-    const { options, placeholder, column, withoutEmptyOption } = this.props;
+    const {
+      options,
+      placeholder,
+      column,
+      withoutEmptyOption = false,
+    } = this.props;
     if (!withoutEmptyOption) {
       optionTags.push(
         <option key="-1" value="">
@@ -119,7 +125,7 @@ class MultiSelectFilter extends Component<
     if (value.length === 1 && value[0] === "") {
       value = [];
     }
-    this.setState(() => ({ isSelected: value.length > 0 }));
+    this.state = { isSelected: value.length > 0 };
     // TODO
     // @ts-ignore
     this.props.onFilter(this.props.column, FILTER_TYPES.MULTISELECT)(value);
@@ -132,17 +138,17 @@ class MultiSelectFilter extends Component<
 
   render() {
     const {
-      id,
+      id = null,
       style,
-      className,
-      filterState,
-      defaultValue,
+      className = "",
+      filterState = {},
+      defaultValue = [],
       onFilter,
       column,
       options,
-      comparator,
-      withoutEmptyOption,
-      caseSensitive,
+      comparator = EQ,
+      withoutEmptyOption = false,
+      caseSensitive = true,
       getFilter,
       ...rest
     } = this.props;

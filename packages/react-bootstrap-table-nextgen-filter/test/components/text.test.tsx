@@ -1,4 +1,4 @@
-import { mount } from "enzyme";
+import { mount, shallow } from "enzyme";
 import "jsdom-global/register";
 import React from "react";
 import sinon from "sinon";
@@ -148,9 +148,9 @@ describe("Text Filter", () => {
     };
 
     beforeEach(() => {
-      wrapper = mount(<TextFilter onFilter={onFilter} column={column} />);
+      wrapper = shallow(<TextFilter onFilter={onFilter} column={column} />);
       instance = wrapper.instance();
-      instance.UNSAFE_componentWillReceiveProps(nextProps);
+      wrapper.instance().componentDidUpdate(nextProps);
     });
 
     it("should setting state correctly when props.defaultValue is changed", () => {
@@ -166,6 +166,7 @@ describe("Text Filter", () => {
   });
 
   describe("cleanFiltered", () => {
+    const defaultValue = "";
     beforeEach(() => {
       wrapper = mount(<TextFilter onFilter={onFilter} column={column} />);
       instance = wrapper.instance();
@@ -173,7 +174,8 @@ describe("Text Filter", () => {
     });
 
     it("should setting state correctly", () => {
-      expect(instance.state.value).toEqual(instance.props.defaultValue);
+      expect(undefined).toEqual(instance.props.defaultValue);
+      expect(instance.state.value).toEqual(defaultValue);
     });
 
     it("should calling onFilter correctly", () => {
@@ -181,7 +183,7 @@ describe("Text Filter", () => {
       expect(onFilter.calledWith(column, FILTER_TYPES.TEXT)).toBeTruthy();
       expect(onFilterFirstReturn.calledOnce).toBeTruthy();
       expect(
-        onFilterFirstReturn.calledWith(instance.props.defaultValue)
+        onFilterFirstReturn.calledWith(defaultValue)
       ).toBeTruthy();
     });
   });

@@ -68,7 +68,7 @@ class DateFilter extends Component<DateFilterProps> {
 
   getComparatorOptions() {
     const optionTags = [];
-    const { withoutEmptyComparatorOption } = this.props;
+    const { withoutEmptyComparatorOption = false } = this.props;
     if (!withoutEmptyComparatorOption) {
       optionTags.push(<option key="-1" />);
     }
@@ -83,7 +83,8 @@ class DateFilter extends Component<DateFilterProps> {
   }
 
   getDefaultComparator() {
-    const { defaultValue, filterState } = this.props;
+    const { defaultValue = { date: undefined, comparator: "" }, filterState = {} } =
+      this.props;
     if (filterState && filterState.filterVal) {
       return filterState.filterVal.comparator;
     }
@@ -95,7 +96,7 @@ class DateFilter extends Component<DateFilterProps> {
 
   getDefaultDate() {
     // Set the appropriate format for the input type=date, i.e. "YYYY-MM-DD"
-    const { defaultValue, filterState } = this.props;
+    const { defaultValue = { date: undefined, comparator: "" }, filterState = {} } = this.props;
     if (filterState && filterState.filterVal && filterState.filterVal.date) {
       return dateParser(filterState.filterVal.date);
     }
@@ -109,7 +110,7 @@ class DateFilter extends Component<DateFilterProps> {
     // if (!comparator || !value) {
     //  return;
     // }
-    const { column, onFilter, delay } = this.props;
+    const { column, onFilter, delay = 0 } = this.props;
     const execute = () => {
       // Incoming value should always be a string, and the defaultDate
       // above is implemented as an empty string, so we can just check for that.
@@ -131,15 +132,15 @@ class DateFilter extends Component<DateFilterProps> {
 
   render() {
     const {
-      id,
+      id = null,
       placeholder,
       column: { dataField, text },
       style,
       comparatorStyle,
       dateStyle,
-      className,
-      comparatorClassName,
-      dateClassName,
+      className = "",
+      comparatorClassName = "",
+      dateClassName = "",
     } = this.props;
 
     const comparatorElmId = `date-filter-comparator-${dataField}${

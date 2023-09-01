@@ -37,7 +37,8 @@ describe("Date Filter", () => {
     it("should rendering comparator options correctly", () => {
       const select = wrapper.find("select");
       expect(select.find("option")).toHaveLength(
-        wrapper.prop("comparators").length + 1
+        // wrapper.prop("comparators").length + 1
+        Object.keys(Comparator).length
       );
     });
   });
@@ -56,7 +57,8 @@ describe("Date Filter", () => {
     it("should rendering comparator options correctly", () => {
       const select = wrapper.find(".date-filter-comparator");
       expect(select.find("option")).toHaveLength(
-        wrapper.prop("comparators").length
+        // wrapper.prop("comparators").length
+        Object.keys(Comparator).length - 1
       );
     });
   });

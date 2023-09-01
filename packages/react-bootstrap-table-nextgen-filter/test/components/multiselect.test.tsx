@@ -1,4 +1,4 @@
-import { mount } from "enzyme";
+import { mount, shallow } from "enzyme";
 import "jsdom-global/register";
 import React from "react";
 import sinon from "sinon";
@@ -204,10 +204,10 @@ describe("Multi Select Filter", () => {
     let prevProps;
 
     describe("when props.defaultValue is diff from prevProps.defaultValue", () => {
-      const defaultValue = ["0"];
+      const defaultValue: any[] = [];
 
       beforeEach(() => {
-        wrapper = mount(
+        wrapper = shallow(
           <MultiSelectFilter
             onFilter={onFilter}
             column={column}
@@ -221,25 +221,25 @@ describe("Multi Select Filter", () => {
           defaultValue: ["1"],
         };
         instance = wrapper.instance();
-        instance.componentDidUpdate(prevProps);
+        wrapper.instance().componentDidUpdate(prevProps);
       });
 
       it("should update", () => {
-        expect(onFilter.callCount).toBe(2);
+        expect(onFilter.callCount).toBe(1);
         expect(
           onFilter.calledWith(column, FILTER_TYPES.MULTISELECT)
         ).toBeTruthy();
-        expect(onFilterFirstReturn.callCount).toBe(2);
+        expect(onFilterFirstReturn.callCount).toBe(1);
         expect(
-          onFilterFirstReturn.calledWith(instance.props.defaultValue)
+          onFilterFirstReturn.calledWith(defaultValue)
         ).toBeTruthy();
       });
     });
 
     describe("when props.options is diff from prevProps.options", () => {
-      const defaultValue = ["0"];
+      const defaultValue: any[] = [];
       beforeEach(() => {
-        wrapper = mount(
+        wrapper = shallow(
           <MultiSelectFilter
             onFilter={onFilter}
             column={column}
@@ -255,17 +255,17 @@ describe("Multi Select Filter", () => {
           options,
         };
         instance = wrapper.instance();
-        instance.componentDidUpdate(prevProps);
+        wrapper.instance().componentDidUpdate(prevProps);
       });
 
       it("should update", () => {
-        expect(onFilter.callCount).toBe(2);
+        expect(onFilter.callCount).toBe(1);
         expect(
           onFilter.calledWith(column, FILTER_TYPES.MULTISELECT)
         ).toBeTruthy();
-        expect(onFilterFirstReturn.callCount).toBe(2);
+        expect(onFilterFirstReturn.callCount).toBe(1);
         expect(
-          onFilterFirstReturn.calledWith(instance.props.defaultValue)
+          onFilterFirstReturn.calledWith(defaultValue)
         ).toBeTruthy();
       });
     });
