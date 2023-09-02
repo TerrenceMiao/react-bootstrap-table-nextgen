@@ -621,7 +621,7 @@ export interface BootstrapTableRef<T extends object = any> {
 
 export interface BootstrapTableProps<T extends object = any, K = number> {
   /**
-   * Tells react-bootstrap-table2 which column is unique.
+   * Tells react-bootstrap-table-nextgen which column is unique.
    */
   keyField: string;
   /**
@@ -792,7 +792,7 @@ export type TableColumnFilterProps<FV = any, T extends object = any> = Partial<{
    */
   getFilter: (filter: (value: FV) => void | T[]) => void;
   /**
-   * Register a listener which will be called when column filter being triggered. If you return an array value, react-bootstrap-table2 will adopt this value as the final filtered result.
+   * Register a listener which will be called when column filter being triggered. If you return an array value, react-bootstrap-table-nextgen will adopt this value as the final filtered result.
    */
   onFilter: (filterValue: FV) => void | T[];
 }>;

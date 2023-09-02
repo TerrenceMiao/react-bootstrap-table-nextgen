@@ -135,10 +135,29 @@ function umd(done) {
   )();
   done();
 }
+function umdnextgen() {
+  return gulp.src('./webpack/nextgen.umd.babel.js').pipe(shell(['webpack --config <%= file.path %>']));
+}
+function umdtoolkit() {
+  return gulp.src('./webpack/toolkit.umd.babel.js').pipe(shell(['webpack --config <%= file.path %>']));
+}
+function umdoverlay() {
+  return gulp.src('./webpack/overlay.umd.babel.js').pipe(shell(['webpack --config <%= file.path %>']));
+}
+function umdpaginator() {
+  return gulp.src('./webpack/paginator.umd.babel.js').pipe(shell(['webpack --config <%= file.path %>']));
+}
+function umdfilter() {
+  return gulp.src('./webpack/filter.umd.babel.js').pipe(shell(['webpack --config <%= file.path %>']));
+}
+function umdeditor() {
+  return gulp.src('./webpack/editor.umd.babel.js').pipe(shell(['webpack --config <%= file.path %>']));
+}
 
-const buildJS = gulp.parallel(umd, scripts, declaration, map);
+const buildUMD = gulp.series(umdnextgen, umdtoolkit, umdoverlay, umdpaginator, umdfilter, umdeditor);
+const buildJS = gulp.parallel(scripts, declaration, map);
 const buildCSS = styles;
-const build = gulp.series(clean, gulp.parallel(buildJS, buildCSS));
+const build = gulp.series(clean, gulp.parallel(buildUMD, buildJS, buildCSS));
 
 gulp.task('prod', build);
 gulp.task('default', build);
