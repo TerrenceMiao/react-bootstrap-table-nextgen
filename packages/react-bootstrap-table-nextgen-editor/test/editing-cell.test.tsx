@@ -349,7 +349,7 @@ describe("EditingCell", () => {
       it("should render TextEditor with correct shake and animated class", () => {
         const editor = wrapper.find(TextEditor);
         expect(editor.html()).toEqual(
-          '<input type="text" class="form-control editor edit-text animated shake">'
+          '<input type="text" class="animated shake form-control editor edit-text">'
         );
         /* Following is better, but it will not work after upgrade React to 16 and enzyme... */
         // expect(editor.length).toEqual(1);

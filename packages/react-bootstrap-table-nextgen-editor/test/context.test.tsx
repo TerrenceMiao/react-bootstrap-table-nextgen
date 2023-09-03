@@ -8,7 +8,7 @@ import {
   CLICK_TO_CELL_EDIT,
   DBCLICK_TO_CELL_EDIT,
   DELAY_FOR_DBCLICK,
-} from "../";
+} from "..";
 import cellEditFactory from "../index";
 import createCellEditContext, { Consumer } from "../src/context";
 
@@ -49,7 +49,7 @@ describe("CellEditContext", () => {
 
   const defaultSelectRow = {};
 
-  const mockBase = jest.fn(() => null);
+  const mockBase = jest.fn((props: any) => null);
 
   const handleCellChange = jest.fn();
 
@@ -75,7 +75,7 @@ describe("CellEditContext", () => {
         selectRow={selectRow}
         data={data}
       >
-        <Consumer>{(cellEditProps) => mockBase()}</Consumer>
+        <Consumer>{(cellEditProps) => mockBase(cellEditProps)}</Consumer>
       </CellEditContext.Provider>
     );
   }

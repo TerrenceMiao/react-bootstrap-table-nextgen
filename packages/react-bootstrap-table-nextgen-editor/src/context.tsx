@@ -49,7 +49,7 @@ export default (
       };
     }
 
-    componentDidUpdate(nextProps: any) {
+    UNSAFE_componentWillReceiveProps(nextProps: any) {
       if (nextProps.cellEdit && isRemoteCellEdit()) {
         if (nextProps.cellEdit.options.errorMessage) {
           this.setState(() => ({
@@ -103,8 +103,9 @@ export default (
           column.dataField,
           newValue
         );
-        if (_.isFunction(afterSaveCell))
+        if (_.isFunction(afterSaveCell)) {
           afterSaveCell(oldValue, newValue, row, column);
+        }
         this.completeEditing();
       }
     }
@@ -126,8 +127,9 @@ export default (
       };
 
       const { selectRow } = this.props;
-      if (!selectRow || selectRow.clickToEdit || !selectRow.clickToSelect)
+      if (!selectRow || selectRow.clickToEdit || !selectRow.clickToSelect) {
         editing();
+      }
     }
 
     escapeEditing() {
