@@ -1,14 +1,22 @@
 /* eslint no-return-assign: 0 */
-import React, { Component } from 'react';
-import cs from 'classnames';
-import PropTypes from 'prop-types';
+import cs from "classnames";
+import React, { Component } from "react";
 
-class DateEditor extends Component {
+interface DateEditorProps {
+  className?: string;
+  defaultValue?: string;
+  didMount?: () => void;
+}
+
+class DateEditor extends Component<DateEditorProps> {
+  date: any;
   componentDidMount() {
-    const { defaultValue, didMount } = this.props;
+    const { defaultValue = "", didMount } = this.props;
     this.date.valueAsDate = new Date(defaultValue);
     this.date.focus();
-    if (didMount) didMount();
+    if (didMount) {
+      didMount();
+    }
   }
 
   getValue() {
@@ -16,30 +24,31 @@ class DateEditor extends Component {
   }
 
   render() {
-    const { defaultValue, didMount, className, ...rest } = this.props;
-    const editorClass = cs('form-control editor edit-date', className);
+    const { defaultValue = "", didMount, className = "", ...rest } = this.props;
+    const editorClass = cs(className, "form-control editor edit-date");
     return (
       <input
-        ref={ node => this.date = node }
+        ref={(node) => (this.date = node)}
         type="date"
-        className={ editorClass }
-        { ...rest }
+        className={editorClass}
+        {...rest}
       />
     );
   }
 }
 
-DateEditor.propTypes = {
-  className: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.object
-  ]),
-  defaultValue: PropTypes.string,
-  didMount: PropTypes.func
-};
-DateEditor.defaultProps = {
-  className: '',
-  defaultValue: '',
-  didMount: undefined
-};
+// DateEditor.propTypes = {
+//   className: PropTypes.oneOfType([
+//     PropTypes.string,
+//     PropTypes.object
+//   ]),
+//   defaultValue: PropTypes.string,
+//   didMount: PropTypes.func
+// };
+// DateEditor.defaultProps = {
+//   className: '',
+//   defaultValue: '',
+//   didMount: undefined
+// };
+
 export default DateEditor;

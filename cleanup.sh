@@ -10,6 +10,7 @@ find packages/react-bootstrap-table-nextgen -type f -name "*.js" -exec rm {} \;
 rm -rf packages/react-bootstrap-table-nextgen-editor/dist
 rm -rf packages/react-bootstrap-table-nextgen-editor/lib
 rm -rf packages/react-bootstrap-table-nextgen-editor/node_modules
+find packages/react-bootstrap-table-nextgen-editor -type f -name "*.js" -exec rm {} \;
 
 rm -rf packages/react-bootstrap-table-nextgen-example/dist
 rm -rf packages/react-bootstrap-table-nextgen-example/lib

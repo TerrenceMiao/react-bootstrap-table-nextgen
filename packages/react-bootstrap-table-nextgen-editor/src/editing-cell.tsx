@@ -3,20 +3,47 @@
 /* eslint class-methods-use-this: 0 */
 /* eslint jsx-a11y/no-noninteractive-element-interactions: 0 */
 /* eslint camelcase: 0 */
-import React, { Component } from 'react';
-import cs from 'classnames';
-import PropTypes from 'prop-types';
+import cs from "classnames";
+import PropTypes from "prop-types";
+import React, { Component } from "react";
 
-import DropdownEditor from './dropdown-editor';
-import TextAreaEditor from './textarea-editor';
-import CheckBoxEditor from './checkbox-editor';
-import DateEditor from './date-editor';
-import TextEditor from './text-editor';
-import EditorIndicator from './editor-indicator';
-import { TIME_TO_CLOSE_MESSAGE, EDITTYPE } from './const';
+import { EDITTYPE, TIME_TO_CLOSE_MESSAGE } from "..";
+import CheckBoxEditor from "./checkbox-editor";
+import DateEditor from "./date-editor";
+import DropdownEditor from "./dropdown-editor";
+import EditorIndicator from "./editor-indicator";
+import TextEditor from "./text-editor";
+import TextAreaEditor from "./textarea-editor";
 
-export default (_, onStartEdit) =>
-  class EditingCell extends Component {
+interface EditingCellProps {
+  row: object;
+  rowIndex: number;
+  column: {
+    dataField: any;
+    validator?: any;
+    editorClasses?: any;
+    editorStyle?: any;
+    editor?: { type: any, options?: any };
+    editorRenderer?: Function;
+    text: any;
+  };
+  columnIndex: number;
+  onUpdate: (row: object, column: object, value: any) => void;
+  onEscape: () => void;
+  timeToCloseMessage?: number;
+  autoSelectText?: boolean;
+  className?: string;
+  style?: object;
+  onErrorMessageDisappear?: any;
+  blurToSave?: boolean;
+}
+
+interface EditingCellState {
+  invalidMessage: any;
+}
+
+export default (_: any, onStartEdit?: any) =>
+  class EditingCell extends Component<EditingCellProps, EditingCellState> {
     static propTypes = {
       row: PropTypes.object.isRequired,
       rowIndex: PropTypes.number.isRequired,
@@ -27,17 +54,20 @@ export default (_, onStartEdit) =>
       timeToCloseMessage: PropTypes.number,
       autoSelectText: PropTypes.bool,
       className: PropTypes.string,
-      style: PropTypes.object
-    }
+      style: PropTypes.object,
+    };
 
     static defaultProps = {
       timeToCloseMessage: TIME_TO_CLOSE_MESSAGE,
       className: null,
       autoSelectText: false,
-      style: {}
-    }
+      style: {},
+    };
 
-    constructor(props) {
+    editor: any;
+    indicatorTimer: any;
+
+    constructor(props: any) {
       super(props);
       this.indicatorTimer = null;
       this.clearTimer = this.clearTimer.bind(this);
@@ -48,7 +78,7 @@ export default (_, onStartEdit) =>
       this.asyncbeforeCompete = this.asyncbeforeCompete.bind(this);
       this.displayErrorMessage = this.displayErrorMessage.bind(this);
       this.state = {
-        invalidMessage: null
+        invalidMessage: null,
       };
     }
 
@@ -56,11 +86,11 @@ export default (_, onStartEdit) =>
       this.clearTimer();
     }
 
-    UNSAFE_componentWillReceiveProps({ message }) {
+    componentDidUpdate({ message }: any) {
       if (_.isDefined(message)) {
         this.createTimer();
         this.setState(() => ({
-          invalidMessage: message
+          invalidMessage: message,
         }));
       }
     }
@@ -76,21 +106,22 @@ export default (_, onStartEdit) =>
       const { timeToCloseMessage, onErrorMessageDisappear } = this.props;
       this.indicatorTimer = _.sleep(() => {
         this.setState(() => ({
-          invalidMessage: null
+          invalidMessage: null,
         }));
         if (_.isFunction(onErrorMessageDisappear)) onErrorMessageDisappear();
       }, timeToCloseMessage);
     }
 
-    displayErrorMessage(message) {
+    displayErrorMessage(message: any) {
       this.setState(() => ({
-        invalidMessage: message
+        invalidMessage: message,
       }));
       this.createTimer();
     }
 
-    asyncbeforeCompete(newValue) {
+    asyncbeforeCompete(newValue: any) {
       return (result = { valid: true }) => {
+        // @ts-ignore
         const { valid, message } = result;
         const { onUpdate, row, column } = this.props;
         if (!valid) {
@@ -101,7 +132,7 @@ export default (_, onStartEdit) =>
       };
     }
 
-    beforeComplete(newValue) {
+    beforeComplete(newValue: any) {
       const { onUpdate, row, column } = this.props;
       if (_.isFunction(column.validator)) {
         const validateForm = column.validator(
@@ -131,17 +162,19 @@ export default (_, onStartEdit) =>
       }
     }
 
-    handleKeyDown(e) {
+    handleKeyDown(e: any) {
       const { onEscape } = this.props;
-      if (e.keyCode === 27) { // ESC
+      if (e.keyCode === 27) {
+        // ESC
         onEscape();
-      } else if (e.keyCode === 13) { // ENTER
+      } else if (e.keyCode === 13) {
+        // ENTER
         this.beforeComplete(this.editor.getValue());
       }
     }
 
-    handleClick(e) {
-      if (e.target.tagName !== 'TD') {
+    handleClick(e: any) {
+      if (e.target.tagName !== "TD") {
         // To avoid the row selection event be triggered,
         // When user define selectRow.clickToSelect and selectRow.clickToEdit
         // We shouldn't trigger selection event even if user click on the cell editor(input)
@@ -151,15 +184,28 @@ export default (_, onStartEdit) =>
 
     render() {
       let editor;
-      const { row, column, className, style, rowIndex, columnIndex, autoSelectText } = this.props;
+      const {
+        row,
+        column,
+        className,
+        style,
+        rowIndex,
+        columnIndex,
+        autoSelectText,
+      } = this.props;
       const { dataField } = column;
 
       const value = _.get(row, dataField);
       const hasError = _.isDefined(this.state.invalidMessage);
 
-      let customEditorClass = column.editorClasses || '';
+      let customEditorClass = column.editorClasses || "";
       if (_.isFunction(column.editorClasses)) {
-        customEditorClass = column.editorClasses(value, row, rowIndex, columnIndex);
+        customEditorClass = column.editorClasses(
+          value,
+          row,
+          rowIndex,
+          columnIndex
+        );
       }
 
       let editorStyle = column.editorStyle || {};
@@ -167,22 +213,28 @@ export default (_, onStartEdit) =>
         editorStyle = column.editorStyle(value, row, rowIndex, columnIndex);
       }
 
-      const editorClass = cs({
-        animated: hasError,
-        shake: hasError
-      }, customEditorClass);
+      const editorClass = cs(
+        {
+          animated: hasError,
+          shake: hasError,
+        },
+        customEditorClass
+      );
 
       let editorProps = {
-        ref: node => this.editor = node,
+        ref: (node: any) => (this.editor = node),
         defaultValue: value,
         style: editorStyle,
         className: editorClass,
         onKeyDown: this.handleKeyDown,
-        onBlur: this.handleBlur
+        onBlur: this.handleBlur,
+        didMount: () => {},
+        onUpdate: (newValue: any) => {},
       };
 
       if (onStartEdit) {
-        editorProps.didMount = () => onStartEdit(row, column, rowIndex, columnIndex);
+        editorProps.didMount = () =>
+          onStartEdit(row, column, rowIndex, columnIndex);
       }
 
       const isDefaultEditorDefined = _.isObject(column.editor);
@@ -190,37 +242,62 @@ export default (_, onStartEdit) =>
       if (isDefaultEditorDefined) {
         editorProps = {
           ...editorProps,
-          ...column.editor
+          ...column.editor,
         };
       } else if (_.isFunction(column.editorRenderer)) {
         editorProps = {
           ...editorProps,
-          onUpdate: this.beforeComplete
+          onUpdate: this.beforeComplete,
         };
       }
 
       if (_.isFunction(column.editorRenderer)) {
-        editor = column.editorRenderer(editorProps, value, row, column, rowIndex, columnIndex);
-      } else if (isDefaultEditorDefined && column.editor.type === EDITTYPE.SELECT) {
-        editor = <DropdownEditor { ...editorProps } row={ row } column={ column } />;
-      } else if (isDefaultEditorDefined && column.editor.type === EDITTYPE.TEXTAREA) {
-        editor = <TextAreaEditor { ...editorProps } autoSelectText={ autoSelectText } />;
-      } else if (isDefaultEditorDefined && column.editor.type === EDITTYPE.CHECKBOX) {
-        editor = <CheckBoxEditor { ...editorProps } />;
-      } else if (isDefaultEditorDefined && column.editor.type === EDITTYPE.DATE) {
-        editor = <DateEditor { ...editorProps } />;
+        editor = column.editorRenderer!(
+          editorProps,
+          value,
+          row,
+          column,
+          rowIndex,
+          columnIndex
+        );
+      } else if (
+        isDefaultEditorDefined &&
+        column.editor?.type === EDITTYPE.SELECT
+      ) {
+        editor = <DropdownEditor {...editorProps} row={row} column={column} />;
+      } else if (
+        isDefaultEditorDefined &&
+        column.editor?.type === EDITTYPE.TEXTAREA
+      ) {
+        editor = (
+          <TextAreaEditor {...editorProps} autoSelectText={autoSelectText} />
+        );
+      } else if (
+        isDefaultEditorDefined &&
+        column.editor?.type === EDITTYPE.CHECKBOX
+      ) {
+        editor = <CheckBoxEditor {...editorProps} />;
+      } else if (
+        isDefaultEditorDefined &&
+        column.editor?.type === EDITTYPE.DATE
+      ) {
+        editor = <DateEditor {...editorProps} />;
       } else {
-        editor = <TextEditor { ...editorProps } autoSelectText={ autoSelectText } />;
+        editor = (
+          <TextEditor {...editorProps} autoSelectText={autoSelectText} />
+        );
       }
 
       return (
         <td
-          className={ cs('react-bootstrap-table-editing-cell', className) }
-          style={ style }
-          onClick={ this.handleClick }
+          className={cs("react-bootstrap-table-editing-cell", className)}
+          style={style}
+          onClick={this.handleClick}
         >
-          { editor }
-          { hasError ? <EditorIndicator invalidMessage={ this.state.invalidMessage } /> : null }
+          {editor}
+          {hasError ? (
+            <EditorIndicator invalidMessage={this.state.invalidMessage} />
+          ) : null}
         </td>
       );
     }

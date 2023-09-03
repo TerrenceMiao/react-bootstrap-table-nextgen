@@ -2,24 +2,28 @@
 /* eslint react/require-default-props: 0 */
 /* eslint camelcase: 0 */
 /* eslint react/no-unused-prop-types: 0 */
-import React from 'react';
-import PropTypes from 'prop-types';
-import { CLICK_TO_CELL_EDIT, DBCLICK_TO_CELL_EDIT } from './const';
+import PropTypes from "prop-types";
+import React from "react";
+import { CLICK_TO_CELL_EDIT, CellEditProviderProps, CellEditProviderState, DBCLICK_TO_CELL_EDIT } from "..";
 
-const CellEditContext = React.createContext();
+const CellEditContext = React.createContext<any>(null);
 
 export default (
-  _,
-  dataOperator,
-  isRemoteCellEdit,
-  handleCellChange
+  _: any,
+  dataOperator?: any,
+  isRemoteCellEdit?: any,
+  handleCellChange?: any
 ) => {
-  class CellEditProvider extends React.Component {
+  class CellEditProvider extends React.Component<
+    CellEditProviderProps,
+    CellEditProviderState
+  > {
     static propTypes = {
       data: PropTypes.array.isRequired,
       selectRow: PropTypes.object,
       options: PropTypes.shape({
-        mode: PropTypes.oneOf([CLICK_TO_CELL_EDIT, DBCLICK_TO_CELL_EDIT]).isRequired,
+        mode: PropTypes.oneOf([CLICK_TO_CELL_EDIT, DBCLICK_TO_CELL_EDIT])
+          .isRequired,
         onErrorMessageDisappear: PropTypes.func,
         blurToSave: PropTypes.bool,
         beforeSaveCell: PropTypes.func,
@@ -27,11 +31,11 @@ export default (
         onStartEdit: PropTypes.func,
         nonEditableRows: PropTypes.func,
         timeToCloseMessage: PropTypes.number,
-        errorMessage: PropTypes.any
-      })
-    }
+        errorMessage: PropTypes.any,
+      }),
+    };
 
-    constructor(props) {
+    constructor(props: any) {
       super(props);
       this.doUpdate = this.doUpdate.bind(this);
       this.startEditing = this.startEditing.bind(this);
@@ -41,15 +45,15 @@ export default (
       this.state = {
         ridx: null,
         cidx: null,
-        message: null
+        message: null,
       };
     }
 
-    UNSAFE_componentWillReceiveProps(nextProps) {
+    componentDidUpdate(nextProps: any) {
       if (nextProps.cellEdit && isRemoteCellEdit()) {
         if (nextProps.cellEdit.options.errorMessage) {
           this.setState(() => ({
-            message: nextProps.cellEdit.options.errorMessage
+            message: nextProps.cellEdit.options.errorMessage,
           }));
         } else {
           this.escapeEditing();
@@ -57,7 +61,7 @@ export default (
       }
     }
 
-    handleCellUpdate(row, column, newValue) {
+    handleCellUpdate(row: any, column: any, newValue: any) {
       const newValueWithType = dataOperator.typeConvert(column.type, newValue);
       const { cellEdit } = this.props;
       const { beforeSaveCell } = cellEdit.options;
@@ -84,7 +88,7 @@ export default (
       this.doUpdate(row, column, newValueWithType);
     }
 
-    doUpdate(row, column, newValue) {
+    doUpdate(row: any, column: any, newValue: any) {
       const { keyField, cellEdit, data } = this.props;
       const { afterSaveCell } = cellEdit.options;
       const rowId = _.get(row, keyField);
@@ -92,8 +96,15 @@ export default (
       if (isRemoteCellEdit()) {
         handleCellChange(rowId, column.dataField, newValue);
       } else {
-        dataOperator.editCell(data, keyField, rowId, column.dataField, newValue);
-        if (_.isFunction(afterSaveCell)) afterSaveCell(oldValue, newValue, row, column);
+        dataOperator.editCell(
+          data,
+          keyField,
+          rowId,
+          column.dataField,
+          newValue
+        );
+        if (_.isFunction(afterSaveCell))
+          afterSaveCell(oldValue, newValue, row, column);
         this.completeEditing();
       }
     }
@@ -102,26 +113,27 @@ export default (
       this.setState(() => ({
         ridx: null,
         cidx: null,
-        message: null
+        message: null,
       }));
     }
 
-    startEditing(ridx, cidx) {
+    startEditing(ridx: any, cidx: any) {
       const editing = () => {
         this.setState(() => ({
           ridx,
-          cidx
+          cidx,
         }));
       };
 
       const { selectRow } = this.props;
-      if (!selectRow || (selectRow.clickToEdit || !selectRow.clickToSelect)) editing();
+      if (!selectRow || selectRow.clickToEdit || !selectRow.clickToSelect)
+        editing();
     }
 
     escapeEditing() {
       this.setState(() => ({
         ridx: null,
-        cidx: null
+        cidx: null,
       }));
     }
 
@@ -130,7 +142,7 @@ export default (
         cellEdit: {
           options: { nonEditableRows, errorMessage, ...optionsRest },
           ...cellEditRest
-        }
+        },
       } = this.props;
 
       const newCellEdit = {
@@ -140,20 +152,18 @@ export default (
         nonEditableRows: _.isDefined(nonEditableRows) ? nonEditableRows() : [],
         onStart: this.startEditing,
         onEscape: this.escapeEditing,
-        onUpdate: this.handleCellUpdate
+        onUpdate: this.handleCellUpdate,
       };
 
       return (
-        <CellEditContext.Provider
-          value={ { ...newCellEdit } }
-        >
-          { this.props.children }
+        <CellEditContext.Provider value={{ ...newCellEdit }}>
+          {this.props.children}
         </CellEditContext.Provider>
       );
     }
   }
   return {
-    Provider: CellEditProvider
+    Provider: CellEditProvider,
   };
 };
 

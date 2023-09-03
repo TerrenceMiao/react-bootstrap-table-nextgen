@@ -1,11 +1,11 @@
 /* eslint react/prop-types: 0 */
-import React from 'react';
-import { Consumer } from './context';
-import createEditingCell from './editing-cell';
+import React from "react";
+import { Consumer } from "./context";
+import createEditingCell from "./editing-cell";
 
-export default (_, onStartEdit) => {
+export default (_: any, onStartEdit?: any) => {
   const EditingCell = createEditingCell(_, onStartEdit);
-  const renderWithEditingCell = (props, cellEdit) => {
+  const renderWithEditingCell = (props: any, cellEdit: any) => {
     const content = _.get(props.row, props.column.dataField);
     let editCellstyle = props.column.editCellStyle || {};
     let editCellclasses = props.column.editCellClasses;
@@ -22,22 +22,21 @@ export default (_, onStartEdit) => {
         content,
         props.row,
         props.rowIndex,
-        props.columnIndex);
+        props.columnIndex
+      );
     }
 
     return (
       <EditingCell
-        { ...props }
-        className={ editCellclasses }
-        style={ editCellstyle }
-        { ...cellEdit }
+        {...props}
+        className={editCellclasses}
+        style={editCellstyle}
+        {...cellEdit}
       />
     );
   };
 
-  return props => (
-    <Consumer>
-      { cellEdit => renderWithEditingCell(props, cellEdit) }
-    </Consumer>
+  return (props: any) => (
+    <Consumer>{(cellEdit) => renderWithEditingCell(props, cellEdit)}</Consumer>
   );
 };

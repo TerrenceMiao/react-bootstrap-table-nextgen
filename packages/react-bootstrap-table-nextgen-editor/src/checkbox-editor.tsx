@@ -1,13 +1,31 @@
 /* eslint no-return-assign: 0 */
-import React, { Component } from 'react';
-import cs from 'classnames';
-import PropTypes from 'prop-types';
+import cs from "classnames";
+import React, { ChangeEvent, Component } from "react";
 
-class CheckBoxEditor extends Component {
-  constructor(props) {
+interface CheckBoxEditorProps {
+  className?: string;
+  value?: string;
+  defaultValue?: any;
+  onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
+  didMount?: () => void;
+}
+
+interface CheckBoxEditorState {
+  checked: boolean;
+}
+
+class CheckBoxEditor extends Component<
+  CheckBoxEditorProps,
+  CheckBoxEditorState
+> {
+  checkbox: any;
+
+  constructor(props: CheckBoxEditorProps) {
     super(props);
     this.state = {
-      checked: props.defaultValue.toString() === props.value.split(':')[0]
+      checked:
+        (props.defaultValue ?? false).toString() ===
+        (props.value ?? "on:off").split(":")[0],
     };
     this.handleChange = this.handleChange.bind(this);
   }
@@ -19,47 +37,51 @@ class CheckBoxEditor extends Component {
   }
 
   getValue() {
-    const [positive, negative] = this.props.value.split(':');
+    const [positive, negative] = (this.props.value ?? "on:off").split(":");
     return this.checkbox.checked ? positive : negative;
   }
 
-  handleChange(e) {
+  handleChange(e: any) {
     if (this.props.onChange) this.props.onChange(e);
     const { target } = e;
     this.setState(() => ({ checked: target.checked }));
   }
 
   render() {
-    const { defaultValue, didMount, className, ...rest } = this.props;
-    const editorClass = cs('editor edit-chseckbox checkbox', className);
+    const {
+      defaultValue = false,
+      didMount,
+      className = "",
+      ...rest
+    } = this.props;
+    const editorClass = cs("editor edit-chseckbox checkbox", className);
     return (
       <input
-        ref={ node => this.checkbox = node }
+        ref={(node) => (this.checkbox = node)}
         type="checkbox"
-        className={ editorClass }
-        { ...rest }
-        checked={ this.state.checked }
-        onChange={ this.handleChange }
+        className={editorClass}
+        {...rest}
+        checked={this.state.checked}
+        onChange={this.handleChange}
       />
     );
   }
 }
 
-CheckBoxEditor.propTypes = {
-  className: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.object
-  ]),
-  value: PropTypes.string,
-  defaultValue: PropTypes.any,
-  onChange: PropTypes.func,
-  didMount: PropTypes.func
-};
-CheckBoxEditor.defaultProps = {
-  className: '',
-  value: 'on:off',
-  defaultValue: false,
-  onChange: undefined,
-  didMount: undefined
-};
+// CheckBoxEditor.propTypes = {
+//   className: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+//   value: PropTypes.string,
+//   defaultValue: PropTypes.any,
+//   onChange: PropTypes.func,
+//   didMount: PropTypes.func,
+// };
+
+// CheckBoxEditor.defaultProps = {
+//   className: "",
+//   value: "on:off",
+//   defaultValue: false,
+//   onChange: undefined,
+//   didMount: undefined,
+// };
+
 export default CheckBoxEditor;
