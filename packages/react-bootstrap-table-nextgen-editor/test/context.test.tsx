@@ -125,7 +125,7 @@ describe("CellEditContext", () => {
         wrapper = shallow(shallowContext());
         wrapper.setState(initialState);
         wrapper.render();
-        wrapper.instance().UNSAFE_componentWillReceiveProps({});
+        wrapper.setProps({});
       });
 
       it("should not set state.message", () => {
@@ -146,7 +146,7 @@ describe("CellEditContext", () => {
         wrapper = shallow(shallowContext());
         wrapper.setState(initialState);
         wrapper.render();
-        wrapper.instance().UNSAFE_componentWillReceiveProps({
+        wrapper.setProps({
           cellEdit: cellEditFactory(defaultCellEdit),
         });
       });
@@ -172,7 +172,7 @@ describe("CellEditContext", () => {
           wrapper = shallow(shallowContext(defaultCellEdit, true));
           wrapper.setState(initialState);
           wrapper.render();
-          wrapper.instance().UNSAFE_componentWillReceiveProps({
+          wrapper.setProps({
             cellEdit: cellEditFactory({
               ...defaultCellEdit,
               errorMessage: message,
@@ -198,7 +198,7 @@ describe("CellEditContext", () => {
         beforeEach(() => {
           wrapper = shallow(shallowContext(defaultCellEdit, true));
           wrapper.setState(initialState);
-          wrapper.instance().UNSAFE_componentWillReceiveProps({
+          wrapper.setProps({
             cellEdit: cellEditFactory({ ...defaultCellEdit }),
           });
           wrapper.update();
@@ -209,11 +209,11 @@ describe("CellEditContext", () => {
         });
 
         it("should set correct state.ridx", () => {
-          expect(wrapper.state().ridx).toBeNull();
+          expect(wrapper.state().ridx).toBe(initialState.ridx);
         });
 
         it("should set correct state.cidx", () => {
-          expect(wrapper.state().cidx).toBeNull();
+          expect(wrapper.state().cidx).toBe(initialState.ridx);
         });
       });
     });

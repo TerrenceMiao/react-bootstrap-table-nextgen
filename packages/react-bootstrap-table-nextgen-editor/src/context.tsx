@@ -4,7 +4,12 @@
 /* eslint react/no-unused-prop-types: 0 */
 import PropTypes from "prop-types";
 import React from "react";
-import { CLICK_TO_CELL_EDIT, CellEditProviderProps, CellEditProviderState, DBCLICK_TO_CELL_EDIT } from "..";
+import {
+  CLICK_TO_CELL_EDIT,
+  CellEditProviderProps,
+  CellEditProviderState,
+  DBCLICK_TO_CELL_EDIT,
+} from "..";
 
 const CellEditContext = React.createContext<any>(null);
 
@@ -49,14 +54,22 @@ export default (
       };
     }
 
-    UNSAFE_componentWillReceiveProps(nextProps: any) {
-      if (nextProps.cellEdit && isRemoteCellEdit()) {
+    // eslint-disable-next-line consistent-return
+    static getDerivedStateFromProps(nextProps: any, prevState: any) {
+      if (
+        nextProps.cellEdit &&
+        _.isFunction(isRemoteCellEdit) &&
+        isRemoteCellEdit()
+      ) {
         if (nextProps.cellEdit.options.errorMessage) {
-          this.setState(() => ({
+          return {
             message: nextProps.cellEdit.options.errorMessage,
-          }));
+          };
         } else {
-          this.escapeEditing();
+          return {
+            ridx: prevState.ridx,
+            cidx: prevState.cidx,
+          };
         }
       }
     }
