@@ -12,9 +12,9 @@ rm -rf packages/react-bootstrap-table-nextgen-editor/lib
 rm -rf packages/react-bootstrap-table-nextgen-editor/node_modules
 find packages/react-bootstrap-table-nextgen-editor -type f -name "*.js" -exec rm {} \;
 
-rm -rf packages/react-bootstrap-table-nextgen-example/dist
-rm -rf packages/react-bootstrap-table-nextgen-example/lib
 rm -rf packages/react-bootstrap-table-nextgen-example/node_modules
+find packages/react-bootstrap-table-nextgen-example/src -type f -name "*.js" -exec rm {} \;
+find packages/react-bootstrap-table-nextgen-example/test -type f -name "*.js" -exec rm {} \;
 
 rm -rf packages/react-bootstrap-table-nextgen-filter/dist
 rm -rf packages/react-bootstrap-table-nextgen-filter/lib
