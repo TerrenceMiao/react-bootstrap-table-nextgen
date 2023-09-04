@@ -5,9 +5,16 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "storybook": "start-storybook -p 6006 -s ./public",
+    "storybook": "storybook dev -p 6006",
     "gh-pages:clean": "rimraf ./storybook-static",
-    "gh-pages:build": "build-storybook -s ./public"
+    "gh-pages:build": "storybook build"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest",
+      "plugin:storybook/recommended"
+    ]
   },
   "license": "MIT",
   "repository": {
@@ -38,18 +45,43 @@
     "react-dom": "^16.4.0"
   },
   "devDependencies": {
-    "@storybook/addon-console": "^1.2.3",
-    "@storybook/react": "^6.5.8",
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "@storybook/addon-actions": "^7.4.0",
+    "@storybook/addon-console": "^2.0.0",
+    "@storybook/addon-essentials": "^7.4.0",
+    "@storybook/addon-interactions": "^7.4.0",
+    "@storybook/addon-links": "^7.4.0",
+    "@storybook/addon-onboarding": "^1.0.8",
+    "@storybook/blocks": "^7.4.0",
+    "@storybook/preset-create-react-app": "^7.4.0",
+    "@storybook/react": "^7.4.0",
+    "@storybook/react-webpack5": "^7.4.0",
+    "@storybook/testing-library": "^0.2.0",
+    "babel-plugin-named-exports-order": "^0.0.2",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-preset-env": "^1.7.0",
+    "eslint-plugin-storybook": "^0.6.13",
     "react-redux": "^8.0.2",
     "redux": "^4.2.0",
     "redux-thunk": "^2.4.1",
-    "typed.js": "^2.0.12"
+    "rimraf": "^5.0.1",
+    "storybook": "^7.4.0",
+    "typed.js": "^2.0.12",
+    "webpack": "^5.88.2"
   },
   "dependencies": {
+    "@testing-library/jest-dom": "^5.17.0",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^13.5.0",
+    "@types/jest": "^27.5.2",
+    "@types/node": "^16.18.48",
+    "@types/react": "^18.2.21",
+    "@types/react-dom": "^18.2.7",
     "prop-types": "^15.8.1",
-    "react": "^18.1.0",
-    "react-dom": "^18.1.0"
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-scripts": "5.0.1",
+    "typescript": "^4.9.5",
+    "web-vitals": "^2.1.4"
   }
 }

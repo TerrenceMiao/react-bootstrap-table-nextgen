@@ -5,7 +5,7 @@ interface DefaultComponentProps {
   children: any;
 }
 
-export default class extends Component<DefaultComponentProps> {
+export default class DefaultComponent extends Component<DefaultComponentProps> {
   static propTypes = {
     children: PropTypes.string,
   };
