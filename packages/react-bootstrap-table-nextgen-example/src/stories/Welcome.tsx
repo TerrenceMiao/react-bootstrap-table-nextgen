@@ -1,7 +1,12 @@
 import React from "react";
 import Typed from "typed.js";
 
-import "./welcome.scss";
+import "./stylesheet/tomorrow.min.css";
+import "./stylesheet/storybook.scss";
+import "../../../react-bootstrap-table-nextgen/style/react-bootstrap-table-nextgen.scss";
+import "../../../react-bootstrap-table-nextgen-paginator/style/react-bootstrap-table-nextgen-paginator.scss";
+import "../../../react-bootstrap-table-nextgen-filter/style/react-bootstrap-table-nextgen-filter.scss";
+import "../../../react-bootstrap-table-nextgen-toolkit/style/react-bootstrap-table-nextgen-toolkit.scss";
 
 interface WelcomeProps {}
 

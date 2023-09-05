@@ -1,22 +1,28 @@
 import PropTypes from "prop-types";
-import React, { Component } from "react";
+import React from "react";
 
 interface DefaultComponentProps {
   children: any;
 }
 
-export default class DefaultComponent extends Component<DefaultComponentProps> {
+export default class DefaultComponent extends React.Component<DefaultComponentProps> {
   static propTypes = {
     children: PropTypes.string,
   };
+
   static defaultProps = {
     children: "",
   };
+
   componentDidMount() {
-    // code-prettify
+    // code-prettify https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js
     // run the PR.prettyPrint() function once your page has finished loading
+    // defined in .storybook/main.ts file
     // @ts-ignore
-    if (typeof (PR) !== "undefined") PR.prettyPrint();
+    if (typeof PR !== "undefined") {
+      // @ts-ignore
+      PR.prettyPrint();
+    }
   }
 
   render() {

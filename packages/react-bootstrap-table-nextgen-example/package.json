@@ -61,6 +61,7 @@
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-preset-env": "^1.7.0",
     "eslint-plugin-storybook": "^0.6.13",
+    "react-bootstrap-table-nextgen": "^4.3.4",
     "react-redux": "^8.0.2",
     "redux": "^4.2.0",
     "redux-thunk": "^2.4.1",
