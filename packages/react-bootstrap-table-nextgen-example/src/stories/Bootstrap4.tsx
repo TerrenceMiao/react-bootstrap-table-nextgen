@@ -32,6 +32,7 @@ export default ({
   bordered,
   noDataIndication,
   tabIndexCell,
+  defaultSorted,
 }) => {
   switch (mode) {
     case "idAndClass":
@@ -206,23 +207,11 @@ export default ({
       return (
         <div>
           <BootstrapTable
-            id={id}
-            classes={classes}
-            headerWrapperClasses={headerWrapperClasses}
-            bodyClasses={bodyClasses}
-            wrapperClasses={wrapperClasses}
+            bootstrap4
             keyField="id"
             data={data}
-            caption={caption}
             columns={columns}
-            selectRow={selectRow}
-            expandRow={expandRow}
-            striped={striped}
-            hover={hover}
-            condensed={condensed}
-            bordered={bordered}
-            noDataIndication={noDataIndication}
-            tabIndexCell={tabIndexCell}
+            defaultSorted={defaultSorted}
           />
           <Code>{sourceCode}</Code>
         </div>

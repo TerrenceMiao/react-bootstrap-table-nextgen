@@ -11,7 +11,7 @@ const preview: Preview = {
     },
     options: {
       storySort: {
-        order: ['Configure your project', 'Welcome', 'Basic Table'],
+        order: ['Configure your project', 'Welcome', 'Basic Table', 'Bootstrap 4'],
       },
     },
   },
