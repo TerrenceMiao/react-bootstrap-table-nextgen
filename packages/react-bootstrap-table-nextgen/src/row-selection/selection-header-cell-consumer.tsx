@@ -12,7 +12,7 @@ const SelectionContext = createSelectionContext();
 const withSelectionContext = (Component: React.ComponentType<Props>) => () =>
   (
     <SelectionContext.Consumer>
-      {(selectRow) => <Component selectRow={selectRow} />}
+      {(selectRow) => <Component {...selectRow} />}
     </SelectionContext.Consumer>
   );
 

@@ -1,7 +1,7 @@
 import { mount, shallow } from "enzyme";
 import "jsdom-global/register";
 import React from "react";
-import _ from "react-bootstrap-table-nextgen/src/utils";
+import _ from "../../react-bootstrap-table-nextgen/src/utils";
 
 import cellEditFactory, { CLICK_TO_CELL_EDIT } from "..";
 import createCellEditContext from "../src/context";

@@ -4,7 +4,7 @@ import "jsdom-global/register";
 import React from "react";
 import sinon from "sinon";
 
-import _ from "react-bootstrap-table-nextgen/src/utils";
+import _ from "../../react-bootstrap-table-nextgen/src/utils";
 import { EDITTYPE } from "..";
 import CheckBoxEditor from "../src/checkbox-editor";
 import DateEditor from "../src/date-editor";
