@@ -49,26 +49,28 @@ class Body extends Component<BodyProps> {
     }
 
     // Construct Row Component
-    let RowComponent: any;
+    let RowComponent: any = SimpleRow;
 
     const selectRowEnabled = selectRow?.mode !== ROW_SELECT_DISABLED;
     const expandRowEnabled = !!expandRow!.renderer;
 
     if (expandRowEnabled) {
       RowComponent = withRowExpansion(RowAggregator);
-    } else if (selectRowEnabled) {
+    }
+
+    if (selectRowEnabled) {
       RowComponent = withRowSelection(
         expandRowEnabled ? RowComponent : RowAggregator
       );
-    } else if (cellEdit?.createContext) {
+    }
+
+    if (cellEdit?.createContext) {
       RowComponent = cellEdit.withRowLevelCellEdit(
         RowComponent,
         selectRowEnabled,
         keyField,
         _
       );
-    } else {
-      RowComponent = SimpleRow;
     }
 
     this.RowComponent = RowComponent;
