@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
 // import bootstrap style by given version
-import { columns, productsGenerator } from '../utils/common';
+import { productsGenerator, sortColumns } from '../utils/common';
 import BootstrapTable from './Bootstrap4';
-import bootstrapStyle from './bootstrap-style';
+import bootstrapStyle, { BOOTSTRAP_VERSION } from './bootstrap-style';
 
 // More on how to set up stories at: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 const meta = {
@@ -17,28 +17,14 @@ const meta = {
   tags: ['autodocs'],
   argTypes: {
     mode: { control: 'text', description: 'mode' },
-    id: { control: 'text', description: 'id' },
-    classes: { control: 'text', description: 'classes' },
-    headerWrapperClasses: { control: 'text', description: 'headerWrapperClasses' },
-    bodyClasses: { control: 'text', description: 'bodyClasses' },
-    wrapperClasses: { control: 'text', description: 'wrapperClasses' },
     data: { control: 'object', description: 'table data' },
-    caption: { control: 'object', description: 'table caption' },
     columns: { control: 'object', description: 'table columns' },
-    selectRow: { control: 'object', description: 'table select row' },
-    expandRow: { control: 'object', description: 'table expand row' },
     sourceCode: { control: 'text', description: 'source code of the table' },
-    striped: { control: 'boolean', description: 'striped flag', table: { defaultValue: { summary: 'false' } } },
-    hover: { control: 'boolean', description: 'hover flag', table: { defaultValue: { summary: 'false' } } },
-    condensed: { control: 'boolean', description: 'condensed flag', table: { defaultValue: { summary: 'false' } } },
-    bordered: { control: 'boolean', description: 'bordered flag', table: { defaultValue: { summary: 'true' } } },
-    noDataIndication: { control: 'text', description: 'no data in the table indication' },
-    tabIndexCell: { control: 'boolean', description: 'tab index cell', table: { defaultValue: { summary: 'false' } } },
     defaultSorted: { control: 'object', description: 'default sorted data field' },
 
   },
   decorators: [
-    (Story: any) => bootstrapStyle()(Story),
+    (Story: any) => bootstrapStyle(BOOTSTRAP_VERSION.FOUR)(Story),
   ],
 } satisfies Meta<typeof BootstrapTable>;
 
@@ -55,7 +41,7 @@ const defaultSorted = [{
 export const SortTableWithBootstrap4: Story = {
   name: "Sort table with Bootstrap 4",
   args: {
-    columns: columns,
+    columns: sortColumns,
     data: productsGenerator(),
     sourceCode: `\
     import BootstrapTable from 'react-bootstrap-table-nextgen';

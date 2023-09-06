@@ -4,12 +4,14 @@ import React from "react";
 import BootstrapTable from "react-bootstrap-table-nextgen";
 import filterFactory from "react-bootstrap-table-nextgen-filter";
 import paginationFactory from "react-bootstrap-table-nextgen-paginator";
+
 import Code from "../components/common/code-block";
 
-import "../../../react-bootstrap-table-nextgen-filter/style/react-bootstrap-table-nextgen-filter.scss";
-import "../../../react-bootstrap-table-nextgen-paginator/style/react-bootstrap-table-nextgen-paginator.scss";
-import "../../../react-bootstrap-table-nextgen-toolkit/style/react-bootstrap-table-nextgen-toolkit.scss";
-import "../../../react-bootstrap-table-nextgen/style/react-bootstrap-table-nextgen.scss";
+import "react-bootstrap-table-nextgen-filter/style/react-bootstrap-table-nextgen-filter.scss";
+import "react-bootstrap-table-nextgen-paginator/style/react-bootstrap-table-nextgen-paginator.scss";
+import "react-bootstrap-table-nextgen-toolkit/style/react-bootstrap-table-nextgen-toolkit.scss";
+import "react-bootstrap-table-nextgen/style/react-bootstrap-table-nextgen.scss";
+
 import "./stylesheet/storybook.scss";
 import "./stylesheet/tomorrow.min.css";
 
@@ -140,28 +142,16 @@ export default ({
 
       return (
         <div>
-          <button
-            className="btn btn-default"
-            onClick={handleGetCurrentData}
-          >
+          <button className="btn btn-default" onClick={handleGetCurrentData}>
             Get Current Display Rows
           </button>
-          <button
-            className="btn btn-default"
-            onClick={handleGetSelectedData}
-          >
+          <button className="btn btn-default" onClick={handleGetSelectedData}>
             Get Current Selected Rows
           </button>
-          <button
-            className="btn btn-default"
-            onClick={handleGetExpandedData}
-          >
+          <button className="btn btn-default" onClick={handleGetExpandedData}>
             Get Current Expanded Rows
           </button>
-          <button
-            className="btn btn-default"
-            onClick={handleGetCurrentPage}
-          >
+          <button className="btn btn-default" onClick={handleGetCurrentPage}>
             Get Current Page
           </button>
           <button
@@ -182,10 +172,7 @@ export default ({
           >
             Get Current Sort Order
           </button>
-          <button
-            className="btn btn-default"
-            onClick={handleGetCurrentFilter}
-          >
+          <button className="btn btn-default" onClick={handleGetCurrentFilter}>
             Get Current Filter Information
           </button>
           <BootstrapTable

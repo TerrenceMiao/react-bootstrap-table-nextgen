@@ -85,7 +85,8 @@ export const stockGenerator = (quantity = 5) =>
     ),
   }));
 
-export const sleep = (ms: any) => new Promise((resolve) => setTimeout(resolve, ms));
+export const sleep = (ms: any) =>
+  new Promise((resolve) => setTimeout(resolve, ms));
 
 export const productsExpandRowsGenerator = (quantity = 5, callback: any) => {
   if (callback) return Array.from({ length: quantity }, callback);
@@ -111,5 +112,23 @@ export const columns = [
   {
     dataField: "price",
     text: "Product Price",
+  },
+];
+
+export const sortColumns = [
+  {
+    dataField: "id",
+    text: "Product ID",
+    sort: true,
+  },
+  {
+    dataField: "name",
+    text: "Product Name",
+    sort: true,
+  },
+  {
+    dataField: "price",
+    text: "Product Price",
+    sort: true,
   },
 ];
