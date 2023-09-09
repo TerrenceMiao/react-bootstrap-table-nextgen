@@ -6,10 +6,17 @@ export default (ExtendBase: any) =>
   class RemoteResolver extends Component<typeof ExtendBase> {
     remoteEmitter: EventEmitter;
 
-    SortContext: any;
-    FilterContext: any;
-    PaginationContext: any;
+    DataContext: any;
+    ColumnContext: any;
+    SelectionContext: any;
     SearchContext: any;
+    FilterContext: any;
+    RowExpandContext: any;
+    CellEditContext: any;
+    PaginationContext: any;
+    SortContext: any;
+
+    Table: any;
 
     constructor(props: any) {
       super(props);

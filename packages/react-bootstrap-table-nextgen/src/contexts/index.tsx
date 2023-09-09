@@ -12,13 +12,17 @@ import createSortContext from "./sort-context";
 
 const withContext = (Base: any) =>
   class BootstrapTableContainer extends RemoteResolver(Base) {
-    DataContext: any;
-    ColumnContext: any;
-    SelectionContext: any;
-    RowExpandContext: any;
-    CellEditContext: any;
+    dataContext: any;
+    columnContext: any;
+    selectionContext: any;
+    searchContext: any;
+    filterContext: any;
+    rowExpandContext: any;
+    cellEditContext: any;
+    paginationContext: any;
+    sortContext: any;
 
-    Table: any;
+    table: any;
 
     constructor(props: any) {
       super(props);
@@ -28,19 +32,19 @@ const withContext = (Base: any) =>
         const exposedAPIEmitter = new EventEmitter();
         exposedAPIEmitter.on(
           "get.table.data",
-          (payload) => (payload.result = this.Table.getData())
+          (payload) => (payload.result = this.table.getData())
         );
         exposedAPIEmitter.on(
           "get.selected.rows",
-          (payload) => (payload.result = this.SelectionContext.getSelected())
+          (payload) => (payload.result = this.selectionContext.getSelected())
         );
         exposedAPIEmitter.on("get.filtered.rows", (payload) => {
-          if (this.SearchContext) {
-            payload.result = this.SearchContext.getSearched();
-          } else if (this.FilterContext) {
-            payload.result = this.FilterContext.getFiltered();
+          if (this.searchContext) {
+            payload.result = this.searchContext.getSearched();
+          } else if (this.filterContext) {
+            payload.result = this.filterContext.getFiltered();
           } else {
-            payload.result = this.Table.getData();
+            payload.result = this.table.getData();
           }
         });
         props.registerExposedAPI(exposedAPIEmitter);
@@ -156,7 +160,7 @@ const withContext = (Base: any) =>
         columnToggleProps: any
       ) => (
         <Base
-          ref={(n: any) => (this.Table = n)}
+          ref={(n: any) => (this.table = n)}
           {...this.props}
           {...sortProps}
           {...filterProps}
@@ -220,7 +224,7 @@ const withContext = (Base: any) =>
       ) => (
         <this.SelectionContext.Provider
           {...baseProps}
-          // ref={(n: any) => (this.SelectionContext = n)}
+          ref={(n: any) => (this.selectionContext = n)}
           selectRow={this.props.selectRow}
           data={rootProps.getData(
             filterProps,
@@ -257,7 +261,9 @@ const withContext = (Base: any) =>
       ) => (
         <this.RowExpandContext.Provider
           {...baseProps}
-          // ref={(n: any) => {this.RowExpandContext = n}}
+          ref={(n: any) => {
+            this.rowExpandContext = n;
+          }}
           expandRow={this.props.expandRow}
           data={rootProps.getData(
             filterProps,
@@ -292,7 +298,7 @@ const withContext = (Base: any) =>
         sortProps: any
       ) => (
         <this.PaginationContext.Provider
-          // ref={(n: any) => (this.PaginationContext = n)}
+          ref={(n: any) => (this.paginationContext = n)}
           pagination={this.props.pagination}
           data={rootProps.getData(filterProps, searchProps, sortProps)}
           bootstrap4={this.props.bootstrap4}
@@ -331,7 +337,7 @@ const withContext = (Base: any) =>
       ) => (
         <this.SortContext.Provider
           {...baseProps}
-          // ref={(n: any) => (this.SortContext = n)}
+          ref={(n: any) => (this.sortContext = n)}
           defaultSorted={this.props.defaultSorted}
           defaultSortDirection={this.props.defaultSortDirection}
           sort={this.props.sort}
@@ -360,7 +366,7 @@ const withContext = (Base: any) =>
       ) => (
         <this.SearchContext.Provider
           {...baseProps}
-          // ref={(n: any) => (this.SearchContext = n)}
+          ref={(n: any) => (this.searchContext = n)}
           data={rootProps.getData(filterProps)}
           searchText={this.props.search.searchText}
           dataChangeListener={this.props.dataChangeListener}
@@ -376,7 +382,7 @@ const withContext = (Base: any) =>
       return (rootProps: any) => (
         <this.FilterContext.Provider
           {...baseProps}
-          // ref={(n: any) => (this.FilterContext = n)}
+          ref={(n: any) => (this.filterContext = n)}
           data={rootProps.getData()}
           filter={this.props.filter.options || {}}
           dataChangeListener={this.props.dataChangeListener}
@@ -399,7 +405,7 @@ const withContext = (Base: any) =>
       }) => (
         <this.CellEditContext.Provider
           {...baseProps}
-          // ref={(n: any) => (this.CellEditContext = n)}
+          ref={(n: any) => (this.cellEditContext = n)}
           selectRow={this.props.selectRow}
           cellEdit={this.props.cellEdit}
           data={rootProps.getData()}
