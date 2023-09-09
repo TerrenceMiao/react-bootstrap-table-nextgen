@@ -7,22 +7,34 @@ import React from "react";
 import { EQ, FILTER_TYPES, LIKE } from "..";
 import { filters } from "./filter";
 
-export default (_: any, isRemoteFiltering: any, handleFilterChange: any) => {
-  const FilterContext = React.createContext<any>(null);
+export interface FilterProviderProps {
+  data: any[];
+  columns: any[];
+  dataChangeListener?: any;
+  filter: any;
+  children: any;
+}
 
-  class FilterProvider extends React.Component<any> {
+export default (
+  _: any,
+  isRemoteFiltering: () => boolean,
+  handleFilterChange: (filters: any) => void
+) => {
+  const FilterContext = React.createContext<any>({});
+
+  class FilterProvider extends React.Component<FilterProviderProps> {
     static propTypes = {
       data: PropTypes.array.isRequired,
       columns: PropTypes.array.isRequired,
       dataChangeListener: PropTypes.object,
     };
 
-    clearFilters: any;
-    currFilters: any;
-    data: any;
-    isEmitDataChange: any;
+    currFilters: { [key: string]: any };
+    clearFilters: { [key: string]: any };
+    data: any[];
+    isEmitDataChange: boolean;
 
-    constructor(props: any) {
+    constructor(props: FilterProviderProps) {
       super(props);
       this.currFilters = {};
       this.clearFilters = {};
@@ -88,16 +100,17 @@ export default (_: any, isRemoteFiltering: any, handleFilterChange: any) => {
       return this.data;
     }
 
-    componentDidUpdate(nextProps: any) {
-      // let nextData = nextProps.data;
-      if (!isRemoteFiltering() && !_.isEqual(nextProps.data, this.data)) {
-        this.doFilter(nextProps, this.isEmitDataChange);
-      } else {
-        this.data = nextProps.data;
-      }
-    }
+    // componentDidUpdate(nextProps: FilterProviderProps) {
+    //   if (!isRemoteFiltering() && !_.isEqual(nextProps.data, this.data)) {
+    //   // this.data has already been filtered
+    //   this.doFilter(nextProps, this.isEmitDataChange);
+    //   } else {
+    //   // this.data is as SAME as nextProps.data
+    //   this.data = nextProps.data;
+    //   }
+    // }
 
-    doFilter(props: any, ignoreEmitDataChange = false) {
+    doFilter(props: FilterProviderProps, ignoreEmitDataChange = false) {
       const { dataChangeListener, data, columns, filter } = props;
       const result = filters(
         data,
