@@ -1,17 +1,51 @@
 /* eslint-disable import/no-anonymous-default-export */
 import React from "react";
 
-import Code from "../components/common/code-block";
 import BootstrapTable from "../../../react-bootstrap-table-nextgen";
 import filterFactory from "../../../react-bootstrap-table-nextgen-filter";
 import paginationFactory from "../../../react-bootstrap-table-nextgen-paginator";
+import Code from "../components/common/code-block";
 
-import "./stylesheet/storybook.scss";
-import "./stylesheet/tomorrow.min.css";
 import "../../../react-bootstrap-table-nextgen-filter/style/react-bootstrap-table-nextgen-filter.scss";
 import "../../../react-bootstrap-table-nextgen-paginator/style/react-bootstrap-table-nextgen-paginator.scss";
 import "../../../react-bootstrap-table-nextgen-toolkit/style/react-bootstrap-table-nextgen-toolkit.scss";
 import "../../../react-bootstrap-table-nextgen/style/react-bootstrap-table-nextgen.scss";
+import "./stylesheet/storybook.scss";
+import "./stylesheet/tomorrow.min.css";
+
+let node: any;
+
+const handleGetCurrentData = () => {
+  console.log(node.table.props.data);
+};
+
+const handleGetSelectedData = () => {
+  console.log(node.selectionContext.selected);
+};
+
+const handleGetExpandedData = () => {
+  console.log(node.rowExpandContext.state.expanded);
+};
+
+const handleGetCurrentPage = () => {
+  console.log(node.paginationContext.currPage);
+};
+
+const handleGetCurrentSizePerPage = () => {
+  console.log(node.paginationContext.currSizePerPage);
+};
+
+const handleGetCurrentSortColumn = () => {
+  console.log(node.sortContext.state.sortColumn);
+};
+
+const handleGetCurrentSortOrder = () => {
+  console.log(node.sortContext.state.sortOrder);
+};
+
+const handleGetCurrentFilter = () => {
+  console.log(node.filterContext.currFilters);
+};
 
 export default ({
   mode,
@@ -106,38 +140,6 @@ export default ({
         </div>
       );
     case "exposedAPI":
-      const handleGetCurrentData = () => {
-        // console.log(this.node.table.props.data);
-      };
-
-      const handleGetSelectedData = () => {
-        // console.log(this.node.selectionContext.selected);
-      };
-
-      const handleGetExpandedData = () => {
-        // console.log(this.node.rowExpandContext.state.expanded);
-      };
-
-      const handleGetCurrentPage = () => {
-        // console.log(this.node.paginationContext.currPage);
-      };
-
-      const handleGetCurrentSizePerPage = () => {
-        // console.log(this.node.paginationContext.currSizePerPage);
-      };
-
-      const handleGetCurrentSortColumn = () => {
-        // console.log(this.node.sortContext.state.sortColumn);
-      };
-
-      const handleGetCurrentSortOrder = () => {
-        // console.log(this.node.sortContext.state.sortOrder);
-      };
-
-      const handleGetCurrentFilter = () => {
-        // console.log(this.node.filterContext.currFilters);
-      };
-
       return (
         <div>
           <button className="btn btn-default" onClick={handleGetCurrentData}>
@@ -174,14 +176,13 @@ export default ({
             Get Current Filter Information
           </button>
           <BootstrapTable
-            // ref={(n) => (this.node = n)}
+            ref={(n) => (node = n)}
             keyField="id"
             data={data}
-            caption="Plain text header"
             columns={columns}
             filter={filterFactory()}
             pagination={paginationFactory()}
-            selectRow={selectRow}
+            selectRow={{ mode: "checkbox", clickToSelect: true }}
             expandRow={expandRow}
           />
           <Code>{sourceCode}</Code>

@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import React from 'react';
 
 // import bootstrap style by given version
-import { columns, productsGenerator } from '../utils/common';
+import { columns, productsGenerator, sortFilterColumns } from '../utils/common';
 import BootstrapTable from './BasicTable';
 import bootstrapStyle from './bootstrap-style';
 
@@ -224,20 +224,40 @@ export const ExposedAPITable: Story = {
   name: "Exposed API",
   args: {
     mode: "exposedAPI",
-    columns: columns,
+    columns: sortFilterColumns,
     data: productsGenerator(63),
+    expandRow: {
+      renderer: (row: any) => (
+        <div>
+          <p>{`This Expand row is belong to rowKey ${row.id}`}</p>
+          <p>
+            You can render anything here, also you can add additional data on
+            every row object
+          </p>
+          <p>
+            expandRow.renderer callback will pass the origin row object to you
+          </p>
+        </div>
+      ),
+      showExpandColumn: true,
+    },
     sourceCode: `\
     import BootstrapTable from 'react-bootstrap-table-nextgen';
 
     const columns = [{
       dataField: 'id',
-      text: 'Product ID'
+      text: 'Product ID',
+      sort: true
     }, {
       dataField: 'name',
-      text: 'Product Name'
+      text: 'Product Name',
+      sort: true,
+      filter: textFilter()
     }, {
       dataField: 'price',
-      text: 'Product Price'
+      text: 'Product Price',
+      sort: true,
+      filter: textFilter()
     }];
 
     class ExposedFunctionTable extends React.Component {
@@ -314,8 +334,6 @@ export const ExposedAPITable: Story = {
       }
     }
     `,
-    selectRow: { mode: 'checkbox', clickToSelect: true },
-    expandRow: expandRow,
   }
 };
 

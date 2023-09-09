@@ -1,6 +1,7 @@
 /* eslint no-mixed-operators: 0 */
 /* eslint no-param-reassign: 0 */
 /* eslint no-promise-executor-return: 0 */
+import { textFilter } from "../../../react-bootstrap-table-nextgen-filter";
 
 /**
  * products generator for stories
@@ -130,5 +131,25 @@ export const sortColumns = [
     dataField: "price",
     text: "Product Price",
     sort: true,
+  },
+];
+
+export const sortFilterColumns = [
+  {
+    dataField: "id",
+    text: "Product ID",
+    sort: true,
+  },
+  {
+    dataField: "name",
+    text: "Product Name",
+    sort: true,
+    filter: textFilter(),
+  },
+  {
+    dataField: "price",
+    text: "Product Price",
+    sort: true,
+    filter: textFilter(),
   },
 ];
