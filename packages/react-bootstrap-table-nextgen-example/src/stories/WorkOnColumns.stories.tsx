@@ -21,8 +21,8 @@ const meta = {
     data: { control: 'object', description: 'table data' },
     columns: { control: 'object', description: 'table columns' },
     sourceCode: { control: 'text', description: 'source code of the table' },
-    defaultSorted: { control: 'object', description: 'default sorted data field' },
-    selectRow: { control: 'object', description: 'table select row' },
+    bordered: { control: 'boolean', description: 'to have or not to have table border' },
+    header: { control: 'text', description: 'header of the table' },
   },
   decorators: [
     (Story: any) => bootstrapStyle()(Story),
