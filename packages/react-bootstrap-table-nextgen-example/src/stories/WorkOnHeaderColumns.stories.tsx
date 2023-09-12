@@ -18,7 +18,6 @@ const meta = {
   // This component will have an automatically generated Autodocs entry: https://storybook.js.org/docs/react/writing-docs/autodocs
   tags: ['autodocs'],
   argTypes: {
-    mode: { control: 'text', description: 'mode' },
     data: { control: 'object', description: 'table data' },
     columns: { control: 'object', description: 'table columns' },
     sourceCode: { control: 'text', description: 'source code of the table' },

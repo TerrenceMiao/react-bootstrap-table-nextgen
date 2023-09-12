@@ -19,6 +19,7 @@ const preview: Preview = {
           "Work On Columns",
           "Work On Header Columns",
           "Column Filter",
+          "Work On Rows",
         ],
       },
     },
