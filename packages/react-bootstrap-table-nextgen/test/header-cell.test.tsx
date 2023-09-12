@@ -467,13 +467,11 @@ describe("HeaderCell", () => {
 
       describe("when sortCaret is defined ", () => {
         beforeEach(() => {
-          column = { ...column };
-          sortCaret = jest.fn();
+          column = { ...column, sortCaret: jest.fn() };
           wrapper = shallow(
             <HeaderCell
               column={column}
               index={index}
-              sortCaret={sortCaret}
               onSort={onSortCallBack}
             />
           );
@@ -484,8 +482,8 @@ describe("HeaderCell", () => {
         });
 
         it("should call column.sortCaret correctly", () => {
-          expect(sortCaret).toHaveBeenCalledTimes(1);
-          expect(sortCaret).toHaveBeenCalledWith(undefined, column);
+          expect(column.sortCaret).toHaveBeenCalledTimes(1);
+          expect(column.sortCaret).toHaveBeenCalledWith(undefined, column);
         });
       });
     });
@@ -519,12 +517,10 @@ describe("HeaderCell", () => {
 
       describe("when sortCaret is defined ", () => {
         beforeEach(() => {
-          column = { ...column };
-          sortCaret = jest.fn();
+          column = { ...column, sortCaret: jest.fn() };
           wrapper = shallow(
             <HeaderCell
               column={column}
-              sortCaret={sortCaret}
               index={index}
               onSort={onSortCallBack}
               sortOrder={SORT_ASC}
@@ -538,8 +534,8 @@ describe("HeaderCell", () => {
         });
 
         it("should call column.sortCaret correctly", () => {
-          expect(sortCaret).toHaveBeenCalledTimes(1);
-          expect(sortCaret).toHaveBeenCalledWith(SORT_ASC, column);
+          expect(column.sortCaret).toHaveBeenCalledTimes(1);
+          expect(column.sortCaret).toHaveBeenCalledWith(SORT_ASC, column);
         });
       });
 

@@ -80,6 +80,7 @@ interface HeaderCellProps {
     sort?: boolean;
     sortFunc?: (a: any, b: any, order: string, column: any) => number;
     onSort?: (column: any, sortOrder: string) => void;
+    sortCaret?: any;
     editor?: object;
     editable?: boolean | ((cell: any, row: any, rowIndex: number) => boolean);
     editCellStyle?:
@@ -137,13 +138,13 @@ class HeaderCell extends eventDelegater(Component)<HeaderCellProps> {
       currFilters,
       filterPosition,
       onExternalFilter,
-      sortCaret,
       globalSortCaret,
     } = this.props;
 
     const {
       text,
       sort,
+      sortCaret,
       filter,
       filterRenderer,
       headerTitle,
