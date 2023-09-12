@@ -1,7 +1,7 @@
 import { mount } from "enzyme";
 import "jsdom-global/register";
 import React from "react";
-import { Comparator, FILTER_TYPES } from "../..";
+import { ComparatorNumber, EQ, FILTER_TYPES } from "../..";
 import DateFilter from "../../src/components/date";
 
 describe("Date Filter", () => {
@@ -38,7 +38,7 @@ describe("Date Filter", () => {
       const select = wrapper.find("select");
       expect(select.find("option")).toHaveLength(
         // wrapper.prop("comparators").length + 1
-        Object.keys(Comparator).length
+        ComparatorNumber
       );
     });
   });
@@ -58,7 +58,7 @@ describe("Date Filter", () => {
       const select = wrapper.find(".date-filter-comparator");
       expect(select.find("option")).toHaveLength(
         // wrapper.prop("comparators").length
-        Object.keys(Comparator).length - 1
+        ComparatorNumber - 1
       );
     });
   });
@@ -87,7 +87,7 @@ describe("Date Filter", () => {
   });
 
   describe("when defaultValue.comparator props is defined", () => {
-    const comparator = Comparator.EQ;
+    const comparator = EQ;
 
     beforeEach(() => {
       wrapper = mount(
@@ -110,7 +110,7 @@ describe("Date Filter", () => {
   describe("when props.getFilter is defined", () => {
     let programmaticallyFilter: any;
 
-    const comparator = Comparator.EQ;
+    const comparator = EQ;
     const date = new Date(2018, 0, 1);
 
     const getFilter = (filter: any) => {
@@ -143,7 +143,7 @@ describe("Date Filter", () => {
 
     beforeEach(() => {
       date = new Date();
-      comparator = Comparator.EQ;
+      comparator = EQ;
       wrapper = mount(
         <DateFilter
           onFilter={onFilter}

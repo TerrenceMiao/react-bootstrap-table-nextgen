@@ -7,13 +7,13 @@ import React, { Component } from "react";
 import { FILTER_TYPES, TextFilterProps } from "../..";
 
 interface TextFilterState {
-  value: any;
+  value: string;
 }
 
 class TextFilter extends Component<TextFilterProps, TextFilterState> {
   input: { value: any } | any;
   timeout: any;
-  constructor(props: any) {
+  constructor(props: TextFilterProps) {
     super(props);
     this.filter = this.filter.bind(this);
     this.handleClick = this.handleClick.bind(this);
@@ -26,7 +26,7 @@ class TextFilter extends Component<TextFilterProps, TextFilterState> {
       ) {
         return props.filterState.filterVal;
       }
-      return props.defaultValue;
+      return props.defaultValue ?? "";
     }
     this.state = {
       value: getDefaultValue(),
@@ -46,7 +46,7 @@ class TextFilter extends Component<TextFilterProps, TextFilterState> {
     // export onFilter function to allow users to access
     if (getFilter) {
       getFilter((filterVal: any) => {
-        this.state = { value: filterVal };
+        this.setState(() => ({ value: filterVal }));
         // TODO
         // @ts-ignore
         onFilter(column, FILTER_TYPES.TEXT)(filterVal);
@@ -68,7 +68,7 @@ class TextFilter extends Component<TextFilterProps, TextFilterState> {
     e.stopPropagation();
     this.cleanTimer();
     const filterValue = e.target.value;
-    this.state = { value: filterValue };
+    this.setState(() => ({ value: filterValue }));
     this.timeout = setTimeout(() => {
       // TODO
       // @ts-ignore
@@ -84,14 +84,14 @@ class TextFilter extends Component<TextFilterProps, TextFilterState> {
 
   cleanFiltered() {
     const value = this.props.defaultValue ?? "";
-    this.state = { value };
+    this.setState(() => ({ value }));
     // TODO
     // @ts-ignore
     this.props.onFilter(this.props.column, FILTER_TYPES.TEXT)(value);
   }
 
   applyFilter(filterText: any) {
-    this.state = { value: filterText };
+    this.setState(() => ({ value: filterText }));
     // TODO
     // @ts-ignore
     this.props.onFilter(this.props.column, FILTER_TYPES.TEXT)(filterText);

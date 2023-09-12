@@ -41,6 +41,7 @@ class MultiSelectFilter extends Component<
   MultiSelectFilterState
 > {
   selectInput: any;
+
   constructor(props: MultiSelectFilterProps) {
     super(props);
     this.filter = this.filter.bind(this);
@@ -71,7 +72,7 @@ class MultiSelectFilter extends Component<
 
   componentDidUpdate(prevProps: any) {
     let needFilter = false;
-    if ((this.props.defaultValue ?? []) !== prevProps.defaultValue) {
+    if (this.props.defaultValue !== prevProps.defaultValue) {
       needFilter = true;
     } else if (!optionsEquals(this.props.options, prevProps.options)) {
       needFilter = true;
@@ -125,7 +126,7 @@ class MultiSelectFilter extends Component<
     if (value.length === 1 && value[0] === "") {
       value = [];
     }
-    this.state = { isSelected: value.length > 0 };
+    this.setState(() => ({ isSelected: value.length > 0 }));
     // TODO
     // @ts-ignore
     this.props.onFilter(this.props.column, FILTER_TYPES.MULTISELECT)(value);

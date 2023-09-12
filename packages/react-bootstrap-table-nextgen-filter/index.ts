@@ -35,15 +35,9 @@ export const GE = ">=";
 export const LT = "<";
 export const LE = "<=";
 
-export enum Comparator {
-  LIKE = "LIKE",
-  EQ = "=",
-  NE = "!=",
-  GT = ">",
-  GE = ">=",
-  LT = "<",
-  LE = "<=",
-}
+export type Comparator = string;
+
+export const ComparatorNumber = 7;
 
 export type TextFilterProps<T extends object = any> = TableColumnFilterProps<
   string,
@@ -175,7 +169,7 @@ export const customFilter = (props: Partial<CustomFilterProps> = {}) => ({
 export type FilterFactoryProps<T extends object = any> = {
   // TODO newFilters is not tested not its type is validated since the author of this commit has no experience with this field
   afterFilter?: ((newResult: T[], newFilters?: unknown[]) => void) | undefined;
-}
+};
 
 // declare function filterFactory(props?: FilterFactoryProps): unknown;
 // export default filterFactory;

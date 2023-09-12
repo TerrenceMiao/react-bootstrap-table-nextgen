@@ -33,7 +33,8 @@ describe("Text Filter", () => {
     });
 
     it("should have correct state", () => {
-      expect(instance.state.value).toEqual(instance.props.defaultValue);
+      expect(instance.state.value).toEqual("");
+      expect(instance.props.defaultValue).toEqual(undefined);
     });
 
     it("should rendering component successfully", () => {

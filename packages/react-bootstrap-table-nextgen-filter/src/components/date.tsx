@@ -4,7 +4,14 @@
 /* eslint prefer-template: 0 */
 import React, { Component } from "react";
 
-import { DateFilterProps, EQ, FILTER_TYPES, GE, GT, LE, LT, NE } from "../..";
+import { DateFilterProps, FILTER_TYPES } from "../..";
+
+const EQ = "=";
+const NE = "!=";
+const GT = ">";
+const GE = ">=";
+const LT = "<";
+const LE = "<=";
 
 const legalComparators = [EQ, NE, GT, GE, LT, LE];
 
@@ -83,8 +90,10 @@ class DateFilter extends Component<DateFilterProps> {
   }
 
   getDefaultComparator() {
-    const { defaultValue = { date: undefined, comparator: "" }, filterState = {} } =
-      this.props;
+    const {
+      defaultValue = { date: undefined, comparator: "" },
+      filterState = {},
+    } = this.props;
     if (filterState && filterState.filterVal) {
       return filterState.filterVal.comparator;
     }
@@ -96,7 +105,10 @@ class DateFilter extends Component<DateFilterProps> {
 
   getDefaultDate() {
     // Set the appropriate format for the input type=date, i.e. "YYYY-MM-DD"
-    const { defaultValue = { date: undefined, comparator: "" }, filterState = {} } = this.props;
+    const {
+      defaultValue = { date: undefined, comparator: "" },
+      filterState = {},
+    } = this.props;
     if (filterState && filterState.filterVal && filterState.filterVal.date) {
       return dateParser(filterState.filterVal.date);
     }

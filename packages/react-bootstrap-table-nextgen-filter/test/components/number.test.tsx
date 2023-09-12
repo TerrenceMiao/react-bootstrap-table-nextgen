@@ -2,7 +2,7 @@ import { mount } from "enzyme";
 import "jsdom-global/register";
 import React from "react";
 import sinon from "sinon";
-import { Comparator, FILTER_TYPES } from "../..";
+import { ComparatorNumber, EQ, FILTER_TYPES } from "../..";
 import NumberFilter from "../../src/components/number";
 
 describe("Number Filter", () => {
@@ -44,7 +44,7 @@ describe("Number Filter", () => {
       const select = wrapper.find("select");
       expect(select.find("option")).toHaveLength(
         // wrapper.prop("comparators").length + 1
-        Object.keys(Comparator).length
+        ComparatorNumber
       );
     });
   });
@@ -64,7 +64,7 @@ describe("Number Filter", () => {
       const select = wrapper.find("select");
       expect(select.find("option")).toHaveLength(
         // wrapper.prop("comparators").length
-        Object.keys(Comparator).length - 1
+        ComparatorNumber - 1
       );
     });
   });
@@ -91,7 +91,7 @@ describe("Number Filter", () => {
   });
 
   describe("when defaultValue.comparator props is defined", () => {
-    const comparator = Comparator.EQ;
+    const comparator = EQ;
 
     beforeEach(() => {
       wrapper = mount(
@@ -114,7 +114,7 @@ describe("Number Filter", () => {
   describe("when props.getFilter is defined", () => {
     let programmaticallyFilter: any;
 
-    const comparator = Comparator.EQ;
+    const comparator = EQ;
     const number = 123;
 
     const getFilter = (filter: any) => {
@@ -149,7 +149,7 @@ describe("Number Filter", () => {
 
   describe("when defaultValue.number and defaultValue.comparator props is defined", () => {
     const number = 203;
-    const comparator = Comparator.EQ;
+    const comparator = EQ;
 
     beforeEach(() => {
       wrapper = mount(
@@ -235,7 +235,7 @@ describe("Number Filter", () => {
 
     describe("when defaultValue.number and defaultValue.comparator props is defined", () => {
       const number = options[1];
-      const comparator = Comparator.EQ;
+      const comparator = EQ;
 
       beforeEach(() => {
         wrapper = mount(

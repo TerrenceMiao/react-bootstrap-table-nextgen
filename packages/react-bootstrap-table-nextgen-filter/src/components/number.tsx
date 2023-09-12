@@ -1,22 +1,17 @@
 /* eslint jsx-a11y/no-static-element-interactions: 0 */
 /* eslint react/require-default-props: 0 */
 /* eslint no-return-assign: 0 */
-
 import React, { Component } from "react";
-import {
-  Comparator,
-  EQ,
-  FILTER_DELAY,
-  FILTER_TYPES,
-  GE,
-  GT,
-  LE,
-  LT,
-  NE,
-  NumberFilterProps,
-} from "../..";
+import { FILTER_DELAY, FILTER_TYPES, NumberFilterProps } from "../..";
 
-const legalComparators: any[] = [EQ, NE, GT, GE, LT, LE];
+const EQ = "=";
+const NE = "!=";
+const GT = ">";
+const GE = ">=";
+const LT = "<";
+const LE = "<=";
+
+const legalComparators = [EQ, NE, GT, GE, LT, LE];
 
 interface NumberFilterState {
   isSelected: boolean;
@@ -48,7 +43,7 @@ class NumberFilter extends Component<NumberFilterProps, NumberFilterState> {
     const { column, onFilter, getFilter } = this.props;
     const comparator =
       this.numberFilterComparator.value === ""
-        ? Comparator.EQ
+        ? EQ
         : this.numberFilterComparator.value;
     const number = this.numberFilter.value;
     if (comparator && number) {
