@@ -1,5 +1,5 @@
 import cs from "classnames";
-import React, { Component } from "react";
+import React, { Component, ReactNode } from "react";
 
 import { ColumnDescription } from "..";
 import eventDelegater from "./cell-event-delegater";
@@ -72,8 +72,7 @@ class FooterCell extends eventDelegater(Component)<FooterCellProps> {
       ? footerFormatter(column, index || 0, { text })
       : text;
 
-    // TODO
-    return React.createElement("th", cellAttrs, `${children}`);
+    return React.createElement("th", cellAttrs, children as ReactNode);
   }
 }
 
