@@ -65,13 +65,8 @@ class Cell extends eventDelegater(Component)<CellProps> {
 
   createHandleEditingCell(originFunc: (e: MouseEvent) => void) {
     return (e: MouseEvent) => {
-      const {
-        atstart,
-        rowindex,
-        columnindex,
-        clicktoedit,
-        dbclicktoedit,
-      } = this.props;
+      const { atstart, rowindex, columnindex, clicktoedit, dbclicktoedit } =
+        this.props;
       if ((clicktoedit || dbclicktoedit) && _.isFunction(originFunc)) {
         originFunc(e);
       }
@@ -82,7 +77,7 @@ class Cell extends eventDelegater(Component)<CellProps> {
   }
 
   render() {
-    const { row, column, ...rest } = this.props;
+    const { row, column, atstart, ...rest } = this.props;
     const { dataField, formatter, formatExtraData } = column;
     const attrs = this.delegate({ ...rest });
     let content = column.isDummyField ? null : _.get(row, dataField);
@@ -96,9 +91,12 @@ class Cell extends eventDelegater(Component)<CellProps> {
       );
     }
 
-    if (this.props.clicktoedit && this.props.editable) {
+    if (this.props.clicktoedit === "true" && this.props.editable === "true") {
       attrs.onClick = this.createHandleEditingCell(attrs.onClick);
-    } else if (this.props.dbclicktoedit && this.props.editable) {
+    } else if (
+      this.props.dbclicktoedit === "true" &&
+      this.props.editable === "true"
+    ) {
       attrs.onDoubleClick = this.createHandleEditingCell(attrs.onDoubleClick);
     }
 

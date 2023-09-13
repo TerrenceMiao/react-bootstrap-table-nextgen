@@ -7,6 +7,7 @@ import { RowProps } from "./should-updater";
 interface RowPureContentProps extends RowProps {
   atstart?: (rowIndex: number, columnIndex: number) => void;
   shouldUpdate?: boolean;
+  isEditable?: boolean;
 }
 
 export default class RowPureContent extends Component<RowPureContentProps> {
@@ -23,7 +24,7 @@ export default class RowPureContent extends Component<RowPureContentProps> {
       keyField,
       columns,
       rowIndex,
-      editable,
+      isEditable,
       editingRowIdx,
       editingColIdx,
       atstart,
@@ -99,7 +100,7 @@ export default class RowPureContent extends Component<RowPureContentProps> {
       if (!_.isEmptyObject(cellStyle)) cellAttrs.style = cellStyle;
 
       let editableCell = _.isDefined(column.editable) ? column.editable : true;
-      if (column.dataField === keyField || !editable) editableCell = false;
+      if (column.dataField === keyField || !isEditable) editableCell = false;
       if (_.isFunction(column.editable)) {
         editableCell = column.editable(content, row, rowIndex, index);
       }
@@ -118,8 +119,8 @@ export default class RowPureContent extends Component<RowPureContentProps> {
           columnindex={index}
           column={column}
           atstart={atstart}
-          clicktoedit={clickToEdit ?? "false"}
-          dbclicktoedit={dbclickToEdit ?? "false"}
+          clicktoedit={clickToEdit ? clickToEdit.toString() : "false"}
+          dbclicktoedit={dbclickToEdit ? dbclickToEdit.toString() : "false"}
           {...cellAttrs}
         />
       );

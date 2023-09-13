@@ -6,7 +6,7 @@ export interface RowProps {
   editable?: boolean;
   editingRowIdx?: number | null;
   editingColIdx?: number;
-  EditingCellComponent?: React.ComponentType<any>;
+  EditingCellComponent?: any;
   tabIndexStart?: number;
   tabIndexCell?: boolean;
   rowIndex?: number;

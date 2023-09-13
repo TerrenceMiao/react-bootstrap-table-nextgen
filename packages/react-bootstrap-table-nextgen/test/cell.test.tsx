@@ -126,8 +126,8 @@ describe("Cell", () => {
             rowindex={rowindex}
             column={column}
             columnindex={columnindex}
-            editable={"false"}
-            clicktoedit={"false"}
+            editable={"true"}
+            clicktoedit={"true"}
             atstart={onStartCallBack}
           />
         );
@@ -166,8 +166,8 @@ describe("Cell", () => {
             rowindex={1}
             column={column}
             columnindex={1}
-            editable={"false"}
-            dbclicktoedit={"false"}
+            editable={"true"}
+            dbclicktoedit={"true"}
             atstart={onStartCallBack}
           />
         );
