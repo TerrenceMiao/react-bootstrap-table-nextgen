@@ -9,7 +9,7 @@ describe("TextEditor", () => {
   const value = "test";
 
   beforeEach(() => {
-    wrapper = mount(<TextEditor defaultValue={value} />);
+    wrapper = mount(<TextEditor defaultValue={value} onUpdate={() => {}} />);
   });
 
   it("should render TextEditor correctly", () => {
@@ -23,7 +23,11 @@ describe("TextEditor", () => {
     const className = "test-class";
     beforeEach(() => {
       wrapper = mount(
-        <TextEditor defaultValue={value} className={className} />
+        <TextEditor
+          defaultValue={value}
+          className={className}
+          onUpdate={() => {}}
+        />
       );
     });
 

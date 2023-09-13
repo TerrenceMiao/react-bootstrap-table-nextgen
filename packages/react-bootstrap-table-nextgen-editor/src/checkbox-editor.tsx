@@ -8,6 +8,7 @@ interface CheckBoxEditorProps {
   defaultValue?: any;
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
   didMount?: () => void;
+  onUpdate?: any;
 }
 
 interface CheckBoxEditorState {
@@ -52,6 +53,7 @@ class CheckBoxEditor extends Component<
       defaultValue = false,
       didMount,
       className = "",
+      onUpdate,
       ...rest
     } = this.props;
     const editorClass = cs("editor edit-chseckbox checkbox", className);

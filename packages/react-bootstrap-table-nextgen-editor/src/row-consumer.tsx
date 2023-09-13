@@ -27,8 +27,8 @@ export default (Component: any, selectRowEnabled: any) => {
         {...attrs}
         editingRowIdx={cellEdit.ridx}
         editingColIdx={cellEdit.cidx}
-        editable={editableRow}
-        onStart={cellEdit.onStart}
+        isEditable={editableRow}
+        atstart={cellEdit.atstart}
         clickToEdit={cellEdit.mode === CLICK_TO_CELL_EDIT}
         dbclickToEdit={cellEdit.mode === DBCLICK_TO_CELL_EDIT}
       />

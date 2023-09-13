@@ -19,6 +19,7 @@ interface DropDownEditorProps {
     setOptions: (options: Option[]) => void,
     context: { row: object; column: object }
   ) => Option[] | void;
+  onUpdate?: any;
 }
 
 interface DropDownEditorState {
@@ -66,6 +67,7 @@ class DropDownEditor extends Component<
       didMount,
       getOptions,
       className = "",
+      onUpdate,
       ...rest
     } = this.props;
     const editorClass = cs(className, "form-control editor edit-select");

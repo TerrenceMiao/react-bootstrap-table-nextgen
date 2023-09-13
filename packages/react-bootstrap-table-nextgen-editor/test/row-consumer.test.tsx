@@ -50,7 +50,7 @@ describe("Row Consumer", () => {
       expect(wrapper.find(BaseComponent)).toHaveLength(1);
       expect(wrapper.find(BaseComponent).prop("editingRowIdx")).toBeNull();
       expect(wrapper.find(BaseComponent).prop("editingColIdx")).toBeNull();
-      expect(wrapper.find(BaseComponent).prop("editable")).toBeTruthy();
+      expect(wrapper.find(BaseComponent).prop("isEditable")).toBeTruthy();
     });
   });
 
@@ -98,7 +98,7 @@ describe("Row Consumer", () => {
 
       it("should inject correct editable prop as false to target component", () => {
         expect(wrapper.find(BaseComponent)).toHaveLength(1);
-        expect(wrapper.find(BaseComponent).prop("editable")).toBeTruthy();
+        expect(wrapper.find(BaseComponent).prop("isEditable")).toBeTruthy();
       });
     });
   });

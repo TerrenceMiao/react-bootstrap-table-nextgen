@@ -54,7 +54,6 @@ export default (
       };
     }
 
-    // eslint-disable-next-line consistent-return
     static getDerivedStateFromProps(nextProps: any, prevState: any) {
       if (
         nextProps.cellEdit &&
@@ -71,6 +70,10 @@ export default (
             cidx: prevState.cidx,
           };
         }
+      } else {
+        return {
+          ...prevState,
+        };
       }
     }
 
@@ -165,7 +168,7 @@ export default (
         ...cellEditRest,
         ...this.state,
         nonEditableRows: _.isDefined(nonEditableRows) ? nonEditableRows() : [],
-        onStart: this.startEditing,
+        atstart: this.startEditing,
         onEscape: this.escapeEditing,
         onUpdate: this.handleCellUpdate,
       };

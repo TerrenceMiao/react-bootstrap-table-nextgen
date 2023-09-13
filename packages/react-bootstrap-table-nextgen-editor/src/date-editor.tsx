@@ -6,6 +6,7 @@ interface DateEditorProps {
   className?: string;
   defaultValue?: string;
   didMount?: () => void;
+  onUpdate?: any;
 }
 
 class DateEditor extends Component<DateEditorProps> {
@@ -24,7 +25,13 @@ class DateEditor extends Component<DateEditorProps> {
   }
 
   render() {
-    const { defaultValue = "", didMount, className = "", ...rest } = this.props;
+    const {
+      defaultValue = "",
+      didMount,
+      className = "",
+      onUpdate,
+      ...rest
+    } = this.props;
     const editorClass = cs(className, "form-control editor edit-date");
     return (
       <input

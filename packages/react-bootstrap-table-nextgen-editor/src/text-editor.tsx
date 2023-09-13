@@ -7,6 +7,7 @@ interface TextEditorProps {
   defaultValue?: string | number;
   autoSelectText?: boolean;
   didMount?: () => void;
+  onUpdate: (row: object, column: object, value: any) => void;
 }
 
 class TextEditor extends Component<TextEditorProps> {
@@ -29,6 +30,7 @@ class TextEditor extends Component<TextEditorProps> {
       didMount,
       className = "",
       autoSelectText = false,
+      onUpdate,
       ...rest
     } = this.props;
     const editorClass = cs(className, "form-control editor edit-text");
