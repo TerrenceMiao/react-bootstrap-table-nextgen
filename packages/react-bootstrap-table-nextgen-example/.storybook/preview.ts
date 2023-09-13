@@ -21,6 +21,8 @@ const preview: Preview = {
           "Column Filter",
           "Work On Rows",
           "Footer",
+          "Sort Table",
+          "Cell Editing",
         ],
       },
     },
