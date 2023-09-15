@@ -43,16 +43,7 @@ type Story = StoryObj<typeof meta>;
 export const SingleSelection: Story = {
   name: "Single selection",
   args: {
-    columns: [{
-      dataField: 'id',
-      text: 'Product ID'
-    }, {
-      dataField: 'name',
-      text: 'Product Name'
-    }, {
-      dataField: 'price',
-      text: 'Product Price'
-    }],
+    columns: columns,
     data: productsGenerator(),
     sourceCode: `\
     import BootstrapTable from 'react-bootstrap-table-nextgen';
@@ -855,8 +846,8 @@ export const SelectionBackgroundColor: Story = {
   }
 };
 
-export const NotSelectabledRows: Story = {
-  name: "Not selectabled rows",
+export const NotSelectableRows: Story = {
+  name: "Not selectable rows",
   args: {
     columns: columns,
     data: productsGenerator(),
@@ -895,8 +886,8 @@ export const NotSelectabledRows: Story = {
   }
 };
 
-export const NotSelectabledRowsStyle: Story = {
-  name: "Not selectabled rows style",
+export const NotSelectableRowsStyle: Story = {
+  name: "Not selectable rows style",
   args: {
     columns: columns,
     data: productsGenerator(),
@@ -937,8 +928,8 @@ export const NotSelectabledRowsStyle: Story = {
   }
 };
 
-export const NotSelectabledRowsClass: Story = {
-  name: "Not selectabled rows class",
+export const NotSelectableRowsClass: Story = {
+  name: "Not selectable rows class",
   args: {
     columns: columns,
     data: productsGenerator(),
