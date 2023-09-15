@@ -24,6 +24,7 @@ const preview: Preview = {
           "Sort Table",
           "Cell Editing",
           "Row Selection",
+          "Row Expand",
         ],
       },
     },

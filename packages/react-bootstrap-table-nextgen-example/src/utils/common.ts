@@ -89,7 +89,7 @@ export const stockGenerator = (quantity = 5) =>
 export const sleep = (ms: any) =>
   new Promise((resolve) => setTimeout(resolve, ms));
 
-export const productsExpandRowsGenerator = (quantity = 5, callback: any) => {
+export const productsExpandRowsGenerator = (quantity = 5, callback?: any) => {
   if (callback) return Array.from({ length: quantity }, callback);
 
   // if no given callback, retrun default product format.
