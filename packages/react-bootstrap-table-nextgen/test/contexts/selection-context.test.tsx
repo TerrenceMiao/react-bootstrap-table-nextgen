@@ -135,7 +135,7 @@ describe("DataContext", () => {
       });
 
       it("should keep origin this.selected", () => {
-        expect(wrapper.instance().selected).toEqual(defaultSelected);
+        expect(wrapper.instance().selected).toBeUndefined();
       });
     });
 

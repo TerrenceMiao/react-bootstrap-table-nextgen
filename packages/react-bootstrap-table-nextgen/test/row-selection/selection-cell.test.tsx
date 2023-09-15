@@ -295,8 +295,8 @@ describe("<SelectionCell />", () => {
           mode,
           checked: selected,
           disabled: wrapper.prop("disabled"),
-          rowIndex,
-          rowKey: 1,
+          rowindex: rowIndex,
+          rowkey: 1,
         });
       });
     });

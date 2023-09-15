@@ -9,10 +9,6 @@ export default function withRowSelection<T extends React.ComponentType<any>>(
   Component: T
 ): React.FC<React.ComponentProps<T>> {
   const renderWithSelection = (props: any, selectRow: any) => {
-    if (!selectRow) {
-      return null;
-    }
-
     const key = props.value;
     const selected = _.contains(selectRow.selected, key);
     const selectable =

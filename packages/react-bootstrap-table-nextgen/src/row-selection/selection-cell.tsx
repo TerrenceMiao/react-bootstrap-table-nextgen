@@ -21,16 +21,16 @@ interface SelectionCellProps {
     mode: string;
     checked: boolean;
     disabled?: boolean;
-    rowIndex?: number;
-    rowKey: any;
+    rowindex?: number;
+    rowkey: any;
   }) => React.ReactNode;
   selectColumnStyle?:
     | React.CSSProperties
     | ((args: {
         checked: boolean;
         disabled?: boolean;
-        rowIndex?: number;
-        rowKey: any;
+        rowindex?: number;
+        rowkey: any;
       }) => React.CSSProperties);
 }
 
@@ -88,8 +88,8 @@ export default class SelectionCell extends Component<SelectionCellProps> {
       ? selectColumnStyle({
           checked: selected,
           disabled,
-          rowIndex,
-          rowKey,
+          rowindex: rowIndex,
+          rowkey: rowKey,
         })
       : selectColumnStyle;
 
@@ -102,8 +102,8 @@ export default class SelectionCell extends Component<SelectionCellProps> {
                 mode: inputType!,
                 checked: selected,
                 disabled,
-                rowIndex,
-                rowKey,
+                rowindex: rowIndex,
+                rowkey: rowKey,
               })
             ) : (
               <input

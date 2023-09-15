@@ -69,10 +69,12 @@ const SelectionContext = React.createContext<SelectionContextValue>(
 
 class SelectionProvider extends Component<SelectionProviderProps> {
   selected: any[];
+  isHandleRowSelect: boolean;
 
   constructor(props: SelectionProviderProps) {
     super(props);
     this.selected = props.selectRow.selected || [];
+    this.isHandleRowSelect = false;
   }
 
   // exposed API
@@ -81,8 +83,14 @@ class SelectionProvider extends Component<SelectionProviderProps> {
   }
 
   componentDidUpdate(nextProps: SelectionProviderProps) {
-    if (nextProps.selectRow) {
-      this.selected = nextProps.selectRow.selected || this.selected;
+    if (this.isHandleRowSelect) {
+      this.isHandleRowSelect = false;
+    } else if (
+      nextProps.selectRow &&
+      !_.isEqual(nextProps.selectRow.selected, this.selected)
+    ) {
+      this.selected = nextProps.selectRow.selected!;
+      this.forceUpdate();
     }
   }
 
@@ -116,6 +124,7 @@ class SelectionProvider extends Component<SelectionProviderProps> {
       }
     }
     this.selected = currSelected;
+    this.isHandleRowSelect = true;
     this.forceUpdate();
   };
 
@@ -127,7 +136,7 @@ class SelectionProvider extends Component<SelectionProviderProps> {
     } = this.props;
     const { selected } = this;
 
-    let currSelected;
+    let currSelected: any;
 
     if (!isUnSelect) {
       currSelected = selected.concat(
@@ -139,7 +148,7 @@ class SelectionProvider extends Component<SelectionProviderProps> {
       );
     }
 
-    let result;
+    let result: any;
     if (onSelectAll) {
       result = onSelectAll(
         !isUnSelect,
@@ -155,6 +164,7 @@ class SelectionProvider extends Component<SelectionProviderProps> {
       }
     }
     this.selected = currSelected;
+    this.isHandleRowSelect = true;
     this.forceUpdate();
   };
 
