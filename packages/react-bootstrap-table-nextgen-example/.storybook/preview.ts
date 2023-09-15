@@ -23,6 +23,7 @@ const preview: Preview = {
           "Footer",
           "Sort Table",
           "Cell Editing",
+          "Row Selection",
         ],
       },
     },
