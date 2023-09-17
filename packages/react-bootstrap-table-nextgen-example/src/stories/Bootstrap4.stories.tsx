@@ -23,6 +23,7 @@ const meta = {
     sourceCode: { control: 'text', description: 'source code of the table' },
     defaultSorted: { control: 'object', description: 'default sorted data field' },
     selectRow: { control: 'object', description: 'table select row' },
+    pagination: { control: 'object', description: 'table pagination' },
   },
   decorators: [
     (Story: any) => bootstrapStyle(BOOTSTRAP_VERSION.FOUR)(Story),

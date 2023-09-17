@@ -52,7 +52,7 @@ const options = {
   sizePerPageRenderer
 };
 
-<BootstrapTable keyField="id" data={ products } columns={ columns } pagination={ paginationFactory(options) } />s
+<BootstrapTable keyField="id" data={ products } columns={ columns } pagination={ paginationFactory(options) } />
 `;
 
 const sizePerPageRenderer = ({
