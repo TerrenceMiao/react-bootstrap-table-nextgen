@@ -80,23 +80,14 @@ class PaginationDataProvider extends Provider {
   };
 
   render() {
+    let { data } = this.props;
     const options = this.props.pagination!.options!;
-    const { currSizePerPage } = this;
+    const currPage = options.page ?? this.currPage;
+    const currSizePerPage = options.sizePerPage ?? this.currSizePerPage;
     const pageStartIndex =
       typeof options.pageStartIndex === "undefined"
         ? Const.PAGE_START_INDEX
         : options.pageStartIndex;
-
-    // workaround an issue with currPage is not 1, but data size is less than currSizePerPage
-    // when SearchBar input changed, componentDidUpdate in the SAME Toolkit updated (searching the data)
-    // secondly after componentDidUpdate (calculating currPage) in this package triggered at first
-    let { data } = this.props;
-    let { currPage } = this;
-
-    if (data.length <= (currPage - 1) * currSizePerPage) {
-      currPage = 1;
-      this.currPage = currPage;
-    }
 
     data = this.isRemotePagination()
       ? data
@@ -104,8 +95,7 @@ class PaginationDataProvider extends Provider {
 
     return (
       <PaginationDataContext.Provider
-        // @ts-ignore
-        value={{ data, setRemoteEmitter: this.setRemoteEmitter }}
+        value={{ data, setRemoteEmitter: this.remoteEmitter }}
       >
         {this.props.children}
         {this.renderDefaultPagination()}

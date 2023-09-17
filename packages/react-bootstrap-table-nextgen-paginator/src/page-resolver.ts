@@ -136,7 +136,7 @@ export default (ExtendBase: any) =>
           return !(isStart(page) || isEnd(page));
         })
         .map((page) => {
-          let title;
+          let title: any;
           const active = page === currPage;
           const disabled = isStart(page) || isEnd(page);
 

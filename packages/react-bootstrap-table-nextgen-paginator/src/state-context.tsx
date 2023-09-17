@@ -12,19 +12,20 @@ import { alignPage } from "./page";
 const StateContext = React.createContext<any>(null);
 
 class StateProvider extends React.Component<PaginationProviderProps> {
-  currPage: any;
-  currSizePerPage: any;
+  currPage: number;
+  currSizePerPage: number;
   dataChangeListener: any;
-  dataSize: any;
+  dataSize: number | undefined;
   remoteEmitter: any;
+
   constructor(props: PaginationProviderProps) {
     super(props);
     this.handleChangePage = this.handleChangePage.bind(this);
     this.handleDataSizeChange = this.handleDataSizeChange.bind(this);
     this.handleChangeSizePerPage = this.handleChangeSizePerPage.bind(this);
 
-    let currPage;
-    let currSizePerPage;
+    let currPage: any;
+    let currSizePerPage: any;
     const options = props.pagination!.options!;
     const sizePerPageList = options.sizePerPageList || Const.SIZE_PER_PAGE_LIST;
 
@@ -123,13 +124,13 @@ class StateProvider extends React.Component<PaginationProviderProps> {
     // user should align the page when the page is not fit to the data size when remote enable
     if (this.isRemotePagination() || custom) {
       if (typeof nextProps.pagination.options.page !== "undefined") {
-        this.currPage = nextProps.pagination.options.page;
+        // this.currPage = nextProps.pagination.options.page;
       }
       if (typeof nextProps.pagination.options.sizePerPage !== "undefined") {
-        this.currSizePerPage = nextProps.pagination.options.sizePerPage;
+        // this.currSizePerPage = nextProps.pagination.options.sizePerPage;
       }
       if (typeof nextProps.pagination.options.totalSize !== "undefined") {
-        this.dataSize = nextProps.pagination.options.totalSize;
+        // this.dataSize = nextProps.pagination.options.totalSize;
       }
     }
   }

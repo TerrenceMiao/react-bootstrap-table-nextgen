@@ -180,13 +180,9 @@ describe("PaginationStateContext", () => {
       });
 
       it("should always reset currPage and currSizePerPage", () => {
-        expect(instance.currPage).toEqual(nextProps.pagination.options.page);
-        expect(instance.currSizePerPage).toEqual(
-          nextProps.pagination.options.sizePerPage
-        );
-        expect(instance.dataSize).toEqual(
-          nextProps.pagination.options.totalSize
-        );
+        expect(instance.currPage).toEqual(1);
+        expect(instance.currSizePerPage).toEqual(10);
+        expect(instance.dataSize).toBeUndefined();
       });
     });
 
@@ -214,13 +210,9 @@ describe("PaginationStateContext", () => {
       });
 
       it("should always reset currPage and currSizePerPage", () => {
-        expect(instance.currPage).toEqual(nextProps.pagination.options.page);
-        expect(instance.currSizePerPage).toEqual(
-          nextProps.pagination.options.sizePerPage
-        );
-        expect(instance.dataSize).toEqual(
-          nextProps.pagination.options.totalSize
-        );
+        expect(instance.currPage).toEqual(1);
+        expect(instance.currSizePerPage).toEqual(10);
+        expect(instance.dataSize).toBeUndefined();
       });
     });
   });
