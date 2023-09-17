@@ -568,8 +568,8 @@ class FullyCustomPagination extends React.Component<FullyCustomPaginationProps> 
                       <p>Current SizePerPage: { paginationProps.sizePerPage }</p>
                     </div>
                     <div className="btn-group" role="group">
-                      <button className="btn btn-primary" onClick={ this.handleNextPage(paginationProps) }>Next Page</button>
                       <button className="btn btn-success" onClick={ this.handlePrevPage(paginationProps) }>Prev Page</button>
+                      <button className="btn btn-primary" onClick={ this.handleNextPage(paginationProps) }>Next Page</button>
                       <button className="btn btn-danger" onClick={ () => this.handleSizePerPage(paginationProps, 10) }>Size Per Page: 10</button>
                       <button className="btn btn-warning" onClick={ () => this.handleSizePerPage(paginationProps, 25) }>Size Per Page: 25</button>
                     </div>
@@ -606,16 +606,16 @@ class FullyCustomPagination extends React.Component<FullyCustomPaginationProps> 
               </div>
               <div className="btn-group" role="group">
                 <button
-                  className="btn btn-primary"
-                  onClick={this.handleNextPage(paginationProps)}
-                >
-                  Next Page
-                </button>
-                <button
                   className="btn btn-success"
                   onClick={this.handlePrevPage(paginationProps)}
                 >
                   Prev Page
+                </button>
+                <button
+                  className="btn btn-primary"
+                  onClick={this.handleNextPage(paginationProps)}
+                >
+                  Next Page
                 </button>
                 <button
                   className="btn btn-danger"
