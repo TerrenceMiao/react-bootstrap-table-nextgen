@@ -33,6 +33,7 @@ export default (
     clearFilters: { [key: string]: any };
     data: any[];
     isEmitDataChange: boolean;
+    isReloadData: boolean;
 
     constructor(props: FilterProviderProps) {
       super(props);
@@ -43,6 +44,7 @@ export default (
       this.onExternalFilter = this.onExternalFilter.bind(this);
       this.data = props.data;
       this.isEmitDataChange = false;
+      this.isReloadData = false;
     }
 
     componentDidMount() {
@@ -100,15 +102,28 @@ export default (
       return this.data;
     }
 
-    // componentDidUpdate(nextProps: FilterProviderProps) {
-    //   if (!isRemoteFiltering() && !_.isEqual(nextProps.data, this.data)) {
-    //   // this.data has already been filtered
-    //   this.doFilter(nextProps, this.isEmitDataChange);
-    //   } else {
-    //   // this.data is as SAME as nextProps.data
-    //   this.data = nextProps.data;
-    //   }
-    // }
+    componentDidUpdate(nextProps: FilterProviderProps) {
+      if (!isRemoteFiltering() && !_.isEqual(nextProps.data, this.data)) {
+        if (nextProps.dataChangeListener && !this.isEmitDataChange) {
+          if (
+            this.currFilters.name === undefined &&
+            this.currFilters.quality === undefined
+          ) {
+            nextProps.dataChangeListener.emit(
+              "filterChanged",
+              nextProps.data.length
+            );
+            this.data = nextProps.data;
+          } else if (this.isReloadData) {
+            this.doFilter(nextProps, false);
+            this.isReloadData = false;
+          } else {
+            this.isReloadData = true;
+          }
+        }
+      }
+      this.isEmitDataChange = false;
+    }
 
     doFilter(props: FilterProviderProps, ignoreEmitDataChange = false) {
       const { dataChangeListener, data, columns, filter } = props;
