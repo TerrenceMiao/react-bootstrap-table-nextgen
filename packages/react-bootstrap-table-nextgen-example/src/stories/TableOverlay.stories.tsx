@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
 // import bootstrap style by given version
-import BootstrapTable from './EmptyTableOverlay';
+import BootstrapTable from './TableOverlay';
 import bootstrapStyle from './bootstrap-style';
 
 // More on how to set up stories at: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
