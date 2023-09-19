@@ -30,7 +30,7 @@ export default (Base: any) =>
             };
 
       // get data for csv export
-      let data;
+      let data: any;
       if (typeof source !== "undefined") {
         data = source;
       } else if (options.exportAll) {
@@ -49,10 +49,9 @@ export default (Base: any) =>
       if (options.onlyExportSelection) {
         const payload = { result: undefined };
         this.tableExposedAPIEmitter.emit("get.selected.rows", payload);
-        const selections: any = payload.result;
-        data = data.filter(
-          (row: any) => !!selections.find((sel: any) => row[keyField] === sel)
-        );
+        const selections = payload.result ?? [];
+        // @ts-ignore
+        data = data.filter((row: any) => selections.includes(row[keyField]));
       }
 
       const content = transform(data, meta, columns, this._, options);

@@ -42,6 +42,7 @@ export interface CSVProps {
   fileName?: string | undefined;
   separator?: string | undefined;
   ignoreHeader?: boolean | undefined;
+  ignoreFooter?: boolean | undefined;
   noAutoBOM?: boolean | undefined;
   /**
    * default is text/plain;charset=utf-8
