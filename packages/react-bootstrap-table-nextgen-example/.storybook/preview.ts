@@ -29,6 +29,7 @@ const preview: Preview = {
           "Table Search",
           "Column Toggle",
           "Export CSV",
+          "Table Overlay",
         ],
       },
     },
