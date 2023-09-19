@@ -28,6 +28,7 @@ const preview: Preview = {
           "Pagination",
           "Table Search",
           "Column Toggle",
+          "Export CSV",
         ],
       },
     },
