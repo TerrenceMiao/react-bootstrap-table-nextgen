@@ -87,9 +87,10 @@ class SelectionProvider extends Component<SelectionProviderProps> {
       this.isHandleRowSelect = false;
     } else if (
       nextProps.selectRow &&
+      nextProps.selectRow.selected &&
       !_.isEqual(nextProps.selectRow.selected, this.selected)
     ) {
-      this.selected = nextProps.selectRow.selected!;
+      this.selected = nextProps.selectRow.selected;
       this.forceUpdate();
     }
   }
