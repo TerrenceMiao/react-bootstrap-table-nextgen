@@ -106,7 +106,7 @@ export default ({ mode, data, columns, sourceCode, header }) => {
       );
     case "hooks":
       const afterSearch = (newResult: any) => {
-        console.log(newResult); // eslint-disable-line no-console
+        console.log(newResult);
       };
       return (
         <div>
