@@ -77,7 +77,9 @@ export default (
           }
         } else {
           if (isRemoteSearch()) {
-            this.setState({ data: this.props.data });
+            if (!_.isEqual(this.state.data, this.props.data)) {
+              this.setState({ data: this.props.data });
+            }
           } else if (!_.isEqual(prevProps.data, this.props.data)) {
             const result = this.search(this.props);
             this.triggerListener(result);
