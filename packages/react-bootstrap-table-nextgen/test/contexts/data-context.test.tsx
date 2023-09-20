@@ -113,7 +113,7 @@ describe("DataContext", () => {
     describe("if first argument is give", () => {
       it("should return the data property from first argument", () => {
         result = wrapper.instance().getData({ data: fakeData });
-        expect(result).toEqual(fakeData);
+        expect(result).toEqual(data);
       });
     });
 

@@ -81,8 +81,8 @@ export default (
       super(props);
       const { defaultSorted, defaultSortDirection, sort } = props;
 
-      let sortOrder;
-      let sortColumn;
+      let sortOrder: any;
+      let sortColumn: any;
 
       if (defaultSorted && defaultSorted.length > 0) {
         sortOrder = defaultSorted[0].order || defaultSortDirection;
@@ -123,7 +123,7 @@ export default (
       const { columns } = this.props;
       const sortColumns = columns.filter((col) => col.dataField === sortField);
 
-      let sortColumn;
+      let sortColumn: any;
 
       if (sortColumns.length > 0) {
         sortColumn = sortColumns[0];

@@ -15,8 +15,18 @@ export default (ExtendBase: any) =>
     CellEditContext: any;
     PaginationContext: any;
     SortContext: any;
-
     Table: any;
+
+    dataContext: any;
+    columnContext: any;
+    selectionContext: any;
+    searchContext: any;
+    filterContext: any;
+    rowExpandContext: any;
+    cellEditContext: any;
+    paginationContext: any;
+    sortContext: any;
+    table: any;
 
     constructor(props: any) {
       super(props);
@@ -33,23 +43,23 @@ export default (ExtendBase: any) =>
       let searchText: string | undefined;
       let filters: any = {};
 
-      if (this.SortContext) {
-        sortOrder = this.SortContext.state.sortOrder;
-        sortField = this.SortContext.state.sortColumn
-          ? this.SortContext.state.sortColumn.dataField
+      if (this.sortContext) {
+        sortOrder = this.sortContext.state.sortOrder;
+        sortField = this.sortContext.state.sortColumn
+          ? this.sortContext.state.sortColumn.dataField
           : null;
       }
 
-      if (this.FilterContext) {
-        filters = this.FilterContext.currFilters;
+      if (this.filterContext) {
+        filters = this.filterContext.currFilters;
       }
 
-      if (this.PaginationContext) {
-        page = this.PaginationContext.currPage;
-        sizePerPage = this.PaginationContext.currSizePerPage;
+      if (this.paginationContext) {
+        page = this.paginationContext.currPage;
+        sizePerPage = this.paginationContext.currSizePerPage;
       }
 
-      if (this.SearchContext) {
+      if (this.searchContext) {
         searchText = this.props.search.searchText;
       }
 

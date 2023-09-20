@@ -12,18 +12,6 @@ import createSortContext from "./sort-context";
 
 const withContext = (Base: any) =>
   class BootstrapTableContainer extends RemoteResolver(Base) {
-    dataContext: any;
-    columnContext: any;
-    selectionContext: any;
-    searchContext: any;
-    filterContext: any;
-    rowExpandContext: any;
-    cellEditContext: any;
-    paginationContext: any;
-    sortContext: any;
-
-    table: any;
-
     constructor(props: any) {
       super(props);
       this.DataContext = createDataContext();
