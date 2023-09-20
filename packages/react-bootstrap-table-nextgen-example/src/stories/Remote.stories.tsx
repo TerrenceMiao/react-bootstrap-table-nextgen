@@ -41,6 +41,13 @@ export const RemoteFilter: Story = {
   }
 };
 
+export const RemotePagination: Story = {
+  name: "Remote pagination",
+  args: {
+    mode: "pagination",
+  }
+};
+
 export const RemoteSearch: Story = {
   name: "Remote search",
   args: {

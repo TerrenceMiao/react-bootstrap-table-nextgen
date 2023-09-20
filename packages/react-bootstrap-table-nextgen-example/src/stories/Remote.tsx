@@ -7,6 +7,7 @@ import filterFactory, {
   LIKE,
   textFilter,
 } from "../../../react-bootstrap-table-nextgen-filter";
+import paginationFactory from "../../../react-bootstrap-table-nextgen-paginator";
 import ToolkitProvider, {
   Search,
 } from "../../../react-bootstrap-table-nextgen-toolkit";
@@ -185,6 +186,23 @@ class RemoteSortComponent extends React.Component<{}, RemoteSortState> {
   }
 }
 
+const remoteFilterColumns = [
+  {
+    dataField: "id",
+    text: "Product ID",
+  },
+  {
+    dataField: "name",
+    text: "Product Name",
+    filter: textFilter(),
+  },
+  {
+    dataField: "price",
+    text: "Product Price",
+    filter: textFilter(),
+  },
+];
+
 const remoteFilterSourceCode = `\
 import BootstrapTable from 'react-bootstrap-table-nextgen';
 import filterFactory, { textFilter } from 'react-bootstrap-table-nextgen-filter';
@@ -265,22 +283,7 @@ const RemoteFilter = (props: any) => (
       remote={{ filter: true }}
       keyField="id"
       data={props.data}
-      columns={[
-        {
-          dataField: "id",
-          text: "Product ID",
-        },
-        {
-          dataField: "name",
-          text: "Product Name",
-          filter: textFilter(),
-        },
-        {
-          dataField: "price",
-          text: "Product Price",
-          filter: textFilter(),
-        },
-      ]}
+      columns={remoteFilterColumns}
       filter={filterFactory()}
       onTableChange={props.onTableChange}
     />
@@ -335,6 +338,147 @@ class RemoteFilterComponent extends React.Component<{}, RemoteFilterState> {
     return (
       <RemoteFilter
         data={this.state.data}
+        onTableChange={this.handleTableChange}
+      />
+    );
+  }
+}
+
+const remotePaginationSourceCode = `\
+import BootstrapTable from 'react-bootstrap-table-nextgen';
+import paginationFactory from 'react-bootstrap-table-nextgen-paginator';
+// ...
+const RemotePagination = ({ data, page, sizePerPage, onTableChange, totalSize }) => (
+  <div>
+    <BootstrapTable
+      remote
+      keyField="id"
+      data={ data }
+      columns={ columns }
+      pagination={ paginationFactory({ page, sizePerPage, totalSize }) }
+      onTableChange={ onTableChange }
+    />
+    <Code>{ sourceCode }</Code>
+  </div>
+);
+
+class Container extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      page: 1,
+      data: products.slice(0, 10),
+      sizePerPage: 10
+    };
+  }
+
+  handleTableChange = (type, { page, sizePerPage }) => {
+    const currentIndex = (page - 1) * sizePerPage;
+    setTimeout(() => {
+      this.setState(() => ({
+        page,
+        data: products.slice(currentIndex, currentIndex + sizePerPage),
+        sizePerPage
+      }));
+    }, 2000);
+  }
+
+  render() {
+    const { data, sizePerPage, page } = this.state;
+    return (
+      <RemotePagination
+        data={ data }
+        page={ page }
+        sizePerPage={ sizePerPage }
+        totalSize={ products.length }
+        onTableChange={ this.handleTableChange }
+      />
+    );
+  }
+}
+`;
+
+const RemotePagination = ({
+  data,
+  page,
+  sizePerPage,
+  onTableChange,
+  totalSize,
+}) => (
+  <div>
+    <BootstrapTable
+      remote
+      keyField="id"
+      data={data}
+      columns={[
+        {
+          dataField: "id",
+          text: "Product ID",
+        },
+        {
+          dataField: "name",
+          text: "Product Name",
+        },
+        {
+          dataField: "price",
+          text: "Product Price",
+        },
+      ]}
+      pagination={paginationFactory({ page, sizePerPage, totalSize })}
+      onTableChange={onTableChange}
+    />
+    <Code>{remotePaginationSourceCode}</Code>
+  </div>
+);
+
+RemotePagination.propTypes = {
+  data: PropTypes.array.isRequired,
+  page: PropTypes.number.isRequired,
+  totalSize: PropTypes.number.isRequired,
+  sizePerPage: PropTypes.number.isRequired,
+  onTableChange: PropTypes.func.isRequired,
+};
+
+interface RemotePaginationState {
+  data: any;
+  sizePerPage: number;
+  page: any;
+}
+
+class RemotePaginationComponent extends React.Component<
+  {},
+  RemotePaginationState
+> {
+  products = productsGenerator(87);
+
+  constructor(props: any) {
+    super(props);
+    this.state = {
+      page: 1,
+      data: this.products.slice(0, 10),
+      sizePerPage: 10,
+    };
+  }
+
+  handleTableChange = (type: any, { page, sizePerPage }) => {
+    const currentIndex = (page - 1) * sizePerPage;
+    setTimeout(() => {
+      this.setState(() => ({
+        page,
+        data: this.products.slice(currentIndex, currentIndex + sizePerPage),
+        sizePerPage,
+      }));
+    }, 2000);
+  };
+
+  render() {
+    const { data, sizePerPage, page } = this.state;
+    return (
+      <RemotePagination
+        data={data}
+        page={page}
+        sizePerPage={sizePerPage}
+        totalSize={this.products.length}
         onTableChange={this.handleTableChange}
       />
     );
@@ -440,7 +584,7 @@ class Container extends React.Component {
 }
 `;
 
-const RemoteSearchFilter = (props: any) => (
+const RemoteSearch = (props: any) => (
   <div>
     <ToolkitProvider
       keyField="id"
@@ -463,7 +607,7 @@ const RemoteSearchFilter = (props: any) => (
   </div>
 );
 
-RemoteSearchFilter.propTypes = {
+RemoteSearch.propTypes = {
   data: PropTypes.array.isRequired,
   onTableChange: PropTypes.func.isRequired,
 };
@@ -505,7 +649,7 @@ class RemoteSearchComponent extends React.Component<{}, RemoteSearchState> {
 
   render() {
     return (
-      <RemoteSearchFilter
+      <RemoteSearch
         data={this.state.data}
         onTableChange={this.handleTableChange}
       />
@@ -519,9 +663,9 @@ export default ({ mode }) => {
       return <RemoteSortComponent />;
     case "filter":
       return <RemoteFilterComponent />;
+    case "pagination":
+      return <RemotePaginationComponent />;
     case "search":
-      return <RemoteSearchComponent />;
-    default:
       return <RemoteSearchComponent />;
   }
 };
