@@ -30,6 +30,7 @@ const preview: Preview = {
           "Column Toggle",
           "Export CSV",
           "Table Overlay",
+          "Remote",
         ],
       },
     },
