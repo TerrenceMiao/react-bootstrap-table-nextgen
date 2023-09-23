@@ -54,3 +54,17 @@ export const RemoteSearch: Story = {
     mode: "search",
   }
 };
+
+export const RemoteCellEditing: Story = {
+  name: "Remote cell editing",
+  args: {
+    mode: "edit",
+  }
+};
+
+export const RemoteAll: Story = {
+  name: "Remote all",
+  args: {
+    mode: "all",
+  }
+};
