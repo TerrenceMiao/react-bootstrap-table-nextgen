@@ -1,4 +1,5 @@
 import React, { Component, ReactNode } from "react";
+import _ from "../utils";
 
 interface FilterProps {
   data: any;
@@ -51,17 +52,21 @@ class DataProvider extends Component<DataProviderProps> {
     } else if (searchProps) {
       return searchProps.data;
     } else if (filterProps) {
-      if (filterProps.data.length <= this.props.data.length) {
+      if (
+        filterProps.data.length < this.props.data.length &&
+        _.isEqual(this.props.data, this.state.data)
+      ) {
         return filterProps.data;
       }
     }
     return this.props.data;
   };
 
-  componentDidUpdate(nextProps: DataProviderProps) {
-    if (this.props.data !== nextProps.data) {
-      this.setState(() => ({ data: nextProps.data }));
-    }
+  static getDerivedStateFromProps(nextProps: any, prevState: any) {
+    return {
+      data: nextProps.data,
+      ...prevState,
+    };
   }
 
   render() {
