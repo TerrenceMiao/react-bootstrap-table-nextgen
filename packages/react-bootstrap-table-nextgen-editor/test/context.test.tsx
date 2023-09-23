@@ -205,7 +205,7 @@ describe("CellEditContext", () => {
         });
 
         it("should not set state.message", () => {
-          expect(wrapper.state("message")).toBe(initialState.message);
+          expect(wrapper.state("message")).toBe(null);
         });
 
         it("should set correct state.ridx", () => {

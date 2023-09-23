@@ -68,6 +68,7 @@ export default (
           return {
             ridx: prevState.ridx,
             cidx: prevState.cidx,
+            message: null,
           };
         }
       } else {

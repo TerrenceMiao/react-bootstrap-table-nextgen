@@ -23,7 +23,7 @@ interface EditingCellProps {
     validator?: any;
     editorClasses?: any;
     editorStyle?: any;
-    editor?: { type: any, options?: any };
+    editor?: { type: any; options?: any };
     editorRenderer?: Function;
     text: any;
   };
@@ -86,7 +86,7 @@ export default (_: any, onStartEdit?: any) =>
       this.clearTimer();
     }
 
-    componentDidUpdate({ message }: any) {
+    UNSAFE_componentWillReceiveProps({ message }: any) {
       if (_.isDefined(message)) {
         this.createTimer();
         this.setState(() => ({
@@ -183,7 +183,7 @@ export default (_: any, onStartEdit?: any) =>
     }
 
     render() {
-      let editor;
+      let editor: any;
       const {
         row,
         column,
