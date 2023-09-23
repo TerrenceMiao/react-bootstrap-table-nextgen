@@ -57,7 +57,13 @@ class StateProvider extends React.Component<PaginationProviderProps> {
   getPaginationProps = () => {
     const { bootstrap4, tableId } = this.props;
     const options = this.props.pagination!.options!;
-    const { currPage, currSizePerPage, dataSize } = this;
+    const { currPage, currSizePerPage } = this;
+    let dataSize: number;
+    if (this.isRemotePagination()) {
+      dataSize = options.totalSize!;
+    } else {
+      dataSize = this.dataSize!;
+    }
     const withFirstAndLast =
       typeof options.withFirstAndLast === "undefined"
         ? Const.With_FIRST_AND_LAST
@@ -137,7 +143,7 @@ class StateProvider extends React.Component<PaginationProviderProps> {
 
   isRemotePagination = () => {
     const e = { result: undefined };
-    this.remoteEmitter.emit("isRemotePagination", e);
+    this.remoteEmitter?.emit("isRemotePagination", e);
     return e.result;
   };
 

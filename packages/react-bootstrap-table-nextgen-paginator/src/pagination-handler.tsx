@@ -14,14 +14,15 @@ export default (WrappedComponent: any) =>
     }
 
     componentDidUpdate(currProps: any) {
-      const { currSizePerPage, dataSize } = currProps;
+      const { currSizePerPage, dataSize, totalSize } = currProps;
       if (
         currSizePerPage !== this.props.currSizePerPage ||
-        dataSize !== this.props.dataSize
+        dataSize !== this.props.dataSize ||
+        totalSize !== this.props.totalSize
       ) {
         const totalPages = this.calculateTotalPage(
           this.props.currSizePerPage,
-          this.props.dataSize
+          this.props.totalSize ?? this.props.dataSize
         );
         const lastPage = this.calculateLastPage(totalPages);
         this.setState({ totalPages, lastPage });
@@ -44,7 +45,7 @@ export default (WrappedComponent: any) =>
     }
 
     handleChangePage(newPage: any) {
-      let page;
+      let page: any;
       const {
         currPage,
         pageStartIndex,

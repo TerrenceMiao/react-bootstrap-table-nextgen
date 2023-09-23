@@ -92,7 +92,8 @@ class PaginationDataProvider extends Provider {
     // secondly after componentDidUpdate (calculating currPage) in this package triggered at first
     let { data } = this.props;
     let currPage = options.page ?? this.currPage;
-    if (data.length <= (currPage - 1) * currSizePerPage) {
+
+    if (!this.isRemotePagination() && data.length <= (currPage - 1) * currSizePerPage) {
       const totalPages = Math.floor(data.length / currSizePerPage) + 1;
       currPage = currPage > totalPages ? totalPages : currPage;
       this.currPage = currPage;
