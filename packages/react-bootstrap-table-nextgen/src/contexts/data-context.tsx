@@ -3,6 +3,7 @@ import _ from "../utils";
 
 interface FilterProps {
   data: any;
+  currFilters: any;
 }
 
 interface SearchProps {
@@ -23,6 +24,10 @@ interface DataProviderProps {
   children: ReactNode;
 }
 
+interface DataProviderState {
+  data: any[];
+}
+
 interface DataContextValue {
   data: any[];
   getData: (
@@ -36,8 +41,11 @@ interface DataContextValue {
 const defaultDataContext = { data: [], getData: () => [] };
 const DataContext = React.createContext<DataContextValue>(defaultDataContext);
 
-class DataProvider extends Component<DataProviderProps> {
-  state = { data: this.props.data };
+class DataProvider extends Component<DataProviderProps, DataProviderState> {
+  constructor(props: DataProviderProps) {
+    super(props);
+    this.state = { data: props.data };
+  }
 
   getData = (
     filterProps?: FilterProps,
@@ -54,20 +62,13 @@ class DataProvider extends Component<DataProviderProps> {
     } else if (filterProps) {
       if (
         filterProps.data.length < this.props.data.length &&
-        _.isEqual(this.props.data, this.state.data)
+        !_.isEmpty(Object.keys(filterProps.currFilters))
       ) {
         return filterProps.data;
       }
     }
     return this.props.data;
   };
-
-  static getDerivedStateFromProps(nextProps: any, prevState: any) {
-    return {
-      data: nextProps.data,
-      ...prevState,
-    };
-  }
 
   render() {
     return (
