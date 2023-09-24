@@ -47,3 +47,24 @@ export const LodadDataWithDefaultFilter: Story = {
     mode: "default-filter",
   }
 };
+
+export const LodadDataWithSearch: Story = {
+  name: "Load data with search",
+  args: {
+    mode: "search",
+  }
+};
+
+export const LodadDataWithDefaultSearch: Story = {
+  name: "Load data with default search",
+  args: {
+    mode: "default-search",
+  }
+};
+
+export const LodadDataWithFilterAndPagination: Story = {
+  name: "Load data with filter and pagination",
+  args: {
+    mode: "pagination",
+  }
+};

@@ -6,6 +6,9 @@ import filterFactory, {
   textFilter,
 } from "../../../react-bootstrap-table-nextgen-filter";
 import paginationFactory from "../../../react-bootstrap-table-nextgen-paginator";
+import ToolkitProvider, {
+  Search,
+} from "../../../react-bootstrap-table-nextgen-toolkit";
 
 import Code from "../components/common/code-block";
 import { productsGenerator } from "../utils/common";
@@ -328,6 +331,233 @@ class LoadDataWithDefaultFilterComponent extends React.Component<
   }
 }
 
+const { SearchBar } = Search;
+
+const LoadDataWithSearchProductList = (props: any) => {
+  const columns = [
+    {
+      dataField: "id",
+      text: "Product ID",
+    },
+    {
+      dataField: "name",
+      text: "Product Name",
+    },
+    {
+      dataField: "price",
+      text: "Product Price",
+    },
+  ];
+
+  return (
+    <div style={{ paddingTop: "20px" }}>
+      <h1 className="h2">Products</h1>
+      <ToolkitProvider
+        keyField="id"
+        data={props.products}
+        columns={columns}
+        search
+      >
+        {(toolkitprops) => (
+          <div>
+            <SearchBar {...toolkitprops.searchProps} />
+            <BootstrapTable striped hover {...toolkitprops.baseProps} />
+          </div>
+        )}
+      </ToolkitProvider>
+    </div>
+  );
+};
+
+interface LoadDataWithSearchState {
+  products: any[];
+}
+
+class LodadDataWithSearchComponent extends React.Component<
+  {},
+  LoadDataWithSearchState
+> {
+  constructor(props: any) {
+    super(props);
+    this.state = { products: [] };
+  }
+
+  loadData = () => {
+    this.setState({
+      products: productsGenerator(),
+    });
+  };
+
+  render() {
+    return (
+      <div>
+        <button
+          onClick={this.loadData}
+          style={{
+            fontSize: "20px",
+            position: "absolute",
+            left: "200px",
+            top: "40px",
+          }}
+        >
+          Load Data
+        </button>
+        <LoadDataWithSearchProductList products={this.state.products} />
+      </div>
+    );
+  }
+}
+
+const LoadDataWithDefaultSearchProductList = (props: any) => {
+  const columns = [
+    {
+      dataField: "id",
+      text: "Product ID",
+    },
+    {
+      dataField: "name",
+      text: "Product Name",
+    },
+    {
+      dataField: "price",
+      text: "Product Price",
+    },
+  ];
+
+  return (
+    <div style={{ paddingTop: "20px" }}>
+      <h1 className="h2">Products</h1>
+      <ToolkitProvider
+        keyField="id"
+        data={props.products}
+        columns={columns}
+        search={{ defaultSearch: "3" }}
+      >
+        {(toolkitprops) => (
+          <div>
+            <SearchBar {...toolkitprops.searchProps} />
+            <BootstrapTable striped hover {...toolkitprops.baseProps} />
+          </div>
+        )}
+      </ToolkitProvider>
+    </div>
+  );
+};
+
+interface LoadDataWithDefaultSearchState {
+  products: any[];
+}
+
+class LodadDataWithDefaultSearchComponent extends React.Component<
+  {},
+  LoadDataWithDefaultSearchState
+> {
+  constructor(props: any) {
+    super(props);
+    this.state = { products: productsGenerator(4) };
+  }
+
+  loadData = () => {
+    this.setState({
+      products: productsGenerator(34),
+    });
+  };
+
+  render() {
+    return (
+      <div>
+        <button
+          onClick={this.loadData}
+          style={{
+            fontSize: "20px",
+            position: "absolute",
+            left: "200px",
+            top: "40px",
+          }}
+        >
+          Load Data
+        </button>
+        <LoadDataWithDefaultSearchProductList products={this.state.products} />
+      </div>
+    );
+  }
+}
+
+const LodadDataWithFilterAndPaginationProductList = (props: any) => {
+  const columns = [
+    {
+      dataField: "id",
+      text: "Product ID",
+    },
+    {
+      dataField: "name",
+      text: "Product Name",
+      filter: textFilter({
+        defaultValue: "6",
+      }),
+    },
+    {
+      dataField: "price",
+      text: "Product Price",
+      filter: textFilter(),
+    },
+  ];
+
+  return (
+    <div style={{ paddingTop: "20px" }}>
+      <h1 className="h2">Products</h1>
+      <BootstrapTable
+        keyField="id"
+        data={props.products}
+        columns={columns}
+        filter={filterFactory()}
+        pagination={paginationFactory()}
+      />
+    </div>
+  );
+};
+
+interface LodadDataWithFilterAndPaginationState {
+  products: any[];
+}
+
+class LodadDataWithFilterAndPaginationComponent extends React.Component<
+  {},
+  LodadDataWithFilterAndPaginationState
+> {
+  constructor(props: any) {
+    super(props);
+    this.state = { products: productsGenerator(60) };
+  }
+
+  loadData = () => {
+    this.setState({
+      products: productsGenerator(14),
+    });
+  };
+
+  render() {
+    return (
+      <div>
+        <button
+          onClick={this.loadData}
+          style={{
+            fontSize: "20px",
+            position: "absolute",
+            left: "200px",
+            top: "40px",
+          }}
+        >
+          Load Data
+        </button>
+        <LodadDataWithFilterAndPaginationProductList
+          products={this.state.products}
+        />
+      </div>
+    );
+  }
+}
+
 export default ({ mode }) => {
   switch (mode) {
     case "data":
@@ -347,6 +577,24 @@ export default ({ mode }) => {
       return (
         <div>
           <LoadDataWithDefaultFilterComponent />
+        </div>
+      );
+    case "search":
+      return (
+        <div>
+          <LodadDataWithSearchComponent />
+        </div>
+      );
+    case "default-search":
+      return (
+        <div>
+          <LodadDataWithDefaultSearchComponent />
+        </div>
+      );
+    case "pagination":
+      return (
+        <div>
+          <LodadDataWithFilterAndPaginationComponent />
         </div>
       );
   }
