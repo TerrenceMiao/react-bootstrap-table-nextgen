@@ -31,6 +31,7 @@ const preview: Preview = {
           "Export CSV",
           "Table Overlay",
           "Remote",
+          "Data",
         ],
       },
     },
