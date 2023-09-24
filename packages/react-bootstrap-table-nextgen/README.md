@@ -1,5 +1,7 @@
 # react-bootstrap-table-nextgen
-Next generation of [`react-bootstrap-table`](https://github.com/AllenFang/react-bootstrap-table)
+Next generation of [`react-bootstrap-table-nextgen`](https://github.com/TerrenceMiao/react-bootstrap-table-nextgen)
+
+**[Live Demo](https://terrencemiao.github.io/react-bootstrap-table-nextgen/storybook-static)**
 
 ## Usage
 

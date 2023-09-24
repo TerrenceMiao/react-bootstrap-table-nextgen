@@ -1,6 +1,6 @@
 {
   "name": "react-bootstrap-table-nextgen-editor",
-  "version": "1.6.2",
+  "version": "1.6.3",
   "description": "It's the editor addon for react-bootstrap-table-nextgen",
   "main": "./lib/index.js",
   "scripts": {

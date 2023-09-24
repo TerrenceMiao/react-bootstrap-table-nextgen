@@ -1,6 +1,6 @@
 {
   "name": "react-bootstrap-table-nextgen",
-  "version": "4.3.15",
+  "version": "4.3.16",
   "description": "Next generation of react-bootstrap-table",
   "main": "./lib/index.js",
   "repository": {

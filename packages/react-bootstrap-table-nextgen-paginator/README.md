@@ -2,7 +2,7 @@
 
 `react-bootstrap-table-nextgen` separate the pagination code base to [`react-bootstrap-table-nextgen-paginator`](https://github.com/TerrenceMiao/react-bootstrap-table-nextgen/tree/main/packages/react-bootstrap-table-nextgen-paginator), so there's a little bit different when you use pagination. In the following, we are going to show you how to enable and configure the a pagination table
 
-**[Live Demo For Pagination](https://react-bootstrap-table.github.io/react-bootstrap-table2/storybook/index.html?selectedKind=Pagination)**
+**[Live Demo For Pagination](https://terrencemiao.github.io/react-bootstrap-table-nextgen/storybook-static/?path=/docs/pagination--docs)**
 
 **[API&Props Definitation](https://react-bootstrap-table.github.io/react-bootstrap-table2/docs/pagination-props.html)**
 

@@ -2,7 +2,7 @@
 
 `react-bootstrap-table-nextgen` separate the cell edit code base to [`react-bootstrap-table-nextgen-editor`](https://github.com/TerrenceMiao/react-bootstrap-table-nextgen/tree/main/packages/react-bootstrap-table-nextgen-editor), so there's a little bit different when you use cell edit than `react-bootstrap-table`. In the following, we are going to show you how to enable the cell edit
 
-**[Live Demo For Cell Edit](https://react-bootstrap-table.github.io/react-bootstrap-table2/storybook/index.html?selectedKind=Cell%20Editing)**
+**[Live Demo For Cell Edit](https://terrencemiao.github.io/react-bootstrap-table-nextgen/storybook-static/?path=/docs/cell-editing--docs)**
 
 **[API&Props Definitation](https://react-bootstrap-table.github.io/react-bootstrap-table2/docs/cell-edit-props.html)**
 
