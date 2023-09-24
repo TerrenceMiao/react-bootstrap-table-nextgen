@@ -15,16 +15,40 @@ export default (WrappedComponent: any) =>
 
     componentDidUpdate(currProps: any) {
       const { currSizePerPage, dataSize, totalSize } = currProps;
+      let totalPages = 0;
+
       if (
         currSizePerPage !== this.props.currSizePerPage ||
         dataSize !== this.props.dataSize ||
         totalSize !== this.props.totalSize
       ) {
-        const totalPages = this.calculateTotalPage(
+        if (currSizePerPage !== this.props.currSizePerPage) {
+          totalPages = this.calculateTotalPage(
+            this.props.currSizePerPage,
+            this.props.totalSize ?? this.props.dataSize
+          );
+        } else if (dataSize !== this.props.dataSize) {
+          totalPages = this.calculateTotalPage(
+            this.props.currSizePerPage,
+            this.props.dataSize
+          );
+        } else if (totalSize !== this.props.totalSize) {
+          totalPages = this.calculateTotalPage(
+            this.props.currSizePerPage,
+            this.props.totalSize
+          );
+        }
+      } else {
+        totalPages = this.calculateTotalPage(
           this.props.currSizePerPage,
-          this.props.totalSize ?? this.props.dataSize
+          this.props.dataSize
         );
-        const lastPage = this.calculateLastPage(totalPages);
+      }
+
+      const lastPage = this.calculateLastPage(totalPages);
+
+      // @ts-ignore
+      if (totalPages !== this.state.totalPages || lastPage !== this.state.lastPage) {
         this.setState({ totalPages, lastPage });
       }
     }

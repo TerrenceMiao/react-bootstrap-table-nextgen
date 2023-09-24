@@ -52,7 +52,7 @@ class PaginationDataProvider extends Provider {
       nextProps.onDataSizeChange &&
       nextProps.data.length !== this.props.data.length
     ) {
-      nextProps.onDataSizeChange({ dataSize: nextProps.data.length });
+      nextProps.onDataSizeChange({ dataSize: this.props.data.length });
     }
   }
 
@@ -96,6 +96,10 @@ class PaginationDataProvider extends Provider {
     if (!this.isRemotePagination() && data.length <= (currPage - 1) * currSizePerPage) {
       const totalPages = Math.floor(data.length / currSizePerPage) + 1;
       currPage = currPage > totalPages ? totalPages : currPage;
+      this.currPage = currPage;
+    }
+
+    if (this.isRemotePagination()) {
       this.currPage = currPage;
     }
 
