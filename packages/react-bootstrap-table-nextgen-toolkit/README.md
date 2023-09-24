@@ -9,7 +9,9 @@ In the future, this toolkit will support other feature like row delete, insert e
 * Column Toggle
 
 **[Live Demo For Table Search](https://terrencemiao.github.io/react-bootstrap-table-nextgen/storybook-static/?path=/docs/table-search--docs)**
+
 **[Live Demo For Export CSV](https://terrencemiao.github.io/react-bootstrap-table-nextgen/storybook-static/?path=/docs/export-csv--docs)**
+
 **[Live Demo For Column Toggle](https://terrencemiao.github.io/react-bootstrap-table-nextgen/storybook-static/?path=/docs/column-toggle--docs)**
 
 **[API&Props Definitation](https://react-bootstrap-table.github.io/react-bootstrap-table2/docs/pagination-props.html)**
