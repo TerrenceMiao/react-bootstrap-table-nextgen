@@ -26,7 +26,7 @@ See [getting started](https://react-bootstrap-table.github.io/react-bootstrap-ta
 
 ## Online Demo
 
-See `react-bootstrap-table2` [storybook](https://react-bootstrap-table.github.io/react-bootstrap-table2/storybook/index.html).
+See `react-bootstrap-table-nextgen` [storybook](https://terrencemiao.github.io/react-bootstrap-table-nextgen/storybook-static).
 
 ## Development
 
@@ -42,11 +42,9 @@ $ git clone https://github.com/TerrenceMiao/react-bootstrap-table-nextgen.git
 $ cd react-bootstrap-table-nextgen
 
 # Install all dependencies with yarn
-$ npm install
+$ yarn install
 
 # Start the stroybook server, then go to localhost:6006
-$ npm run storybook
+$ yarn storybook
 
 ```
-
-**Storybook examples: [`packages/react-bootstrap-table2-example/examples`](https://github.com/react-bootstrap-table/react-bootstrap-table2/tree/master/packages/react-bootstrap-table2-example/examples)**
